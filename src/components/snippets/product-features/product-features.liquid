@@ -1,0 +1,24 @@
+{%- comment -%}
+Snippet: Product Features
+
+Description: This snippet renders the product features.
+
+{%- endcomment -%}
+
+{%- liquid
+  # Product Features
+  assign product_features = product.metafields.custom.product_features.value
+-%}
+
+<div class="my-7 -m-0.5 flex flex-wrap justify-center">
+  {%- if product_features %}
+    {%- for feature in product_features -%}
+      <span
+        data-product-feature="{{ feature.system.handle }}"
+        @click.prevent="$store.app.openProductFeaturesModal('{{ feature.system.handle }}')"
+        class="text-14 text-center border border-gray uppercase px-5 py-2 m-0.5 text-black rounded-lg cursor-pointer hover:border-black">
+        {{ feature.title.value | escape }}
+      </span>
+    {%- endfor -%}
+  {%- endif -%}
+</div>

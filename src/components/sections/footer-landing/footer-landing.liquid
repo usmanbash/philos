@@ -1,0 +1,97 @@
+{%- comment -%}
+	Section: Footer
+	Description: A section that displays footer.
+
+	Usage: This section is used to display footer.
+
+	Accepts:
+    - Newsletter Title: Text field that represents newsletter title.
+    - Newsletter Subtitle: Text field that represents newsletter subtitle.
+    - Link Text: Text field that represents link text.
+	  - Address: Text field that represents hero address.
+    - Blocks:
+      - Menu Title: Text field that represents menu title.
+      - Menu: Menu field that represents menu.
+{%- endcomment -%}
+
+<footer
+	x-data='footerLanding()'
+	data-scroll
+	data-scroll-repeat
+  data-scroll-call="inViewportAnimation"
+	class='footer footer--landing w-full px-5 lg:px-10 pb-7 lg:pb-9 bg-charcoal text-cloud'>
+	<div
+		data-animate
+    data-preset='fade'
+		data-to='{"delay": 0.25}'
+		class='flex flex-col sm:flex-row items-center sm:items-end w-full'>
+
+    {%- comment -%} Copyright {%- endcomment -%}
+    <p class='copyright sm:w-full text-16 hidden lg:block'>&copy; {{ 'now' | date: '%Y' }} {{ 'general.footer.copyright.text' | t }}</p>
+
+    {%- comment -%} Text {%- endcomment -%}
+    {%- if section.settings.text != blank -%}
+      <div class='footer--landing__text flex justify-center w-full font-ivar text-24 md:text-46 text-center'>
+        {{ section.settings.text }}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Links {%- endcomment -%}
+    <div class="footer-links hidden lg:flex lg:flex-row items-center lg:items-start lg:justify-end gap-4 w-full">
+      {%- for block in section.blocks -%}
+        <div class="footer-links__item text-16 uppercase">
+          {%- liquid
+            assign link_attr = ''
+            if section.settings.cta_link contains 'http://' or block.settings.link contains 'https://'
+              assign link_attr = 'target="_blank" rel="noopener nofollow"'
+            endif
+          -%}
+          <a
+            href="{{ block.settings.link }}"
+            {{ link_attr }}
+            aria-label="{{ 'general.check_out' | t }} {{ block.settings.link_label | escape }}"
+            class="footer-links__link link link--reversed pb-1">
+            {{ block.settings.link_label }}
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+	</div>
+</footer>
+
+{% schema %}
+{
+	"name": "Footer Landing",
+	"tag": "section",
+	"settings": [
+    {
+      "type": "richtext",
+      "label": "Text",
+      "id": "text"
+    }
+  ],
+	"blocks": [
+		{
+			"type": "links",
+			"name": "Links",
+			"settings": [
+        {
+          "type": "text",
+          "label": "Link Label",
+          "id": "link_label"
+        },
+        {
+          "type": "url",
+          "label": "Link",
+          "id": "link"
+        }
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Footer Landing"
+		}
+	]
+}
+{% endschema %}

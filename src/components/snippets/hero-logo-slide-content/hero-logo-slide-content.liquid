@@ -1,0 +1,35 @@
+{%- comment -%}
+Snippet: Hero Logo Slide Content
+
+Slide settings
+  slide: slide object (block)
+
+{%- endcomment -%}
+
+<div 
+  class="hero-logo-slide-content absolute bottom-20 left-0 w-full flex flex-col items-center">
+
+  {%- comment -%} Headline {%- endcomment -%}
+  {%- if slide.settings.headline != blank -%}
+    <div
+      x-data="heroLogoSlideContent"
+      class="hero-logo-slide-content__text px-7 pb-10 lg:px-0 text-cloud text-center">
+      
+      {%- if slide.settings.cta != blank -%}<a href="{{ slide.settings.cta.url }}" class="inline-block">{%- endif -%}
+        <div class="hero-logo-slide-content__text__headline text-30 lg:text-50 font-ivar">{{ slide.settings.headline | newline_to_br }}</div>
+      {%- if slide.settings.cta != blank -%}</a>{%- endif -%}
+      
+      {%- if slide.settings.text != blank -%}
+        <div class="hero-logo-slide-content__text__text text-16 uppercase mt-4">{{ slide.settings.text | newline_to_br }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div
+    class="hero-logo-slide-content__cta-wrapper flex flex-col justify-center items-center w-full h-[64px] px-[90px]">
+    {%- if slide.settings.cta != blank -%}
+      {%- render 'button-cta', url: slide.settings.cta.url, text: slide.settings.cta_text -%}
+    {%- endif -%}
+  </div>
+
+</div>

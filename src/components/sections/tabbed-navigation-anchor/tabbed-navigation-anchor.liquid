@@ -1,0 +1,35 @@
+{%- comment -%}
+Section: Tabbed Navigation Anchor
+Description: This section serves as a scroll target for the Tabbed Navigation, providing anchor points
+             on the page that the tabbed navigation can scroll to. Each instance of this section
+             should have a unique ID that matches the Target Section ID used in the Tabbed Navigation.
+
+Accepts:
+- Settings:
+  - Anchor ID: The unique identifier for this anchor target, aligning with the Target Section ID
+               in the Tabbed Navigation section.
+{%- endcomment -%}
+
+<div
+  x-data="tabbedNavigationAnchor()"
+  id="{{ section.settings.anchor_id }}"
+  @scroll-to-section.window="handleScrollEvent($event.detail.sectionId)"
+  class="w-full h-0"></div>
+{% schema %}
+{
+  "name": "Tabbed Navigation Anchor",
+  "tag": "section",
+  "class": "tabbed-navigation-anchor",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor ID",
+      "info": "Specify the unique ID for this anchor. This ID must match the corresponding Target Section ID in the Tabbed Navigation for proper scrolling functionality."
+    }
+  ],
+  "presets": [{
+    "name": "Tabbed Navigation Anchor"
+  }]
+}
+{% endschema %}

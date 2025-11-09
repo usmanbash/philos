@@ -1,0 +1,20 @@
+// Section: Marquee
+.marquee {
+	.track {
+		animation: marquee 10s linear infinite;
+		-webkit-transform-style: preserve-3d;
+		-webkit-backface-visibility: hidden;
+		@media only screen and (min-width: 1024px) {
+			animation: marquee 15s linear infinite;
+		}
+	}
+}
+
+@keyframes marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}

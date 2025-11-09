@@ -1,0 +1,19 @@
+.contact-form {
+  .field__input {
+    background-color: transparent;
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #000;
+      font-size: 16px;
+    }
+  }
+
+  .error {
+    border: 1px solid #D01C1F;
+  }
+}

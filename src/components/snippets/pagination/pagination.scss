@@ -1,0 +1,23 @@
+.pagination {
+	span {
+		color: #6d4145;
+	}
+	a {
+		transition: color 0.4s;
+		svg {
+			width: 1.8rem;
+			height: auto;
+			path {
+				transition: fill 0.4s;
+			}
+		}
+		&:hover {
+			color: #6d4145;
+			svg {
+				path {
+					fill: #6d4145;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,101 @@
+{%- comment -%}
+	Template for the blog page.
+	Description: This template is used to render the blog page.
+	             It will display the blog title, subtitle, blog tags menu
+	             and a list of articles.
+	             The number of articles displayed is controlled by the
+	             `number_of_blog_posts` setting. Default is 13.
+
+	Useful resources:
+	@see https://shopify.github.io/liquid/tags/iteration/
+	@see https://shopify.github.io/liquid/filters/paginate/
+
+	@see https://shopify.dev/docs/api/liquid/objects/blog
+	@see https://shopify.dev/docs/api/liquid/objects/article
+{%- endcomment -%}
+
+<div
+  x-data="templateBlog"
+  class="template-blog relative">
+
+  <div
+    data-scroll
+    data-scroll-call="inViewportAnimation"
+    class='flex items-center justify-center lg:px-24'>
+    {%- comment -%} Headline {%- endcomment -%}
+    {%- if blog.title != blank -%}
+      {%- assign blog_headline_text = blog.metafields.custom.subtitle |  metafield_text -%}
+      <div
+        data-animate
+        data-preset='fadeUp'>
+        {% render 'headline',
+          headline: blog.title,
+          text: blog_headline_text
+        %}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {% render 'blog-navigation' %}
+
+	{% paginate blog.articles by section.settings.number_of_blog_posts %}
+    {%- comment -%} Blog Posts (articles) {%- endcomment -%}
+    <div class='relative w-full h-full px-5 sm:px-7 pt-6'>
+      <div class='flex flex-col sm:flex-row flex-wrap'>
+        {% for article in blog.articles %}
+          {% comment %}
+            Use modulo to cycle through indexes 0 to 12 for every 13 articles.
+            This creates a repeating pattern of classes applied to articles in cycles of 13.
+            note: forloop.index0 is 0-based index
+                  forloop.index is 1-based index
+                  modulo: 13 will return 0 to 12
+                  number_of_blog_posts is the number of articles per page (default: 13)
+          {% endcomment %}
+          {% assign current_index = forloop.index0 | modulo: section.settings.number_of_blog_posts %}
+          {% case current_index %}
+            {% when 0, 9 %}
+              {% assign width_class = 'sm:w-1/2 lg:w-1/2 lg:ml-[25%] sm:px-3 lg:px-4' %}
+            {% when 1, 2, 3, 6, 7, 8, 10, 11, 12 %}
+              {% assign width_class = 'sm:w-1/2 lg:w-1/3 sm:px-3' %}
+            {% when 4, 5 %}
+              {% assign width_class = 'sm:w-1/2 sm:px-3' %}
+          {% endcase %}
+          <div
+            data-scroll
+            data-scroll-call="inViewportAnimation"
+            class='article-wrapper mb-32 lg:mb-40 {{ width_class }}'>
+            {%- comment -%} Article Card Snippet (snippets/article-card) {%- endcomment -%}
+            <div
+            data-animate
+            data-preset='fade'>
+              {% render 'article-card',
+                blog_handle: blog.handle,
+                article: article
+              %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class='mx-auto'>
+      {% render 'pagination', pagination: paginate %}
+    </div>
+  {% endpaginate %}
+</div>
+
+{% schema %}
+{
+	"name": "Blog",
+	"settings": [
+		{
+			"type": "range",
+			"id": "number_of_blog_posts",
+			"step": 1,
+			"min": 1,
+			"max": 13,
+			"label": "Blog posts per page",
+			"default": 13
+		}
+	]
+}
+{% endschema %}

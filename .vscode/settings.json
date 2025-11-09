@@ -1,0 +1,17 @@
+{
+  "editor.foldingStrategy": "indentation",
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "*.liquid": "liquid"
+  },
+  "search.exclude": {
+    "**/dist/**": true
+  },
+  "cSpell.words": [
+    "metafield",
+    "Metafields",
+    "Metaobject",
+    "metaobjects",
+    "swipers"
+  ]
+}

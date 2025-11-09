@@ -1,0 +1,23 @@
+.link {
+	display: inline !important;
+	transition: background-size 0.35s linear;
+	background: linear-gradient(to bottom, currentColor 0%, currentColor 98%);
+	background-repeat: no-repeat;
+	background-position: left 100%;
+	&--line {
+		background-size: 100% 1px;
+		@media only screen and (min-width: 1024px) {
+			&:hover {
+				background-size: 0% 1px;
+			}
+		}
+	}
+	&--reversed {
+		background-size: 0% 1px;
+		@media only screen and (min-width: 1024px) {
+			&:hover {
+				background-size: 100% 1px;
+			}
+		}
+	}
+}

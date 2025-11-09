@@ -1,0 +1,21 @@
+.color-selector {
+	input[type='radio'] {
+		opacity: 0;
+	}
+
+	label {
+		border: 1px solid transparent;
+		transition: border-color 0.4s;
+		overflow: hidden;
+		border-radius: 0.5rem;
+		&:hover {
+			border: 1px solid #111010;
+		}
+	}
+
+	input[type='radio']:checked + label {
+		border: 1px solid #111010;
+		overflow: hidden;
+		border-radius: 0.5rem;
+	}
+}

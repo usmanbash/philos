@@ -1,0 +1,176 @@
+{%- comment -%}
+Section: Template Article
+Description: This section is used to display an article.
+{%- endcomment -%}
+
+<article
+  data-scroll
+  data-scroll-call="inViewportAnimation"
+	itemscope
+	class="article template-article text-black"
+	itemtype='http://schema.org/BlogPosting'>
+	{%- for block in section.blocks -%}
+		{%- case block.type -%}
+			{%- when 'article_title' -%}
+				<div
+				class='flex items-center justify-center px-10 lg:px-24'>
+					{%- comment -%} Headline {%- endcomment -%}
+          {%- if article.title != blank -%}
+            <div
+              data-animate
+              data-preset='fadeUp'
+              class="article-title">
+                {% render 'headline', headline: article.title %}
+            </div>
+          {%- endif -%}
+				</div>
+			{%- when 'article_published_date' -%}
+				<div
+          data-animate
+				  data-preset='fadeUp'
+				  data-to='{ "delay": 0.1 }'
+				  class='flex items-center justify-center mb-9'>
+					<div class='text-center m-w-7xl'>
+						{%- if section.settings.enable_published_date -%}
+							<time
+                datetime='{{ article.published_at | date: '%Y-%m-%d' }}'
+                itemprop='datePublished dateCreated'>
+                {{ article.published_at | date: format: 'abbreviated_date' }}
+							</time>
+						{%- endif -%}
+					</div>
+				</div>
+
+			{%- if article.tags.size > 0 -%}
+				<div
+          data-animate
+					data-preset='fadeUp'
+          data-to='{ "delay": 0.2 }'
+          class='article__tag flex justify-center items-center flex-wrap gap-2 mb-16 px-5 sm:px-10 lg:px-0'>
+					{%- for article_tag in article.tags -%}
+            {% render 'article-tag', blog_handle: blog.handle, article_tag: article_tag %}
+					{%- endfor -%}
+				</div>
+			{%- endif -%}
+
+      {%- when 'article_content' -%}
+        <div class='w-full sm:container mx-auto px-5 sm:px-10 lg:px-0'>
+          {%- if article.image != blank -%}
+            <div
+              data-animate
+              data-preset='fadeUp'
+              data-to='{ "delay": 0.3 }'
+              class='content article-feature-image'>
+              <img
+                src="{{ article.image | image_url }}"
+                alt="{{ article.image.alt | escape }}"
+                loading='lazy'
+                class='w-full h-full object-cover'>
+            </div>
+          {%- endif -%}
+          <div
+            data-animate
+            data-preset='fadeUp'
+            data-to='{ "delay": 0.4 }'
+            class='content'
+            itemprop='articleBody'>
+            {{ article.content }}
+            {% render 'share-button', title: article.title, image: article.image %}
+          </div>
+  </div>
+
+		{%- endcase -%}
+	{%- endfor -%}
+</article>
+
+{%- comment -%} Related Articles {%- endcomment -%}
+{% liquid
+  assign current_article_id = article.id
+  # assign other_articles_count = 0
+
+  assign show_more_articles = false
+  assign latest_articles = blog.articles | sort: 'published_at' | reverse | slice: 0, 5
+  assign latest_articles_size = latest_articles.size
+  assign other_articles_count = 0
+
+  if latest_articles_size > 0
+    for article in latest_articles
+      if article.id != current_article_id
+        assign other_articles_count = other_articles_count | plus: 1
+      endif
+    endfor
+  endif
+
+  if other_articles_count > 0
+    assign show_more_articles = true
+  endif
+%}
+{%- if show_more_articles == true -%}
+  <div class="related_articles relative lg:mt-24 sm:px-10 lg:px-0">
+    {% render 'slider',
+      card_type: 'article_card',
+      title: section.settings.text,
+      blog_handle: blog.handle,
+      slides: latest_articles,
+      current_article_id: current_article_id,
+      current_article_tags: article.tags,
+      space_between_slides: 20,
+      slides_per_view_mob: 1.2,
+      slider_navbar_class: 'px-5 sm:px-0 lg:px-10',
+      centered_slides: true,
+      loop_on_mobile: true,
+      loop_on_desk: true
+    %}
+  </div>
+{%- endif -%}
+
+
+{% schema %}
+{
+	"name": "Template Article",
+	"settings": [
+		{
+			"type": "checkbox",
+			"id": "enable_published_date",
+			"label": "Display Published Date",
+			"default": true
+		},
+    {
+      "type": "text",
+      "label": "Related Articles Headline",
+      "id": "text"
+    }
+	],
+	"blocks": [
+		{
+			"type": "article_title",
+			"name": "Title",
+			"limit": 1
+		},
+    {
+      "type": "share_label",
+      "name": "Share Label"
+    },
+		{
+			"type": "article_author",
+			"name": "Author",
+			"limit": 1
+		},
+		{
+			"type": "article_published_date",
+			"name": "Published Date",
+			"limit": 1
+		},
+		{
+			"type": "article_featured_image",
+			"name": "Thumbnail",
+			"limit": 1
+		},
+		{
+			"type": "article_content",
+			"name": "Content",
+			"limit": 1
+		}
+	]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+
+// Section: Text and Image
+.text-and-imagery-dark {
+  .text-and-imagery__content-wrapper {
+    .text-and-imagery__text {
+      p {
+        margin-bottom: 1rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        @media only screen and (min-width: 768px) {
+          margin-bottom: 2rem;
+        }
+      }
+
+      strong {
+        color: #d6d3ce;
+        font-weight: normal;
+      }
+    }
+
+    .text-and-imagery__logo {
+      svg {
+        display: block;
+        width: 36px;
+        height: auto;
+      }
+    }
+  }
+}

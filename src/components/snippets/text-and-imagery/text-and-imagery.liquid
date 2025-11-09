@@ -1,0 +1,122 @@
+{%- comment -%}
+	Snippet: Text and Imagery
+	Description: A section that displays text and imagery.
+  This snippet is used to create a section that displays text and imagery.
+  It can be also be used as a part of a some other sections where it is possible
+  to pass image blocks as an array, not individual image field, as for About page.
+
+  Accepts:
+    - Text (rich text)
+    _ Reversed (boolean)
+    - Image Blocks (array of images)
+
+  Usage:
+    {% render 'text-and-imagery',
+      text: section.settings.text,
+      reversed: section.settings.reversed,
+      dark_mode: section.settings.dark_mode,
+      blocks: section.blocks
+    %}
+{%- endcomment -%}
+
+{%- liquid
+	# Variables
+	assign is_reversed = reversed
+	assign block_count = blocks.size
+
+	# Check if the section has blocks
+	assign has_blocks = false
+	if block_count > 0
+		assign has_blocks = true
+	endif
+
+	# Check if the section has text
+	assign has_text = false
+	if text != blank
+		assign has_text = true
+	endif
+
+	# Set the default classes for the text and image wrappers
+	# based on the reversed setting
+  if is_reversed
+    assign order_class = 'lg:flex-row-reverse'
+  else
+    assign order_class = 'lg:flex-row'
+  endif
+
+  # Set the theme classes based on the dark mode setting
+  assign theme_classes = ''
+  assign logo_color = 'dark'
+  if dark_mode
+    assign theme_classes = 'bg-charcoal text-sonicSilver'
+    assign logo_color = 'white'
+  endif
+
+	# Add grid classes based on the number of blocks present
+	if has_blocks
+		case block_count
+			when 1
+				assign grid_classes = 'sm:grid-cols-1'
+			when 2
+				assign grid_classes = 'sm:grid-cols-2'
+			when 3, 4
+				assign grid_classes = 'sm:grid-cols-2 lg:grid-rows-2'
+			else
+				assign grid_classes = 'sm:grid-cols-1'
+		endcase
+	endif
+-%}
+
+<div
+	x-data='textAndImagery'
+	class='text-and-imagery w-full h-full {{ theme_classes }} py-5 sm:py-10 px-5 sm:px-10'>
+	{%- comment -%} Content Wrapper {%- endcomment -%}
+	<div class='flex flex-col {{ order_class }} lg:items-center gap-4 w-full h-full'>
+		{%- comment -%} Text Wrapper {%- endcomment -%}
+		<div
+      data-scroll
+      data-scroll-repeat
+      data-scroll-call="inViewportAnimation"
+      class='text-and-imagery__content-wrapper w-full h-full'>
+      <div class='flex flex-col justify-center items-center w-full h-full px-14 py-24 sm:py-20 sm:px-16 lg:py-0 lg:px-44'>
+        {%- comment -%} Text Content {%- endcomment -%}
+        {% if has_text %}
+          <div
+            data-animate
+            data-preset='fadeUp'
+            class='text-and-imagery__text font-ivar text-center text-30 lg:text-46'>
+            {{ text }}
+          </div>
+        {% endif %}
+
+        {%- comment -%} Logo {%- endcomment -%}
+        {% comment %}
+        <div
+          data-animate
+          data-preset='fadeUp'
+          data-to='{"delay": 0.1}'
+          class="text-and-imagery__logo logo--{{ logo_color }} mt-16 lg:mt-16">
+          {%- render 'icon-logo' -%}
+        </div>
+        {% endcomment %}
+
+      </div>
+		</div>
+
+		{%- comment -%} Imagery Wrapper {%- endcomment -%}
+		<div class='text-and-imagery__image-wrapper w-full h-full'>
+			{%- comment -%} Image Blocks {%- endcomment -%}
+			{%- if has_blocks -%}
+				<div class='grid {{ grid_classes }} gap-4 h-full'>
+					{% for block in blocks %}
+            {%- render 'scale-down-image',
+              image: block.settings.image,
+              originalRatio: false,
+              imgRatio: 0.8
+            -%}
+					{% endfor %}
+				</div>
+			{%- endif -%}
+		</div>
+	</div>
+</div>

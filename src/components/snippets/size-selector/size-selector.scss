@@ -1,0 +1,19 @@
+.size-selector {
+  input[type='radio'] {
+    opacity: 0;
+    display: none !important;
+  }
+
+  label {
+    @apply bg-transparent border border-gray rounded-lg overflow-hidden;
+    @apply transition-all duration-300;
+
+    &:hover {
+      @apply border-black;
+    }
+
+    &.selected {
+      @apply text-white3 bg-black border-black rounded-lg overflow-hidden opacity-100;
+    }
+  }
+}

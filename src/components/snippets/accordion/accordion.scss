@@ -1,0 +1,21 @@
+.alpine-accordion {
+	.accordion-plus {
+		width: 13px;
+		height: 13px;
+    margin-left: 1rem;
+
+		.line--vert {
+			transition: 0.5s;
+			transform-origin: center;
+		}
+	}
+
+	.accordion-plus {
+		&.open {
+			.line--vert {
+				transform: rotate(90deg);
+				opacity: 0;
+			}
+		}
+	}
+}

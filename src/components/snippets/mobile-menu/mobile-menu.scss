@@ -1,0 +1,25 @@
+.mobile-menu {
+	.accordion-plus {
+		width: 13px;
+		height: 13px;
+
+		.line--vert {
+			transition: 0.5s;
+			transform-origin: center;
+		}
+	}
+
+	.accordion-plus {
+    svg {
+      rect {
+        fill: #fff;
+      }
+    }
+		&.open {
+			.line--vert {
+				transform: rotate(90deg);
+				opacity: 0;
+			}
+		}
+	}
+}

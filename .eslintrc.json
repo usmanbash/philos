@@ -1,0 +1,8 @@
+{
+  "parser": "@babel/eslint-parser",
+  "extends": ["prettier"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-undef": "off"
+  }
+}

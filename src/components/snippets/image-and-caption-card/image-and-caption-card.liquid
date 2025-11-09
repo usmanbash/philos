@@ -1,0 +1,39 @@
+{%- comment -%}
+Snippet: PDP Image and Caption Card
+Description: A simple card with an image and a caption, used in the PDP
+to display testimonials
+
+Usage:
+{% render 'image-and-caption-card',
+  image: image,
+  image_caption: 'This is a caption',
+  imgRatio: 0.72
+%}
+{%- endcomment -%}
+
+{%- assign img_ratio = imgRatio |  default: 0.82 -%}
+
+<div
+  data-scroll
+  data-scroll-repeat
+  data-scroll-call="inViewportAnimation"
+  class="image-and-caption-card flex flex-col h-full w-full">
+
+  {%-
+    render 'scale-down-image',
+    image: image
+    imgRatio: img_ratio
+    innerClass: 'h-full',
+    animation_preset: animation_preset
+  -%}
+
+  {% if image_caption != blank %}
+  <div
+    data-animate
+    data-preset='fade'
+    data-to='{"delay": 0.2}'
+    class="mb-14 lg:mb-0 pt-4 px-2 text-16 text-black">
+    {{ image_caption }}
+  </div>
+  {% endif %}
+</div>

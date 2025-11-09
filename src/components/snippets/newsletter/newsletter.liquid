@@ -1,0 +1,56 @@
+<div
+  x-data="newsletter({ formFields: { email: '' } })"
+  class="newsletter">
+
+  <form
+    :class="{ 'error': validator.errors.email.isError && (validator.isFieldTouched('email') || validator.isFormSubmitted())}"
+    class="newsletter-form"
+    @submit.prevent="subscribe">
+
+    <div class="field flex items-center border border-gray p-4">
+      <input
+        x-model="formFields.email"
+        x-ref="email"
+        id="email"
+        type="email"
+        name="email"
+        @blur="validateField($event.target)"
+        @input="validateField($event.target)"
+        class="field__input block w-full leading-tight bg-white2 text-16 text-black" />
+
+      <button
+        type="submit"
+        x-ref="submitBtn"
+        name="commit"
+        id="Subscribe"
+        aria-label="Subscribe to newsletter"
+        :disabled="!isFormValid() || isSubmitting"
+        :class="{
+          'cursor-not-allowed opacity-50': !isFormValid() || isSubmitting,
+          'cursor-pointer': isFormValid() && !isSubmitting
+        }"
+        class="newsletter-form__button field__button flex-initial link link--reversed font-proximaNova text-16 uppercase">
+        {{ 'forms.newsletter.subscribe' | t }}
+      </button>
+    </div>
+  </form>
+
+  {%- comment -%} MESAGGES {%- endcomment -%}
+  <div class="error-message min-h-[20px]">
+    <div
+      x-show="validator.errors.email.isError && (validator.isFieldTouched('email') || validator.isFormSubmitted())"
+      class="text-errorRed text-16"
+      x-text="validator.errors.email.message">
+    </div>
+  </div>
+
+  <div class="w-full min-h-[36px] mt-2">
+    <div
+      x-show="message"
+      :class="{ 'text-errorRed': !success }"
+      class="text-18 font-bold leading-none"
+      x-text="message">
+    </div>
+  </div>
+
+</div>

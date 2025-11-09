@@ -1,0 +1,286 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "intro": {
+      "type": "dark-hero",
+      "settings": {
+        "headline": "running as ceremony"
+      }
+    },
+    "full-width-one-image": {
+      "type": "full-bleed-imagery",
+      "blocks": {
+        "image_block": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/Philos_Running_Amphora_Athens.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_block"
+      ],
+      "settings": {
+        "space_x_axis": false
+      }
+    },
+    "callout-intro": {
+      "type": "callout-text",
+      "settings": {
+        "text": "<p><strong>Athens, Panatheniac Stadium. </strong>Since 600 BC, the stadium has hosted running events. In 143 AD the stadium was rebuilt from marble from the same quarry as the Parthenon. In 1896 AD the stadium hosted the first modern Olympics and first marathon. The stadium is the oldest monument to the sport of running in existence, and the catalyst of Philos. These are the<strong> origins of running.</strong>             </p>",
+        "caption": ""
+      }
+    },
+    "full-width-two-images": {
+      "type": "full-bleed-imagery",
+      "blocks": {
+        "image_block_8ynQQG": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/Philos_Panatheniac_Statdium_Athens-02.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_block_8ynQQG"
+      ],
+      "settings": {
+        "space_x_axis": true
+      }
+    },
+    "navigation": {
+      "type": "navigation-about",
+      "blocks": {
+        "nav-item-vision": {
+          "type": "navigation",
+          "settings": {
+            "tab_name": "Vision",
+            "tab_id": "vision"
+          }
+        },
+        "nav-item-strategy": {
+          "type": "navigation",
+          "settings": {
+            "tab_name": "Strategy",
+            "tab_id": "strategy"
+          }
+        },
+        "nav-item-design": {
+          "type": "navigation",
+          "disabled": true,
+          "settings": {
+            "tab_name": "Design",
+            "tab_id": "design"
+          }
+        }
+      },
+      "block_order": [
+        "nav-item-vision",
+        "nav-item-strategy",
+        "nav-item-design"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "section-vision": {
+      "type": "section-about",
+      "blocks": {
+        "text-and-imagery-one": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Running is beyond sport – ancient, intuitive, freeing – it is universal human expression.</p>",
+            "reversed": false,
+            "image_1": "shopify://shop_images/Philos_Running_Greece_1.jpg"
+          }
+        },
+        "text-and-imagery-two": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Running is a daily ritual to many – a time for breathing, thinking, and reconnecting.</p>",
+            "reversed": true,
+            "image_1": "shopify://shop_images/PHILOS_RUNNING_RITUAL.jpg"
+          }
+        },
+        "text-and-imagery-three": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Our vision is to connect past to present – elevating running to the realm of the sacred.</p>",
+            "reversed": false,
+            "image_1": "shopify://shop_images/PHILOS_E-COM-2521.jpg"
+          }
+        },
+        "full-bleed-imagery": {
+          "type": "full_bleed_imagery",
+          "settings": {
+            "image_1": "shopify://shop_images/Philos_Running_Greece_3.jpg",
+            "image_2": "shopify://shop_images/Philos_340.jpg",
+            "image_3": "shopify://shop_images/Philos_Running_Concept_Origins.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "text-and-imagery-one",
+        "text-and-imagery-two",
+        "text-and-imagery-three",
+        "full-bleed-imagery"
+      ],
+      "settings": {
+        "tab_section_id": "vision"
+      }
+    },
+    "section-strategy": {
+      "type": "section-about",
+      "blocks": {
+        "text-and-imagery-one": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Philos is a modern female-first running brand. </p><p>Philos running shoes are made in Italy and running apparel made in Portugal by world-class manufacturers using natural and performance materials.</p>",
+            "reversed": true,
+            "image_1": "shopify://shop_images/about_strategy_img_1.png"
+          }
+        },
+        "text-and-imagery-two": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Philos running is rooted<br/>in intuition, empowerment,<br/>and      togetherness.</p>",
+            "reversed": false,
+            "image_1": "shopify://shop_images/about_strategy_img_2.png"
+          }
+        },
+        "text-and-imagery-three": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Our first store, <strong>in Amsterdam,</strong> is designed as a temple to running.</p><p>A place to come together, the base of our running group, filled with natural light, incense.and our signature running buns.</p>",
+            "reversed": true,
+            "image_1": "shopify://shop_images/about_strategy_img_3.png"
+          }
+        },
+        "full-bleed-imagery": {
+          "type": "full_bleed_imagery",
+          "settings": {
+            "image_1": "shopify://shop_images/about_strategy_img_4.png",
+            "image_2": "shopify://shop_images/about_strategy_img_5.png",
+            "image_3": "shopify://shop_images/Philos_Athena_Charcoal_7.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "text-and-imagery-one",
+        "text-and-imagery-two",
+        "text-and-imagery-three",
+        "full-bleed-imagery"
+      ],
+      "disabled": true,
+      "settings": {
+        "tab_section_id": "strategy"
+      }
+    },
+    "section-design": {
+      "type": "section-about",
+      "blocks": {
+        "text-and-imagery-one": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Ancient inspiration.</p><p>Greek Statuesc.<br/>400BC</p>",
+            "reversed": false,
+            "image_1": "shopify://shop_images/about_design_img_1.png",
+            "image_2": "shopify://shop_images/about_design_img_2.png",
+            "image_3": "shopify://shop_images/about_design_img_3.png",
+            "image_4": "shopify://shop_images/about_design_img_4.png"
+          }
+        },
+        "text-and-imagery-two": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Ancient inspiration. </p><p>Kaihōgyō Monk Runners Rarámuri Tribal Runners c. 1600 AD</p>",
+            "reversed": true,
+            "image_1": "shopify://shop_images/about_design_img_5.png",
+            "image_2": "shopify://shop_images/about_design_img_6.png"
+          }
+        },
+        "text-and-imagery-three": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Modern inspiration. </p><p>Athletic Shoes c. 1917 – 2023 AD</p>",
+            "reversed": false,
+            "image_1": "shopify://shop_images/about_design_img_7.png"
+          }
+        },
+        "text-and-imagery-four": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Future inspiration. </p><p>AI Generated Shoes using Mid journey c. 2023 AD</p>",
+            "reversed": true,
+            "image_1": "shopify://shop_images/about_design_img_8.png",
+            "image_2": "shopify://shop_images/about_design_img_9.png",
+            "image_3": "shopify://shop_images/about_design_img_10.png",
+            "image_4": "shopify://shop_images/about_design_img_11.png"
+          }
+        },
+        "text-and-imagery-five": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Philos Phantom </p><p>Run.<br/>c. 2024 AD</p>",
+            "reversed": false,
+            "image_1": "shopify://shop_images/about_design_img_12.png"
+          }
+        },
+        "text-and-imagery-six": {
+          "type": "text_and_imagery",
+          "settings": {
+            "text": "<p>Philos Phantom featuring <strong>the QuietRun</strong><strong>TM</strong><strong> sole. </strong></p><p>Run.<br/>c. 2024 AD</p>",
+            "reversed": true,
+            "image_1": "shopify://shop_images/about_design_img_13.png"
+          }
+        },
+        "full-bleed-imagery": {
+          "type": "full_bleed_imagery",
+          "settings": {
+            "image_1": "shopify://shop_images/about_design_img_14.png",
+            "image_2": "shopify://shop_images/Philos_Athena_Charcoal_7.jpg",
+            "image_3": "shopify://shop_images/about_strategy_img_1.png"
+          }
+        }
+      },
+      "block_order": [
+        "text-and-imagery-one",
+        "text-and-imagery-two",
+        "text-and-imagery-three",
+        "text-and-imagery-four",
+        "text-and-imagery-five",
+        "text-and-imagery-six",
+        "full-bleed-imagery"
+      ],
+      "disabled": true,
+      "settings": {
+        "tab_section_id": "design"
+      }
+    },
+    "callout-conclusion": {
+      "type": "callout-text",
+      "settings": {
+        "text": "<p><strong><br/>the future has<br/>an ancient heart</strong></p><p></p>",
+        "caption": ""
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "full-width-one-image",
+    "callout-intro",
+    "full-width-two-images",
+    "navigation",
+    "section-vision",
+    "section-strategy",
+    "section-design",
+    "callout-conclusion"
+  ]
+}

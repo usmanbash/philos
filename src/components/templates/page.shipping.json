@@ -1,0 +1,94 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "template-page": {
+      "type": "template-legal",
+      "blocks": {
+        "intro": {
+          "type": "page_text",
+          "settings": {
+            "text": "<p>All Philos orders are shipped from the Netherlands using a secure, tracked shipping service. We offer free PostNL Express shipping on all orders in The Netherlands, and free UPS® Express shipping on orders over €250 for the rest of the world. No code needed, it will automatically apply at checkout.</p><p>Please allow 1 to 2 business days for order processing. Shipping fees and delivery times vary by country, with an estimated delivery of 1 to 2 business days within Europe, and 2-3 business days for Canada & the United States. Once your order is dispatched, you'll receive a tracking link via email. The expected delivery timeline can be found below. Keep in mind that delivery times are estimates.</p><p>Philos ships on business days only (Monday to Friday, excluding bank holidays). Orders placed over the weekend will be processed on the next business day.<br/><br/>For orders shipped to the US, taxes & duties are included. Orders exceeding $800 may incur additional taxes & duties upon delivery. Shipments may also experience delays due to recent US trade regulation changes.<br/><br/>For orders shipped to the UK import duties may apply depending on local customs regulations. While taxes are included in the price, any additional import duties are the responsibility of the customer and are not covered by Philos. We recommend checking with your local customs office for more information on potential duties before placing your order.</p>"
+          }
+        },
+        "country_1": {
+          "type": "shipping_country_info",
+          "settings": {
+            "continent": "Europe",
+            "country_name": "The Netherlands",
+            "delivery_time": "1-2 business days",
+            "shipping_cost": "FREE"
+          }
+        },
+        "shipping_country_info_TPnDGk": {
+          "type": "shipping_country_info",
+          "settings": {
+            "continent": "North America",
+            "country_name": "Canada, United States",
+            "delivery_time": "2-3 business days",
+            "shipping_cost": "25€ | FREE over 250€"
+          }
+        },
+        "country_2": {
+          "type": "shipping_country_info",
+          "settings": {
+            "continent": "Europe",
+            "country_name": "Austria, Belgium, Bulgaria, Croatia, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, Switzerland & United Kingdom",
+            "delivery_time": "1-2 business days",
+            "shipping_cost": "15€ | FREE over 150€"
+          }
+        },
+        "shipping_country_info_ap9Mtn": {
+          "type": "shipping_country_info",
+          "settings": {
+            "continent": "Asia",
+            "country_name": "Hong Kong, Japan, Malaysia, Qatar, Saudi Arabia, Singapore, South Korea, Taiwan, United Arab Emirates",
+            "delivery_time": "2-5 business days",
+            "shipping_cost": "30€ | FREE over 300€"
+          }
+        },
+        "shipping_country_info_gUMXJ3": {
+          "type": "shipping_country_info",
+          "settings": {
+            "continent": "Australia",
+            "country_name": "Australia, New Zealand",
+            "delivery_time": "2-5 business days",
+            "shipping_cost": "30€ | FREE over 300€"
+          }
+        },
+        "conclusion": {
+          "type": "page_text",
+          "settings": {
+            "text": "<p>If your Philos package arrives incomplete or damaged due to shipping, please save the shipping box, the products, and their outer packaging. <a href=\"/pages/contact\" target=\"_blank\" title=\"Contact\">Contact us</a> within 5 business days, and we will assist you further.</p><p>Once the package leaves our warehouse, the shipping carrier assumes responsibility. We are not liable for lost or stolen packages during transit or after arrival. We recommend filing a claim directly with the courier. If they are unable to assist, please <a href=\"/pages/contact\" target=\"_blank\" title=\"Contact\">contact us</a> once the claim is filed, and we will help you from there.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "intro",
+        "country_1",
+        "shipping_country_info_TPnDGk",
+        "country_2",
+        "shipping_country_info_ap9Mtn",
+        "shipping_country_info_gUMXJ3",
+        "conclusion"
+      ],
+      "settings": {
+        "hero_title": "Support",
+        "hero_text": "Need assistance? Our support team is here to help",
+        "hero_image": "shopify://shop_images/legal_hero.png",
+        "sidebar_menu": "legal-menu",
+        "page_title": "Shipping"
+      }
+    }
+  },
+  "order": [
+    "template-page"
+  ]
+}

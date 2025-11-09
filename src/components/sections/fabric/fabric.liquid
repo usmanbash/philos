@@ -1,0 +1,68 @@
+{%- doc -%}
+  Fabric Section
+
+{%- enddoc -%}
+
+{%- liquid
+
+  assign title = section.settings.section_title
+  assign headline = section.settings.card_headline
+  assign image = section.settings.card_image
+
+  assign items = section.blocks | map: 'settings' 
+
+-%}
+<div class='fabric-section w-full px-5 sm:px-10 my-14'>
+
+  {% render 'fabric',
+    title: title,
+    headline: headline,
+    image: image,
+    items: items
+  %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Fabric",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Section Title",
+        "id": "section_title"
+      }, {
+        "type": "richtext",
+        "label": "Card Headline",
+        "id": "card_headline"
+      }, {
+        "type": "image_picker",
+        "label": "Card Image",
+        "id": "card_image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "fabric_detail",
+        "name": "Fabric Detail Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          }, {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Fabric"
+      }
+    ]
+  }
+{% endschema %}

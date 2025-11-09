@@ -1,0 +1,32 @@
+// Section: Home Hero
+.callout-text {
+	.content {
+		strong {
+			font-weight: normal;
+		}
+	}
+	.callout-text-logo {
+		svg {
+			width: 36px;
+			height: auto;
+		}
+	}
+
+  &--charcoal {
+    .content {
+      @apply text-sonicSilver;
+      strong {
+        @apply text-gray;
+      }
+    }
+  }
+
+  &--offwhite {
+    .content {
+      @apply text-charcoal/30;
+      strong {
+        @apply text-charcoal;
+      }
+    }
+  }
+}

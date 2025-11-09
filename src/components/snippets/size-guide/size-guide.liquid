@@ -1,0 +1,65 @@
+{%- comment -%}
+Snippet: Size Guide
+Description: This snippet is used to display a size guide for a product.
+The size guide is populated with data from the product's metafields.
+
+Metafields:
+
+- product.metafields.custom.size_guide - one entry (Metaobject: size_guide_type)
+- Metaobject: size_guide_type (metaobject.system.type == 'size_guide_type')
+
+Fields:
+- shoes (Boolean: true/false)
+- clothing (Boolean: true/false)
+
+- product.metafields.custom.gallery_models - a list of entries (Metaobject: gallery_model)
+- Metaobject: gallery_model (metaobject.system.type == 'gallery_model')
+
+Fields:
+- description (single line text)
+- model_name (single line text)
+- size (single line text)
+- height (single line text)
+- bust (single line text)
+- waist_natural (single line text)
+- hips (single line text)
+
+- product.metafields.custom.measurement_disclaimer - one entry (Metaobject: product_measurement_disclaimer)
+- Metaobject: product_measurement_disclaimer (metaobject.system.type == 'product_measurement_disclaimer')
+
+Fields:
+- title (single line text)
+- text (multi line text)
+
+@see metaobjects https://shopify.dev/docs/api/liquid/objects/metaobject
+{%- endcomment -%}
+
+
+<div
+  x-data='sizeGuide()'
+  class="size_guide flex flex-col w-full h-full">
+
+    <template x-if='$store.sizeGuide.type == "Shoes"'>
+      {%- render 'size-chart-shoes' -%}
+    </template>
+
+    <template x-if='$store.sizeGuide.type == "Clothing"'>
+      {%- render 'size-chart-clothes' -%}
+    </template>
+
+    <template x-if='$store.sizeGuide.galleryModels.length > 0'>
+      <div class="headline-wrapper pt-6">
+        <h3 class="text-24 font-normal">{{ 'product.size_guide.size_examples' | t }}</h3>
+      </div>
+    </template>
+
+    <template x-if='$store.sizeGuide.galleryModels.length > 0'>
+      {%- render 'gallery-models' -%}
+    </template>
+
+    <template x-if='$store.sizeGuide.measurementDisclaimer'>
+      {%- render 'measurement-disclaimer' -%}
+    </template>
+
+</div>
+

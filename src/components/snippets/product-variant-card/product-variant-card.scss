@@ -1,0 +1,50 @@
+.product-variant-card {
+  .quick-buy__btn {
+
+    svg,
+    path {
+      width: 13px;
+      height: 13px;
+      fill: #000;
+      transition: transform 0.4s;
+    }
+
+    @media only screen and (min-width: 1024px) {
+      &:hover {
+        svg {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+
+  .product-variant-card__images {
+    .product-variant-card__image {
+      .product-card-image {
+        z-index: 0;
+        opacity: 0;
+
+        &.featured {
+          z-index: 5;
+          opacity: 1;
+        }
+
+        &.active {
+          z-index: 8;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .available-sizes {
+    &.invisible-scrollbar {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}

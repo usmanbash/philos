@@ -1,0 +1,50 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Philos Running Theme",
+    "theme_version": "1.0.26",
+    "theme_author": "RBLN7",
+    "theme_support_email": "velimir.matic@wearepm.co",
+    "theme_documentation_url": "https://github.com/"
+  },
+  {
+    "name": "General",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Website favicon. It will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "API Settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "storefront_access_token",
+        "label": "Storefront Access Token"
+      }
+    ]
+  },
+  {
+    "name": "Currency format",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Currency codes"
+      },
+      {
+        "type": "paragraph",
+        "content": "Note that cart and checkout totals will always show the currency code, and itemized, unit, and installment prices will not."
+      },
+      {
+        "type": "checkbox",
+        "id": "currency_code_enable",
+        "label": "Show currency codes",
+        "default": true
+      }
+    ]
+  }
+]

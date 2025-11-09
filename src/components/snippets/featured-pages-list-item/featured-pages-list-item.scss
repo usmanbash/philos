@@ -1,0 +1,57 @@
+.featured-pages-list-item {
+  .featured-pages-list-item__link-name {
+    transition-duration: 0.5s;
+
+    @media only screen and (max-width: 429px) {
+      font-size: 2.75rem;
+    }
+
+    svg {
+      display: inline;
+      width: auto;
+      height: 0.2em;
+      vertical-align: top;
+    }
+
+    .link-name-suffix {
+      transition: color 0.4s;
+    }
+  }
+
+  .first,
+  .second {
+    transition: transform 0.4s, opacity 0.4s;
+  }
+
+  .first {
+    opacity: 1;
+  }
+
+  .second {
+    opacity: 0;
+  }
+
+  &:hover {
+    .featured-pages-list-item__link-name {
+      @media only screen and (min-width: 1024px) {
+        svg {
+          fill: #6d4145;
+        }
+
+        .link-name-suffix {
+          color: #6d4145;
+        }
+
+        .first {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+
+        .second {
+          transform: translateY(-100%);
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

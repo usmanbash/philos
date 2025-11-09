@@ -1,0 +1,217 @@
+{%- comment -%}
+Snippet: Mobile Menu
+Description: This snippet is used to render the mobile menu in the header.
+It uses the `linklists` object to get the menu links and then loops through them to
+render the menu items. If a menu item has sub-links, it will render them
+as well. The `mobileNavigation` component is used to handle the accordion
+functionality for the menu items with sub-links.
+
+Usage:
+{% render 'mobile-menu', menu: mobile_menu_linklist %}
+
+Accepts:
+- `menu` (required): The linklist object to render the menu from.
+{%- endcomment -%}
+
+{%- assign featured_nav_page_handle = pages[featured_nav_page].handle -%}
+{%- assign infinity_symbol = '∞'-%}
+
+{% for link in menu %}
+  {% liquid
+    # Reset product count for each link
+    assign product_count = nil
+    # Add a border bottom to the last menu item
+    assign border_bottom = ''
+    if forloop.index == menu.links.size
+      assign border_bottom = 'border-b'
+    endif
+
+    # Check for link type and assign product count if it's a collection link
+    case link.type
+      when 'collection_link'
+        assign current_collection = collections[link.object.handle]
+        if current_collection
+          # Get all products from the collection
+          assign total_color_count = 0
+
+          for product in current_collection.products
+            assign product_color_count = 0
+
+            # Find the array of colors from options_with_values
+            for option in product.options_with_values
+              if option.name == 'Color'
+                # Count the number of colors available for this product
+                assign product_color_count = option.values | size
+              endif
+            endfor
+
+            # Accumulate the total color count across all products
+            assign total_color_count = total_color_count | plus: product_color_count
+          endfor
+
+          assign product_count = total_color_count
+          # Get all products from the collection
+          # assign product_count = current_collection.all_products_count
+        endif
+
+      when 'catalog_link'
+        assign all_products_collection = collections['all']
+        if all_products_collection
+          # Get all products from the collection
+          assign total_color_count = 0
+
+          for product in all_products_collection.products
+            assign product_color_count = 0
+
+            # Find the array of colors from options_with_values
+            for option in product.options_with_values
+              if option.name == 'Color'
+                # Count the number of colors available for this product
+                assign product_color_count = option.values | size
+              endif
+            endfor
+
+            # Accumulate the total color count across all products
+            assign total_color_count = total_color_count | plus: product_color_count
+          endfor
+
+          assign product_count = total_color_count
+        endif
+        # Get all products from the store
+
+        # there is no all_products.size, or some other simple way to retrieve the
+        # number of all products in the store, so we will just leave it empty
+
+        # maybe create some automated collection that includes all products, and then
+        # use the above method to retrieve the number of products in that collection
+        # e.g. product_count = collections['all-products'].all_products_count
+        #assign product_count = collections['all'].all_products_count
+    endcase
+
+    # Initialize variable to check if the link is the featured navigation page
+    assign is_featured_nav = false
+
+    # Determine if the current link is the featured navigation page
+    if link.type == 'page_link' and link.object.handle == featured_nav_page_handle
+      assign is_featured_nav = true
+    endif
+  %}
+
+  <div
+    x-data='accordion({
+      isOpen: {{ isOpen | default: false }},
+      group: "mobile-menu",
+      id: {{ forloop.index }}
+    })'
+    @accordion-set-active.window='setActive($event.detail)'
+    class='mobile-menu py-5 border-t {{ border_bottom }} border-gray/[.3] text-cloud z-10 last:border-b'>
+
+    {% comment %} Menu Item Title {% endcomment %}
+    <div
+      @click='toggle'
+      class='accordion-title flex flex-row items-center cursor-pointer'>
+      {% if link.links.size > 0 %}
+        <span class="text-16 uppercase">{{ link.title }}</span>
+        <div :class="{ 'open': isOpen }" class="accordion-plus ml-auto">
+          {% render 'icon-accordion-plus' %}
+        </div>
+      {% else %}
+
+        <a
+          href="{{ link.url }}"
+          aria-label="{{ 'general.check_out' | t }} {{ link.title | escape }}"
+          class="text-16 uppercase"
+          @click.native="closeMenu()">
+          <span class="link-title">{{ link.title }}</span>
+          {% if product_count and product_count > 0 %}
+            <span class="align-top text-[.6em]">{{ product_count }}</span>
+          {% endif %}
+          {% if is_featured_nav %}
+            <span class="align-top text-[.6em]">{{ infinity_symbol }}</span>
+          {% endif %}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if link.links.size > 0 %}
+      {% comment %} Menu Item Content (nested menu) {% endcomment %}
+      <div x-ref='foldable' class="accordion-foldable overflow-hidden">
+        <div x-ref='reference' class='py-4 pl-14'>
+          {% for nested_link in link.links %}
+            {%- liquid
+              # Reset nested link product count for each nested link
+              assign nested_link_product_count = nil
+
+              # Check for nested link type
+               case nested_link.type
+                when 'collection_link'
+                  assign nested_collection = collections[nested_link.object.handle]
+                  if nested_collection
+                    # Get all products from the collection
+                    assign total_color_count = 0
+
+                    for product in nested_collection.products
+                      assign product_color_count = 0
+
+                      # Find the array of colors from options_with_values
+                      for option in product.options_with_values
+                        if option.name == 'Color'
+                          # Count the number of colors available for this product
+                          assign product_color_count = option.values | size
+                        endif
+                      endfor
+
+                      # Accumulate the total color count across all products
+                      assign total_color_count = total_color_count | plus: product_color_count
+                    endfor
+
+                    assign nested_link_product_count = total_color_count
+                    # assign nested_link_product_count = nested_collection.all_products_count
+                  endif
+
+                when 'catalog_link'
+                  assign nested_all_products_collection = collections['all']
+                  if nested_all_products_collection
+                    # Get all products from the collection
+                    assign total_color_count = 0
+
+                    for product in nested_all_products_collection.products
+                      assign product_color_count = 0
+
+                      # Find the array of colors from options_with_values
+                      for option in product.options_with_values
+                        if option.name == 'Color'
+                          # Count the number of colors available for this product
+                          assign product_color_count = option.values | size
+                        endif
+                      endfor
+
+                      # Accumulate the total color count across all products
+                      assign total_color_count = total_color_count | plus: product_color_count
+                    endfor
+
+                    assign nested_link_product_count = total_color_count
+                    # assign nested_link_product_count = collections['all'].all_products_count
+                  endif
+              endcase
+            -%}
+            <div class='py-4 text-16 uppercase text-cloud'>
+              <a
+                href="{{ nested_link.url }}"
+                aria-label="{{ 'general.check_out' | t }} {{ nested_link.title | escape }}"
+                @click.native="closeMenu()">
+                <span class="nested-link-title">{{ nested_link.title }}</span>
+                {% if nested_link_product_count and nested_link_product_count > 0 %}
+                  <span class="align-top text-[.6em]">{{ nested_link_product_count }}</span>
+                {% endif %}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+{% endfor %}
+
+

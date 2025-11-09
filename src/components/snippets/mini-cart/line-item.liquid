@@ -1,0 +1,87 @@
+<div class="flex mb-6 {% if vertical == true %} mt-5 pb-5 last:pb-0 last:border-none border-b border-gray {% endif %}">
+
+  <div class="flex aspect-[.82] bg-white4 {% if vertical == true %} w-[41%] md:w-[27%] {% else %} wide:landscape:w-[16%] w-[27%] {% endif %}">
+    <template x-if='lineItem.featured_image'>
+      <a
+        @click="$dispatch('close-cart')"
+        :href="lineItem.url"
+        :aria-label="lineItem.product_title"
+        class="inline-block overflow-hidden">
+        <img
+          :src="lineItem.featured_image.url"
+          :alt="lineItem.product_title"
+          class="object-contain">
+      </a>
+    </template>
+  </div>
+
+
+  <div class="{% if vertical == true %} flex-col md:flex-row w-full items-start {% else %} flex-col {% endif %} flex justify-between ml-6">
+    <div class="{% if vertical == true %} w-full md:w-1/2 pr-3 {% endif %}">
+      <a @click="$dispatch('close-cart')" :href="lineItem.url" :aria-label="lineItem.product_title">
+        <h3 class="font-semibold" x-text='lineItem.product_title'></h3>
+      </a>
+
+      <p
+        x-text='formatPrice(lineItem.price)'
+        class="uppercase mb-6"></p>
+
+      <div class="flex items-center mb-1 text-sonicSilver">
+        <template x-for="option in lineItem.options_with_values">
+          <p
+            x-text='option.value'
+            class="uppercase mr-2 last:mr-0"></p>
+        </template>
+
+        <template x-if="shouldShowLowInventory(lineItem.id)">
+          <div class="inline-flex items-center gap-2">
+            <span class="inline-block before:content-[''] before:inline-block before:align-middle before:w-[8px] before:h-[2px] before:bg-current"></span>
+            <span x-text="getLowInventoryMessage(lineItem.id)"></span>
+          </div>
+        </template>
+
+
+
+      </div>
+    </div>
+
+    <div class="flex items-center {% if vertical == true %} w-1/4 {% endif %}">
+      <button
+        type="button"
+        aria-label="{{ cart.decrease_quantity | t }}"
+        x-on:click='decreaseQuantity(lineItem.id, lineItem.quantity)'>
+        <template x-if="lineItem.quantity > 1">
+          <div class="w-[13px] h-[13px] flex align-middle">
+            {%- render 'icon-minus-cart' -%}
+          </div>
+        </template>
+
+        <template x-if="lineItem.quantity == 1">
+          <div
+            class="w-[12px] h-auto"
+            @click="removeFromCart(lineItem.id)">
+            {%- render 'icon-remove-cart' -%}
+          </div>
+        </template>
+      </button>
+
+      <p class="mx-6 md:mx-5 text-16" x-text='lineItem.quantity'></p>
+
+      <button
+        type="button"
+        aria-label="{{ cart.increase_quantity | t }}"
+        :class="{ 'opacity-70 cursor-default': lineItem.quantity >= lineItem.properties._max_quantity }"
+        class="w-[13px] h-[13px]"
+        x-on:click='increaseQuantity(lineItem.id, lineItem.quantity)'>
+        {%- render 'icon-plus-cart' -%}
+      </button>
+    </div>
+
+
+    {% if showTotalPrice == true %}
+      <div class="{% if vertical == true %} hidden md:block w-1/4 text-center {% endif %}">
+        <p x-text='formatPrice(lineItem.final_line_price)'></p>
+      </div>
+    {% endif %}
+  </div>
+</div>

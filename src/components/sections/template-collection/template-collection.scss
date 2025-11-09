@@ -1,0 +1,26 @@
+.template-collection {
+  .collection-page__grid {
+
+    &.collection-page__grid--one {
+      grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+      @media only screen and (min-width: 1024px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
+    &.collection-page__grid--two {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      @media only screen and (min-width: 1024px) {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      }
+
+      .available-sizes__wrapper {
+        .available-sizes__label,
+        .available-sizes__size-guide-label {
+          @media only screen and (max-width: 620px) {
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+  }
+}

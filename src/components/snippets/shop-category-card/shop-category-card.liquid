@@ -1,0 +1,81 @@
+{% comment %}
+  Snippet: shop-category-card.liquid
+  Description:
+    A snippet that displays a "Shop Category" card (collection)
+
+  Props:
+    - data (object): Block data (block.type: collection_card)
+      - collection (Collection object): Collection
+      - image (Image object)
+      - title (Text): An optional card title, if not provided, the collection title will be used
+      - description (Text): An optional card description, if not provided, the collection description will be used
+      - cta_text (Text): An optional card CTA text, if not provided, the default text "Shop Now" will be used
+
+  Usage:
+    {% raw %}
+      {% render 'shop-category-card', data: block %}
+    {% endraw %}
+
+{% endcomment %}
+
+{%- liquid
+  assign collection = data.collection
+  
+  assign image = data.image
+  if image == blank or image == empty
+    if collection and collection.image
+      assign image = collection.image
+    endif
+  endif
+  
+  # title
+  assign title = data.title | default: collection.title | strip_html
+  
+  # description
+  assign description = data.description | default: collection.description | strip_html
+  
+  # cta text
+  assign cta_text = data.cta_text | default: 'Shop Now'
+  
+  # collection url
+  assign collection_url = '#'
+  if collection and collection.url
+    assign collection_url = collection.url
+  endif
+-%}
+
+<div class="shop-category-card relative aspect-[.82]">
+  
+  <div class="card-image absolute top-0 left-0 w-full h-full bg-gray-100 z-0">
+    {%- if image != blank -%}
+      {%-
+        render 'scale-down-image',
+        alt: title,
+        image: image,
+        inner_class: 'w-full h-auto object-cover',
+        imgRatio: 0.82
+      -%}
+    {%- endif -%}
+  </div>
+  
+  <div class="card-content relative w-full h-full flex flex-col justify-center items-center text-cloud">
+    
+    <h3 class="card-title font-ivar text-30 lg:text-60 mb-4">
+      {{ title }}
+    </h3>
+    
+    {%- if description != blank -%}
+      <p class="card-description text-16 mb-4">{{ description }}</p>
+    {%- endif -%}
+    
+    <div class="card-cta pt-4">
+      {%- 
+        render 'button-cta', 
+        url: collection_url, 
+        text: cta_text 
+      -%}
+    </div>
+  
+  </div>
+</div>
+

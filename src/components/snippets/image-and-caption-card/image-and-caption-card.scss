@@ -1,0 +1,40 @@
+.image-and-caption-card {
+	em {
+		font-family: 'IvarDisplay';
+		font-size: 20px;
+	}
+	&:hover {
+		.image_wrapper {
+			img {
+			}
+		}
+		.link {
+			&--line {
+				@media only screen and (min-width: 1024px) {
+					background-size: 0% 1px;
+				}
+			}
+		}
+	}
+}
+
+.slide-card__link {
+	.image-and-caption-card {
+		.scale-down-image {
+			.inner {
+				transition: transform 0.4s;
+			}
+		}
+	}
+	@media only screen and (min-width: 1024px) {
+		&:hover {
+			.image-and-caption-card {
+				.scale-down-image {
+					.inner {
+						transform: scale(1.05);
+					}
+				}
+			}
+		}
+	}
+}

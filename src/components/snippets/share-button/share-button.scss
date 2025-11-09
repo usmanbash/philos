@@ -1,0 +1,12 @@
+.share-button-wrapper {
+	.share-button__copy {
+		svg {
+			transition: transform 0.5s;
+		}
+		&:hover {
+			svg {
+				transform: scale(1.1);
+			}
+		}
+	}
+}

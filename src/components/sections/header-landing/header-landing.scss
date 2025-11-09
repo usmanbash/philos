@@ -1,0 +1,20 @@
+.header-landing {
+
+  .logo--landing {
+    svg {
+      height: 50px;
+      width: auto;
+      path {
+        fill: #111010;
+      }
+    }
+
+    @media only screen and (min-width: 640px) {
+      svg {
+        path {
+          fill: #d6d3ce;
+        }
+      }
+    }
+  }
+}

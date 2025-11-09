@@ -1,0 +1,19 @@
+// Snippet: Article Card
+.article-card {
+	.article-card__image-wrapper {
+		transition: transform 0.4s;
+	}
+	.article-card__title {
+		transition: color 0.4s;
+	}
+	@media only screen and (min-width: 1024px) {
+		&:hover {
+			.article-card__image-wrapper {
+				transform: scale(1.05);
+			}
+			.article-card__title {
+				color: #6d4145;
+			}
+		}
+	}
+}

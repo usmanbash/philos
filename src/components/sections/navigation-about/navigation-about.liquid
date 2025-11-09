@@ -1,0 +1,83 @@
+{%- comment -%}
+Section: About Page Navigation
+Description: A section that displays a tabbed navigation for the about page
+
+Accepts:
+- Navigation Item: Repeater block that contains the tab name and tab id
+  - Tab Name: Text field that will be used as the tab name
+  - Unique Tab ID: Text field that will be used as the tab id
+{%- endcomment -%}
+
+<div
+  x-data="navigationAbout()"
+  class="navigation-about relative w-full py-14 bg-charcoal px-5 sm:px-10 lg:mb-32">
+  <div class="tabs">
+    <ul
+      data-scroll
+      data-scroll-call="inViewportAnimation"
+      class="tab-links">
+      {% for block in section.blocks %}
+        {%- liquid
+          assign tab_name = block.settings.tab_name
+          assign tab_anchor = tab_name | downcase | replace: ' ', '-'
+          assign tab_id = block.settings.tab_id | default: tab_anchor
+          assign current_index = forloop.index0 | modulo: 4
+          case current_index
+            when 0
+              assign tab_class = 'justify-start'
+            when 1, 3
+              assign tab_class = 'justify-end'
+            when 2
+              assign tab_class = 'pl-[10vw]'
+          endcase
+        -%}
+        <li
+          data-animate
+          data-preset='fadeUp'
+          data-to='{"delay": {{ forloop.index | divided_by: 10.0 }}}'
+          class="flex mb-5 last:mb-0 sm:mb-0 {{ tab_class }} text-sonicSilver cursor-pointer ">
+
+          <button
+            type="button"
+            aria-label="Tab-{{ tab_name | escape }}"
+            :class="{
+              'active': activeTab === '{{ tab_id }}'
+            }"
+            class="tab-link flex"
+            @click.prevent="setActiveTab('{{ tab_id }}')">
+            <span class="relative top-[12%] mr-3 sm:mr-8 text-16 ">0{{ forloop.index0 | plus: 1 }}</span>
+            <span class="text-[19vw] lg:text-[16vw] font-ivar sm:!leading-none !leading-none">{{ tab_name }}</span>
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Tabbed Navigation",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "navigation",
+      "name": "Navigation Item",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Tab Name",
+          "id": "tab_name",
+          "info": "This is the name of the tab that will be displayed."
+        },
+        {
+          "type": "text",
+          "label": "Unique Tab ID",
+          "id": "tab_id",
+          "info": "This is used to identify the tab. It should be unique and not contain any spaces. It should be all lowercase and with hyphen instead of spaces (e.g. tab-one)."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

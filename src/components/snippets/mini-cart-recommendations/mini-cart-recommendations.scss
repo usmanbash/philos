@@ -1,0 +1,48 @@
+.mini-cart-recommendations {
+  .accordion-plus {
+    width: 13px;
+    height: 13px;
+
+    .line--vert {
+      transition: 0.5s;
+      transform-origin: center;
+    }
+  }
+
+  .accordion-plus {
+    &.open {
+      .line--vert {
+        transform: rotate(90deg);
+        opacity: 0;
+      }
+    }
+  }
+
+  .quick-buy__btn {
+    svg,
+    path {
+      width: 13px;
+      height: 13px;
+      fill: #000;
+      transition: transform 0.4s;
+    }
+    @media only screen and (min-width: 1024px) {
+      &:hover {
+        svg {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+
+  .available-sizes {
+    &.invisible-scrollbar {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}

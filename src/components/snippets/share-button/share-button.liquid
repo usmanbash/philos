@@ -1,0 +1,102 @@
+{%- comment -%}
+Snippet: Share button
+Description: A button to share the current page on social media
+
+Accepts:
+- title: The title of the page to share
+- image: The image to share on Pinterest
+Usage:
+{% render 'share-button', title: 'Sample title', image: 'imageUrl' %}
+{%- endcomment -%}
+
+
+<div x-data="shareButton({ url: '{{ article.url |  escape }}' })" class="share-button-wrapper my-6">
+
+  {%- comment -%} Mobile Share Button: uses navigator {%- endcomment -%}
+  <button
+    x-show="canShare"
+    type="button"
+    aria-label="{{ 'blog.share' | t }}"
+    class="share-button block lg:hidden"
+    @click="share">
+    <span class="link link--line text-14 uppercase">{{ 'general.share' | t }}</span>
+  </button>
+
+  <div class="relative hidden lg:flex lg:items-center h-[25px]">
+    {%- comment -%} Desktop Share Button: Opens up share options {%- endcomment -%}
+    <button
+      type="button"
+      aria-label="{{ 'blog.share' | t }}"
+      class="share-button"
+      @click="toggleDetails">
+      <span class="link link--line text-14 uppercase">{{ 'general.share' | t }}</span>
+    </button>
+
+    {%- comment -%} Share options {%- endcomment -%}
+    <div x-show="detailsOpen" x-transition.opacity x-transition:enter.duration.400ms x-transition:leave.duration.400ms
+      class="share-details hidden lg:flex items-center gap-6 pl-6">
+      <button
+        x-show="canShare"
+        type="button"
+        aria-label="{{ 'blog.share' | t }}"
+        class="share-button__button icon transition duration-500 ease-in-out transform hover:scale-110 h-auto w-[50px]"
+        @click="share">
+        {% render 'icon-share' %}
+      </button>
+
+      <button
+        type="button"
+        aria-label="{{ 'blog.share_on' | t }} Facebook"
+        class="social-share__button icon transition duration-500 ease-in-out transform hover:scale-110 h-auto w-[50px]"
+        @click="shareOnFacebook">
+        {% render 'icon-facebook' %}
+      </button>
+
+      <button
+        type="button"
+        aria-label="{{ 'blog.share_on' | t }} Twitter"
+        class="social-share__button icon transition duration-500 ease-in-out transform hover:scale-110 h-auto w-[50px]"
+        @click="shareOnTwitter('{{ title |  escape }}')">
+        {% render 'icon-twitter-x' %}
+      </button>
+
+      <button
+        type="button"
+        aria-label="{{ 'blog.share_on' | t }} Pinterest"
+        class="social-share__button icon transition duration-500 ease-in-out transform hover:scale-110 h-auto w-[50px]"
+        @click="shareOnPinterest('{{ title |  escape }}', '{{ image |  image_url |  escape  }}')">
+        {% render 'icon-pinterest' %}
+      </button>
+
+
+      <button
+        type="button"
+        aria-label="{{ 'blog.share_on' | t }} LinkedIn"
+        class="social-share__button icon transition duration-500 ease-in-out transform hover:scale-110 h-auto w-[50px]"
+        @click="shareOnLinkedIn">
+        {% render 'icon-linkedin' %}
+      </button>
+
+      <div class="field flex items-center w-full">
+
+        <button
+          type="button"
+          aria-label="{{ 'blog.copy' | t }}"
+          class="share-button__copy icon flex-initial h-auto w-[25px] relative"
+          @click="copyToClipboard" >
+          {% render 'icon-clipboard' %}
+
+        <span
+          x-show="successMessage"
+          x-transition.opacity
+          role="status"
+          class="share-button__message absolute left-full top-0 whitespace-nowrap ml-3"
+          x-text="successMessage">
+        </span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

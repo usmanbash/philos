@@ -1,0 +1,51 @@
+.hero-slider-logo.slider-wrapper {
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+
+    .swiper-slide {
+      pointer-events: none;
+    }
+
+    .swiper-slide-active {
+      pointer-events: auto;
+    }
+
+    .swiper-pagination {
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 5rem;
+      padding: 1.875rem 0;
+
+      .swiper-pagination-bullet {
+        display: inline-block;
+        position: relative;
+        width: 4rem;
+        height: 1.25rem;
+        padding: 0.5rem 0.25rem;
+        border-radius: 0;
+        background-color: transparent;
+        opacity: 0.5;
+        transition: all 0.3s linear;
+        cursor: pointer;
+
+        &:after {
+          content: '';
+          display: block;
+          position: relative;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #fff;
+        }
+
+        &.swiper-pagination-bullet-active {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

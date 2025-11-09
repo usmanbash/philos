@@ -1,0 +1,74 @@
+{% comment %}
+  Section: seen-on-you.liquid
+  Description:
+    A section showcasing customer Instagram posts (metaobjects) with auto/manual control.
+{% endcomment %}
+
+<div class="seen-on-you w-full py-14 sm:px-10">
+  {% liquid
+    assign title = section.settings.title | default: 'Seen On You'
+    assign mode = section.settings.mode | default: 'auto'
+    assign manual_items = section.settings.manual_items
+    assign limit = section.settings.limit
+  %}
+
+  {% render 'seen-on-you',
+    title: title,
+    mode: mode,
+    manual_items: manual_items,
+    limit: limit
+  %}
+
+</div>
+
+{% schema %}
+{
+  "name": "Seen On You",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Seen On You"
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Mode",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "manual",
+          "label": "Manual"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "metaobject_list",
+      "id": "manual_items",
+      "label": "Manually Items",
+      "metaobject_type": "seen_on",
+      "info": "Select specific items to display when in manual mode."
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Max number of items",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Seen On You"
+    }
+  ]
+}
+{% endschema %}

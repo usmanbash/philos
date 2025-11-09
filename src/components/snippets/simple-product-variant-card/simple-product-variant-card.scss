@@ -1,0 +1,24 @@
+.simple-product-variant-card {
+	.quick-buy__btn {
+		svg,
+		path {
+			width: 13px;
+			height: 13px;
+			fill: #000;
+			transition: transform 0.4s;
+		}
+		@media only screen and (min-width: 1024px) {
+			&:hover {
+				svg {
+					transform: rotate(90deg);
+				}
+			}
+		}
+	}
+
+	.product-availability__wrapper,
+	.quick-buy__wrapper {
+		-webkit-transform: translateZ(0);
+		-webkit-backface-visibility: hidden;
+	}
+}

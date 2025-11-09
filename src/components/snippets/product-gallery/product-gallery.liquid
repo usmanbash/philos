@@ -1,0 +1,75 @@
+{% comment %}
+Snippet: Product Gallery
+Description: Renders the product gallery based on the metafield value
+
+Usage:
+{% render 'product-gallery' %}
+{% endcomment %}
+{%- liquid
+  # metafield type: mixed reference (list of metaobjects)
+  # list of metaobjects type:
+  #   - product_gallery_item_two_images
+  #   - product_galery_item_text_and_image
+  #   - product_gallery_item
+
+  # how to access to different types of metaobjects?
+  # see: https://shopify.dev/docs/api/liquid/objects/metafield
+
+  assign product_gallery = product.metafields.custom.product_gallery.value
+-%}
+
+<div
+  x-data="productGallery()"
+  class="product-gallery">
+  {%- if product_gallery != blank -%}
+    {%- for metaobject in product_gallery -%}
+      {% comment %} <h3>{{metaobject.system.type}}</h3> {% endcomment %}
+      {% comment %} <h3>{{metaobject.system.handle}}</h3> {% endcomment %}
+      {% case metaobject.system.type %}
+        {% when 'product_gallery_item_two_images' %}
+          {%- assign caption_1 = metaobject.image_1_caption | metafield_tag -%}
+          {%- assign caption_2 = metaobject.image_2_caption | metafield_tag -%}
+
+          <div class="gallery-item-two-images flex flex-col lg:flex-row lg:my-14">
+
+            {%- comment -%} Cards {%- endcomment -%}
+            {%- render 'image-and-caption-card',
+              image: metaobject.image_1,
+              image_caption: caption_1,
+              imgRatio: 0.82
+            -%}
+
+            {%- render 'image-and-caption-card',
+              image: metaobject.image_2,
+              image_caption: caption_2,
+              imgRatio: 0.82
+            -%}
+
+          </div>
+
+        {% when 'product_galery_item_text_and_image' %}
+          <div class="gallery-item-text-and-image">
+
+            {%- render 'pdp-text-and-image',
+              text: metaobject.text,
+              image: metaobject.image,
+              is_reversed: metaobject.is_reversed
+            -%}
+          </div>
+
+        {% when 'product_gallery_item' %}
+          <div
+            data-scroll
+            data-scroll-repeat
+            data-scroll-call="inViewportAnimation"
+            class="gallery-item mb-14">
+            {%-
+              render 'scale-down-image',
+              image: metaobject.image,
+              imgRatio: 0.73
+              -%}
+          </div>
+      {% endcase %}
+    {%- endfor -%}
+  {%- endif -%}
+</div>

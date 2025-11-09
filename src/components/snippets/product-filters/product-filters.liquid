@@ -1,0 +1,43 @@
+<div>
+  {% comment %} Clear all filters {% endcomment %}
+  <div class="flex justify-end items-center h-5 mb-5">
+    <template x-if="Object.values(selectedFacets).some(facet => facet.length > 0)">
+      <button
+        class="link link--reversed text-16 cursor-pointer"
+        @click='clearAllFacets($event)'>
+        {{ 'product.filters.clear_all' | t }}
+      </button>
+    </template>
+  </div>
+
+  {% comment %} Loop trough facets {% endcomment %}
+  <template x-for='facet in facets'>
+
+    <div x-show='Object.values(facet.values).length > 1'>
+
+      {% comment %} Checkbox facets {% endcomment %}
+      <template x-if='facet.label != "Color" && facet.label != "Price"'>
+        <div>
+          {% render 'facet-checkbox' %}
+        </div>
+      </template>
+
+      {% comment %} Price facets {% endcomment %}
+      <template x-if='facet.label == "Price"'>
+        <div>
+          {% render 'facet-range' %}
+        </div>
+      </template>
+
+      {% comment %} Color Facets {% endcomment %}
+      <template x-if='facet.label == "Color"'>
+        <div>
+          {% render 'facet-color' %}
+        </div>
+      </template>
+
+    </div>
+
+  </template>
+
+</div>

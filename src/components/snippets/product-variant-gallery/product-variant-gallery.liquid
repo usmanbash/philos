@@ -1,0 +1,109 @@
+{% doc %}
+  Product Variant Gallery
+  
+  @description Product variant gallery with sections like "image", "text and image" and "two images".
+
+  @example
+  {% render 'product-variant-gallery' %}
+
+{% enddoc %}
+
+{%- liquid
+  # metafield type: mixed reference
+  # (contains one metaobject which contains a color name and list of metaobjects - gallery_items)
+  #   - color: Shopify's Metaobject (type: shopify--color-pattern)
+  #   - gallery_items: list of metaobjects
+  #     - product_gallery_item_two_images
+  #     - product_galery_item_text_and_image
+  #     - product_gallery_item
+
+  # how to access to different types of metaobjects?
+  # see: https://shopify.dev/docs/api/liquid/objects/metafield
+
+  # Step 1: Access the color_variant_gallery metafield
+  assign color_variant_galleries = product.metafields.custom.color_variant_gallery.value
+
+  # Initialize variables for color and size option index
+  assign color_option_index = ''
+  # Determine the indexes of the color and size options (e.g., option1, option2, etc.)
+  for option in product.options_with_values
+    case option.name
+      when 'Color'
+        assign color_option_index = option.position
+    endcase
+  endfor
+  # Assign the color option
+  assign color_option = 'option' | append: color_option_index
+
+  # Get the color from the first variant
+  assign first_variant_color = product.variants.first[color_option]
+-%}
+
+<div
+  x-data='productVariantGallery({ selectedColor: "{{ first_variant_color }}" })'
+  @color-changed.window='selectedColor = $event.detail.colorName'
+  class='product-variant-gallery'>
+  {%- comment -%} Step 2: Iterate over product variants galleries {%- endcomment -%}
+  {%- for metaobject in color_variant_galleries -%}
+    {% liquid
+      assign color_name = metaobject.color.value.label | escape
+    %}
+    {%- comment -%}Step 3: Check if there is a color name in metaobject {%- endcomment -%}
+    {%- if color_name -%}
+      {%- comment -%} Step 4: Display gallery for selected color if it matches color name {%- endcomment -%}
+      <div x-show='selectedColor == "{{ color_name }}"' x-cloak>
+        {%- comment -%} Step 4: Iterate over gallery items for selected color {%- endcomment -%}
+        {%- for metaobject in metaobject.gallery_items.value -%}
+          {% case metaobject.system.type %}
+
+            {% when 'product_gallery_item_two_images' %}
+              {%- assign caption_1 = metaobject.image_1_caption | metafield_tag -%}
+              {%- assign caption_2 = metaobject.image_2_caption | metafield_tag -%}
+
+              {%- comment -%} Two Images (cards) {%- endcomment -%}
+              <div class="gallery-item-two-images flex flex-col lg:flex-row lg:my-14">
+                {%- render 'image-and-caption-card',
+                  image: metaobject.image_1,
+                  image_caption: caption_1,
+                  imgRatio: 0.82,
+                  animation_preset: 'fade'
+                -%}
+                {%- render 'image-and-caption-card',
+                  image: metaobject.image_2,
+                  image_caption: caption_2,
+                  imgRatio: 0.82,
+                  animation_preset: 'fade'
+                -%}
+              </div>
+
+            {% comment %} Text and Image {% endcomment %}
+            {% when 'product_galery_item_text_and_image' %}
+              <div class="gallery-item-text-and-image">
+                {%- render 'pdp-text-and-image',
+                  text: metaobject.text,
+                  image: metaobject.image,
+                  is_reversed: metaobject.is_reversed,
+                  animation_preset: 'fade'
+                -%}
+              </div>
+
+            {% comment %} Image {% endcomment %}
+            {% when 'product_gallery_item' %}
+              <div
+                data-scroll
+                data-scroll-repeat
+                data-scroll-call="inViewportAnimation"
+                class="gallery-item mb-14">
+                {%- render 'scale-down-image',
+                  image: metaobject.image,
+                  imgRatio: 0.73,
+                  animation_preset: 'fade'
+                -%}
+              </div>
+
+          {% endcase %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

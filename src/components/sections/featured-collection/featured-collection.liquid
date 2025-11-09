@@ -1,0 +1,55 @@
+{%- comment -%}
+Section: Featured Collection
+Description: A section that displays a slider of featured products from a collection
+
+Accepts:
+- Title: Text field that will be used as the title
+- Link Text: Text field that will be used as the link text
+- Featured Collection: Collection picker that represents the featured collection
+{%- endcomment -%}
+
+<div class="featured-collection relative w-full py-14 sm:px-10">
+  {% render 'slider',
+    card_type: 'product_card',
+    data_source: 'collection',
+    title: section.settings.title,
+    link: section.settings.featured_collection.url,
+    link_text: section.settings.link_text,
+    slides: section.settings.featured_collection.products,
+    space_between_slides: 20,
+    slides_per_view: 4,
+    slides_per_view_mob: 1.2,
+    slider_navbar_class: 'px-5 sm:px-0',
+    centered_slides: true,
+    loop_on_mobile: true,
+    loop_on_desk: true
+  %}
+</div>
+{% schema %}
+{
+ "name": "featured-collection",
+ "tag": "section",
+ "settings": [
+  {
+    "type": "text",
+    "id": "title",
+    "label": "Title"
+  },
+  {
+    "type": "text",
+    "id": "link_text",
+    "label": "Link Text"
+  },
+  {
+    "type": "collection",
+    "id": "featured_collection",
+    "label": "Collection"
+  }
+ ],
+ "presets": [
+  {
+    "name": "Featured Collection"
+  }
+ ]
+}
+{% endschema %}

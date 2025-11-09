@@ -1,0 +1,63 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "template": {
+      "type": "template-contact",
+      "blocks": {
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "title": "Contact",
+            "text": "Need assistance? Our support team is here to help",
+            "image": "shopify://shop_images/legal_hero.png"
+          }
+        },
+        "shop": {
+          "type": "shop",
+          "settings": {
+            "label": "Flagship Store",
+            "address": "<p><a href=\"https://www.google.com/maps/place//data=!4m2!3m1!1s0x47c6091a752963e7:0x1f4985e280c26648?sa=X&ved=1t:8290&ictx=111\" target=\"_blank\" title=\"Spiegelgracht 21, Amsterdam, NL\">Spiegelgracht 21, Amsterdam, NL</a></p>",
+            "work_hours": "<p>Store opening hours: </p><p>Monday - Saturday: 10:00 - 18:00<br/>Sunday: 12:00 - 18.00</p>",
+            "email": "",
+            "image": "shopify://shop_images/Philos_Temple_of_Running_Store_Amsterdam_1.jpg"
+          }
+        },
+        "title": {
+          "type": "page_title",
+          "settings": {
+            "title": "Contact us"
+          }
+        },
+        "text": {
+          "type": "page_text",
+          "settings": {
+            "text": "<p>Check out the <a href=\"/pages/faq\" target=\"_blank\" title=\"FAQ\">FAQ section</a> - your answer may already be there. If not, feel free to reach out, and we'll be happy to assist you. For the fastest response, fill out the form below: </p>"
+          }
+        },
+        "contact-form": {
+          "type": "contact_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "hero",
+        "shop",
+        "title",
+        "text",
+        "contact-form"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "template"
+  ]
+}

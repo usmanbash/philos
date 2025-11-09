@@ -1,0 +1,13 @@
+.navigation-about {
+	.tab-link {
+		transition: color 0.4s;
+		&:hover,
+		&.active {
+			color: #d6d3ce;
+		}
+	}
+
+	.sm:leading-none {
+		line-height: 1 !important;
+	}
+}

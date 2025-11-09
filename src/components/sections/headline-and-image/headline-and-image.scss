@@ -1,0 +1,14 @@
+.headline-and-image {
+	.image-and-headline__link {
+		.image-wrapper {
+			transition: transform 0.4s;
+		}
+		@media only screen and (min-width: 1024px) {
+			&:hover {
+				.image-wrapper {
+					transform: scale(1.05);
+				}
+			}
+		}
+	}
+}

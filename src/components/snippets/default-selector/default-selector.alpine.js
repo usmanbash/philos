@@ -1,0 +1,1 @@
+import './default-selector.scss'

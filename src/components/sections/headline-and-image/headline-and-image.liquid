@@ -1,0 +1,183 @@
+{%- comment -%}
+	Section: Headline And Image
+	Description: This section is used to display a headline and an image on the page.
+	             It also has a text and a link that can be used to display more
+	             information about the content.
+
+	Usage:
+	- Use this section to display a headlines (as blocks) and an image on the page. Optionally,
+	  you can also add a text and a link to display more information about the content.
+	- There is no limit for the number of blocks that can be added to this section.
+
+	Accepts:
+	- Image: Image picker for the image.
+	- Text: Text field that represents the description.
+	- Link_Text: Text field that represents the link text.
+	- Link: Page picker that represents the link.
+	- Blocks: block to display the headline.
+	  - Headline: Text field that represents the headline.
+{%- endcomment -%}
+
+<div
+	x-data='headlineAndImage'
+  data-scroll
+	data-scroll-repeat
+  data-scroll-call="inViewportAnimation"
+	class='headline-and-image relative w-full flex flex-col px-10 pt-10 xl:pt-14 pb-40 overflow-hidden'>
+	
+  {%- comment -%} Headline Wrapper {%- endcomment -%}
+	<div>
+		{%- comment -%} Headline of a first block {%- endcomment -%}
+		<h2
+      data-animate
+      data-preset='moveUp'
+      data-from='{ "y": 300 }'
+		  class='text-[19.04vw] lg:text-[16.14vw] leading-[1.2] font-ivar text-center lg:text-left text-charcoal'>
+			{{ section.blocks[0].settings.headline }}
+		</h2>
+	</div>
+
+	<div class='flex flex-row'>
+		{% comment %} Text and link with a link text (desktop) {% endcomment %}
+		<div
+      data-animate
+		  data-preset='fade'
+		  data-to='{ "delay": 0.65 }'
+      class='w-1/4 hidden lg:block'>
+			{%- if section.settings.text != blank -%}
+				<div class='text-20 text-black font-ivar mb-4 pr-14 xl:pr-36'>
+					{{ section.settings.text | newline_to_br }}
+				</div>
+			{%- endif -%}
+
+			{%- if section.settings.link != blank -%}
+				<a
+					href='{{ section.settings.link.url }}'
+					class='text-16 text-black link link--line'>
+					{{ section.settings.link_text }}
+				</a>
+			{%- endif -%}
+		</div>
+
+		{%- comment -%} Image and headline of a second block {%- endcomment -%}
+		<div class='flex flex-row items-center justify-center lg:justify-between w-full lg:w-[70%]'>
+			<div
+        data-animate
+        data-from='{ "scale": 0.9 }'
+        data-to='{
+          "scale": 1,
+          "delay": 0.2,
+          "duration": 1
+        }'
+        class="!w-[70%] h-auto mt-[-11%] lg:mt-[-14%] relative z-10">
+				<div class="translate-x-1/4 lg:translate-x-0">
+          <a
+            href="{{ section.settings.image_link }}"
+            aria-label="{{ section.settings.image.alt | default: 'Image Link' }}"
+            class="image-and-headline__link inline-block w-full h-full">
+            <div class="image-wrapper">
+	            {%-
+	              render 'shopify-image',
+	              image: section.settings.image
+	              alt: section.settings.image.alt
+	              className: '!opacity-100'
+	            -%}
+            </div>
+          </a>
+				</div>
+			</div>
+
+			<h2
+        data-animate
+			  data-preset='moveUp'
+			  data-from='{ "y": 600 }'
+			  class='text-[19.04vw] lg:text-[16.14vw] leading-[1.2] font-ivar text-charcoal'>
+				{{ section.blocks[1].settings.headline }}
+			</h2>
+		</div>
+	</div>
+
+	{%- comment -%} Headline of a third block {%- endcomment -%}
+	<div
+    data-animate
+    data-preset='moveUp'
+    data-from='{ "y": 900 }'
+	  class='flex justify-center mt-[-5%]'>
+		<h2 class='text-[19.04vw] lg:text-[16.14vw] leading-[1.2] font-ivar text-charcoal'>
+			{{ section.blocks[2].settings.headline }}
+		</h2>
+	</div>
+
+	{%- comment -%} Text and link with link text (mobile) {%- endcomment -%}
+	<div
+    data-animate
+    data-preset='fade'
+    data-to='{ "delay": 0.3 }'
+    class='w-full sm:w-1/2 block lg:hidden mt-5 lg:mt-0'>
+		{%- if section.settings.text != blank -%}
+			<div class='text-20 text-black font-ivar mb-4 pr-20'>
+				{{ section.settings.text | newline_to_br }}
+			</div>
+		{%- endif -%}
+
+		{%- if section.settings.link != blank -%}
+			<a
+				href='{{ section.settings.link.url }}'
+				class='text-16 text-black link link--line'>
+				{{ section.settings.link_text }}
+			</a>
+		{%- endif -%}
+	</div>
+</div>
+
+{% schema %}
+{
+	"name": "Headline And Image",
+	"tag": "section",
+	"settings": [
+		{
+			"type": "image_picker",
+			"label": "Image",
+			"id": "image"
+		},
+    {
+      "type": "url",
+      "label": "Image Link",
+      "id": "image_link"
+    },
+		{
+			"type": "richtext",
+			"label": "Text",
+			"id": "text"
+		},
+		{
+			"type": "text",
+			"label": "Link Text",
+			"id": "link_text"
+		},
+		{
+			"type": "url",
+			"label": "Link",
+			"id": "link"
+		}
+	],
+	"blocks": [
+		{
+			"type": "headline",
+			"name": "Headline",
+			"settings": [
+				{
+					"type": "text",
+					"label": "Headline",
+					"id": "headline"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Headline And Image"
+		}
+	]
+}
+{% endschema %}

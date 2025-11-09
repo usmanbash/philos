@@ -1,0 +1,243 @@
+{%- comment -%}
+	Section: Text and Image
+	Description: This section dynamically displays an image and text side by side,
+	             with the ability to reverse their order based on a 'is_reversed'
+	             setting from the theme editor. The section supports conditional
+	             rendering of a headline, an info box, and a description based
+	             on their presence.
+
+	Usage: Use this section to display a combination of text and image content.
+
+	Accepts::
+	- Headline: A rich text field for entering headline text.
+	            Displayed at the top of the text section.
+	            Required.
+	- InfoBox: An optional rich text field for additional information like contact
+	            details or store hours.
+	- Description: An optional rich text field for entering descriptive text.
+	               Displayed at the bottom, if present.
+	- Image: An image picker for selecting an image to display alongside the text content.
+	         Required.
+	- IsReversed: A checkbox that, when checked, reverses the order of the image and text
+	               content, moving the image to the right side.
+
+	- Variables:
+	  - is_reversed: Determines the order of image and text display.
+	                True if the image is on the left, false otherwise.
+	  - has_info_box: A boolean that indicates if the info box content is present and
+	                uses as a condition to adjust the grid column start and span of
+	                the text content.
+	  - image_wrapper_classes: A string that contains the classes for the image wrapper.
+	  - text_content_wrapper_classes: A string that contains the classes for the text wrapper.
+	  - text_content_classes: A string that contains the classes for the text content position
+	                          within its flexbox.
+{%- endcomment -%}
+
+{%- liquid
+	# Variables
+	assign is_reversed = section.settings.reversed
+  assign center_text_content = section.settings.center_text_content
+
+	# Class variations
+
+	# Set the default classes for the text and image wrappers based on the reversed setting
+	# Default (is_reversed = false) is the image on the left and text on the right
+	# Otherwise, the image is on the right and text on the left
+  assign text_content_wrapper_classes = 'lg:col-start-2'
+  assign text_content_classes = 'lg:items-end lg:text-right order-2'
+  assign image_wrapper_classes = 'lg:col-start-1 order-1'
+  assign form_wrapper_classes = 'lg:pl-10 xl:pl-0'
+
+	if is_reversed
+		assign text_content_wrapper_classes = 'lg:col-start-1'
+		assign text_content_classes = 'lg:items-start order-1'
+		assign image_wrapper_classes = 'lg:col-start-2 order-2'
+    assign form_wrapper_classes = 'lg:pr-10 xl:pr-0'
+	endif
+
+	# Add the text_content_classes if the info box is present
+	if center_text_content
+		assign text_content_classes = 'lg:items-center lg:text-left'
+	endif
+-%}
+
+<div
+	x-data='textAndImage'
+	data-scroll
+	data-scroll-repeat
+	data-scroll-call="inViewportAnimation"
+	class='text-and-image w-full text-black'>
+	{%- comment -%} Content Wrapper {%- endcomment -%}
+	<div class='grid grid-cols-1 lg:grid-cols-2 px-5 sm:px-10 my-14'>
+		{%- comment -%} Image Wrapper {%- endcomment -%}
+		<div class='text-and-image__image-wrapper lg:row-span-full {{ image_wrapper_classes }}'>
+			{%- if section.settings.image != blank -%}
+				{%-
+					render 'scale-down-image',
+					image: section.settings.image
+					originalRatio: false
+					imgRatio: 0.733
+					className: 'w-full h-full object-cover'
+				-%}
+			{%- endif -%}
+		</div>
+
+		{%- comment -%} Text Wrapper {%- endcomment -%}
+		<div class='text-and-image__text-content-wrapper lg:row-span-full {{ text_content_wrapper_classes }} pb-8 lg:pb-0'>
+			{%- comment -%} Text Content {%- endcomment -%}
+			<div class='text-and-image__text-content flex flex-col w-full h-full {{ text_content_classes }}'>
+				{%- comment -%} Headline and Info Box Wrapper {%- endcomment -%}
+				<div class='w-full lg:w-3/4 2xl:w-1/2 pr-4 lg:pr-0'>
+					{%- comment -%} Headline and CTA {%- endcomment -%}
+          {%- if section.settings.headline != blank or section.settings.cta_link != blank -%}
+            <div class="headline-and-cta__wrapper mb-36 lg:mb-0">
+              {% if section.settings.headline != blank %}
+                <div
+                  class='text-and-image__headline content font-ivar text-20 lg:text-3'
+                  data-animate
+                  data-preset='fadeUp'>
+                  {{ section.settings.headline }}
+                </div>
+                {%- liquid
+                  assign link_attr = ''
+                  if section.settings.cta_link contains 'http://' or section.settings.cta_link contains 'https://'
+                    assign link_attr = 'target="_blank" rel="noopener nofollow"'
+                  endif
+                -%}
+              {% endif %}
+
+              {%- if section.settings.cta_link != blank -%}
+                <div class="link-wrapper inline-block mt-8 lg:mt-14">
+                  <a
+                    href="{{ section.settings.cta_link }}"
+                    aria-label="{{ 'general.check_out' | t }} {{ section.settings.cta_text | escape }}"
+                    {{ link_attr }}
+                    data-animate
+                    data-preset='fadeUp'
+                    data-to='{ "delay": 0.1 }'
+                    class="flex justify-center items-center w-[290px] h-[45px] px-6 py-6 xl:py-4 bg-black hover:bg-white2 border border-black font-proximaNova text-white hover:text-black transition-colors text-center text-16 align-middle uppercase">
+                    {{ section.settings.cta_text }}
+                  </a>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+					{%- comment -%} Info Box {%- endcomment -%}
+					{% if section.settings.info_box != blank %}
+						<div
+              class='text-and-image__info-box content mt-4 sm:mt-6 font-proximaNova text-16 font-medium'
+              data-animate
+              data-preset='fadeUp'
+              data-to='{ "delay": 0.2 }'>
+							{{ section.settings.info_box }}
+						</div>
+					{% endif %}
+				</div>
+
+				{%- comment -%} Description and Sign Up Form{%- endcomment -%}
+				<div
+          data-animate
+          data-preset='fadeUp'
+          data-to='{ "delay": 0.3 }'
+          class='w-full lg:w-3/4 2xl:w-1/2 lg:mt-auto pr-4 lg:pr-0'>
+
+          {%- comment -%} Description {%- endcomment -%}
+					{% if section.settings.description != blank %}
+						<div class='text-and-image__description mt-6 sm:mt-8 lg:mt-0 font-proximaNova text-16'>
+							{{ section.settings.description }}
+						</div>
+					{% endif %}
+				</div>
+
+        {%- comment -%} Sign Up Form {%- endcomment -%}
+        {% if section.settings.show_form %}
+          <div
+            data-animate
+            data-preset='fadeUp'
+            data-to='{ "delay": 0.3 }'
+            class='w-full xl:w-[65%] {{ form_wrapper_classes }} mt-6 sm:mt-8 lg:mt-auto'>
+            <div class='text-and-image__form mt-36 lg:mt-0'>
+              {%- if section.settings.form_headline != blank -%}
+                <div class='text-and-image__form-headline font-ivar text-20 lg:text-30'>
+                  {{ section.settings.form_headline }}
+                </div>
+              {%- endif -%}
+              {% render 'running-group-form' %}
+              {% comment %} <div class="klaviyo-form-RdLpJW klaviyo-form klaviyo-form--running-group"></div> {% endcomment %}
+            </div>
+          </div>
+        {% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% schema %}
+{
+	"name": "Text and Image",
+	"tag": "section",
+	"settings": [
+		{
+			"type": "richtext",
+			"label": "Headline",
+			"id": "headline"
+		},
+    {
+      "type": "url",
+      "label": "CTA Link",
+      "id": "cta_link"
+    },
+    {
+      "type": "text",
+      "label": "CTA Text",
+      "id": "cta_text"
+    },
+		{
+			"type": "richtext",
+			"label": "Info Box",
+			"id": "info_box"
+		},
+		{
+			"type": "richtext",
+			"label": "Description",
+			"id": "description"
+		},
+    {
+      "type": "checkbox",
+      "label": "Show Form",
+      "id": "show_form",
+      "info": "Show the sign up form."
+    },
+    {
+      "type": "richtext",
+      "label": "Form Headline",
+      "id": "form_headline"
+    },
+
+		{
+			"type": "image_picker",
+			"label": "Image",
+			"id": "image"
+		},
+		{
+			"type": "checkbox",
+			"label": "Reversed",
+			"id": "reversed",
+			"info": "Reverses the order of the image and text content, moving the image to the right side."
+		},
+    {
+      "type": "checkbox",
+      "label": "Center Text Content",
+      "id": "center_text_content",
+      "info": "Center the text content vertically on desktop."
+    }
+	],
+	"blocks": [],
+	"presets": [
+		{
+			"name": "Text and Image"
+		}
+	]
+}
+{% endschema %}

@@ -1,0 +1,98 @@
+{%- comment-%}
+Section: Callout Text
+Description: A section that displays a headline, caption, and a logo in the
+             middle of the screen.
+
+Usage: This section is used to create a callout text that can be used to
+       display a message or a call to action.
+
+Accepts:
+- Text: Richtext field that represents main headline text.
+- Caption: Text field that represents caption text.
+- Theme: Select field that represents the theme of the section.
+
+{%- endcomment -%}
+
+
+<div
+  x-data="calloutText({ theme: '{{ section.settings.theme | default: 'charcoal' }}' })"
+  class="callout-text w-full h-full relative my-14 px-5 sm:px-10"
+  :class="{
+    'callout-text--charcoal': theme === 'charcoal',
+    'callout-text--offwhite': theme === 'offwhite'
+  }">
+  {%- comment -%} Content Wrapper {%- endcomment -%}
+  <div 
+    class="flex justify-center items-center w-full px-10 xl:px-0 py-24 lg:py-40"
+    :class="{ 
+      'bg-charcoal text-gray': theme === 'charcoal', 
+      'bg-cream text-charcoal': theme === 'offwhite'
+    }"
+  >
+
+    <div class="xl:w-3/4">
+
+        {%- comment -%} Text {%- endcomment -%}
+        {%- if section.settings.text != blank -%}
+          <div
+
+            class="content text-24 lg:text-46 font-ivar text-center"
+          >
+            {{ section.settings.text | newline_to_br }}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Caption {%- endcomment -%}
+        {%- if section.settings.caption != blank -%}
+          <div
+            class="caption text-24 lg:text-46 font-ivar text-center mt-14 sm:mt-20 lg:mt-40"
+          >
+            {{ section.settings.caption | newline_to_br }}
+          </div>
+        {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Callout Text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "richtext",
+      "label": "Text",
+      "id": "text"
+    },
+    {
+      "type": "text",
+      "label": "Caption",
+      "id": "caption"
+    },
+    {
+      "type": "select",
+      "id": "theme",
+      "label": "Theme",
+      "options": [
+        {
+          "value": "charcoal",
+          "label": "Charcoal"
+        },
+        {
+          "value": "offwhite",
+          "label": "OffWhite"
+        }
+      ],
+      "default": "charcoal"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Callout Text"
+    }
+  ]
+}
+{% endschema %}

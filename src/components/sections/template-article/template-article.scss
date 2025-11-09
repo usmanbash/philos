@@ -1,0 +1,35 @@
+.template-article {
+  .content {
+    p {
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    blockquote {
+      p {
+        font-size: 20px;
+        font-family: 'IvarDisplay';
+        line-height: 1;
+        margin-bottom: 1.25rem;
+        @media only screen and (min-width: 526px) {
+          font-size: 30px;
+          margin-bottom: 2rem;
+        }
+      }
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      margin-bottom: 3rem;
+      @media only screen and (min-width: 768px) {
+        margin-bottom: 4rem;
+      }
+    }
+  }
+}

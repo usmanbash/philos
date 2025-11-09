@@ -1,0 +1,44 @@
+<section
+  x-data='drawer({ direction: "left", store: "filters" })'
+	x-cloak
+  @toggle-filter-drawer.window="toggle"
+  @popstate.window="close"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="{{ 'product.filters.title' | t }}"
+	class='size-guide-drawer fixed top-0 right-full h-full w-full md:w-1/2 lg:w-2/5 2xl:w-[30%] z-50'>
+
+  {%- comment -%}Overlay{%- endcomment -%}
+	<div
+		x-show="isOpen"
+		x-transition.opacity.duration.400ms
+		class="fixed right-0 top-0 w-full h-full z-10"
+    @click='close'>
+		<div class='top-0 right-0 w-full h-full bg-black opacity-40'></div>
+	</div>
+
+  {%- comment -%}Drawer Content {%- endcomment -%}
+	<div
+		x-ref='drawer'
+		class="relative flex flex-col h-full w-full sm:ml-auto p-10 z-20 bg-white2 overflow-y-auto scroll-smooth">
+
+    {%- comment -%}Header{%- endcomment -%}
+		<div class='flex w-full mb-10'>
+      {%- assign default_title = 'product.filters.title' | t -%}
+      {%- assign filter_title = section.settings.filter_title |  default: default_title -%}
+      <h3 class="font-ivar text-46">{{ filter_title }}</h3>
+      <button
+        type='button'
+        aria-label='{{ 'general.close' | t }} {{ filter_title }}'
+        @click='close'
+        class="ml-auto">
+        <span class="link link--line text-16">{{ 'general.close' | t }}</span>
+      </button>
+		</div>
+
+    {%- comment -%}Filters{%- endcomment -%}
+		{% render 'product-filters' %}
+
+	</div>
+
+</section>
