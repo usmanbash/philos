@@ -1,0 +1,84 @@
+{%- doc -%}
+  Renders a "Fabric" module.
+
+  @description Reusable snippet for fabric module.
+
+  @param {string} title - The title of the section
+  @param {obejct} headline - The headline of the section
+  @param {object} image - The image of the section
+  @param {array} items - Features, accordion items (title, description)
+
+  @example
+  {% render 'fabric'
+    , title: 'Fabric',
+    , headline: 'Fabric',
+    , image: image,
+    , items: items
+  %}
+
+{%- enddoc -%}
+
+{%- liquid
+  # assign title = title | default: section.settings.title
+  # assign headline = headline | default: section.settings.headline
+  # assign image = image | default: section.settings.image
+  # assign features = features | default: section.settings.features
+
+  # wrapper class px-5 sm:px-10 my-14
+%}
+
+<div
+  data-scroll
+  data-scroll-repeat
+  data-scroll-call="inViewportAnimation"
+  class='fabric w-full text-black'>
+
+  {%- comment -%} Section Title {%- endcomment -%}
+  {% render 'section-headline', title: title %}
+
+  {%- comment -%} Fabric Card {%- endcomment -%}
+  <div class='fabric-card grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 bg-cream'>
+
+    {%- comment -%} Image Wrapper {%- endcomment -%}
+    <div class='fabric-card__image-wrapper'>
+      {%- if image != blank -%}
+        {%- render 'scale-down-image'
+          , image: image
+          , originalRatio: false
+          , imgRatio: 0.82
+          , className: 'w-full h-full object-cover'
+        -%}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Text Content {%- endcomment -%}
+    <div class='fabric-card__content-wrapper px-10 xl:px-6 pb-10 lg:pb-0'>
+      <div class='fabric-card__text-content flex flex-col justify-center gap-6 lg:gap-8 w-full h-full'>
+
+        {% comment %} Headline {% endcomment %}
+        {%- if headline != blank -%}
+          <div class="content font-ivar text-46 lg:text-50">
+            {{ headline }}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Fabric Features (Accordion) {%- endcomment -%}
+        <div class="w-full xl:w-3/4 pr-10 xl:pr-0">
+          {%- for item in items -%}
+            {% render 'accordion'
+              , title: item.title
+              , content: item.description
+              , accordion_wrapper_class: "border-b border-gray"
+              , accordion_class: "pt-8 pb-3 flex items-center justify-between cursor-pointer"
+              , title_class: "text-20 md:text-24 font-medium"
+              , content_class: "content pt-4 pb-10 text-16 text-gray-700"
+              , accordion_plus_class: "flex-shrink-0"
+              , id: forloop.index
+            %}
+          {%- endfor -%}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

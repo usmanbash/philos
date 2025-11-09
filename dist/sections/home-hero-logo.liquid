@@ -1,0 +1,135 @@
+{%- comment -%}
+	Section: Home Hero Logo
+	Description: 
+
+	Usage:
+
+	Accepts:
+
+{%- endcomment -%}
+
+{%- liquid
+
+    # Interactive Logo
+    assign interactiveLogo = true
+
+-%}
+<div
+	x-data='homeHeroLogo'
+	class="home-hero-logo relative w-full h-[90svh] md:h-[130vh]">
+	<div class="relative w-full h-full py-24 !pt-0 flex flex-col items-center justify-start overflow-hidden">
+		
+    {%- comment -%} Slider {%- endcomment -%}
+		<div
+			class="absolute top-0 left-0 w-full h-full"
+			data-scroll
+  		data-scroll-call="inViewportAnimation">
+      {%- if section.blocks.size > 0 -%}
+        {% render 'hero-slider-logo', slides: section.blocks %}
+      {%- endif -%}
+		</div>
+
+    {%- comment -%} Logo {%- endcomment -%}
+    <div class="relative h-screen w-full px-8 pb-40 invisible">
+      <div class="relative h-full w-full">
+        <div
+          x-ref='logoPlaceholder'
+          data-scroll
+          data-scroll-event-progress="logoProgressEvent"
+          class='logo-placeholder absolute left-0 bottom-0 w-full'>
+          {%- render 'icon-logo-philos-running' -%}
+        </div>
+      </div>
+    </div>
+
+	</div>
+</div>
+
+{% schema %}
+{
+	"name": "Home Hero Logo",
+	"tag": "section",
+	"settings": [],
+	"blocks": [
+		{
+			"type": "image",
+			"name": "Image",
+			"settings": [
+				{
+					"type": "image_picker",
+					"label": "Desktop Image",
+					"id": "image"
+				},
+				{
+					"type": "image_picker",
+					"label": "Mobile Image",
+					"id": "image_mobile"
+				},
+        {
+          "type": "text",
+          "label": "Headline",
+          "id": "headline"
+        },
+        {
+          "type": "richtext",
+          "label": "Text",
+          "id": "text"
+        },
+        {
+          "type": "url",
+          "label": "Cta Link",
+          "id": "cta"
+        },
+        {
+          "type": "text",
+          "label": "Cta Text",
+          "id": "cta_text"
+        }
+			]
+		},
+		{
+			"type": "video",
+			"name": "Video",
+			"settings": [
+				{
+					"type": "video",
+					"id": "video",
+					"label": "Desktop Video",
+					"info": "Upload a video for desktop view"
+				},
+				{
+					"type": "video",
+					"id": "video_mobile",
+					"label": "Mobile Video",
+					"info": "Upload a video for mobile view. If not set, the desktop video will be used"
+				},
+        {
+          "type": "text",
+          "label": "Headline",
+          "id": "headline"
+        },
+        {
+          "type": "richtext",
+          "label": "Text",
+          "id": "text"
+        },
+        {
+          "type": "url",
+          "label": "Cta Link",
+          "id": "cta"
+        },
+        {
+          "type": "text",
+          "label": "Cta Text",
+          "id": "cta_text"
+        }
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Home Hero Logo"
+		}
+	]
+}
+{% endschema %}

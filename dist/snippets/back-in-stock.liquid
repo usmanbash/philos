@@ -1,0 +1,20 @@
+{%- doc -%}
+  Renders the back-in-stock button and modal.
+{%- enddoc -%}
+
+{%- liquid
+  # assign...
+-%}
+<div
+  x-data="backInStock({})"
+  class="back-in-stock">
+  
+  {% render 'back-in-stock-button', 
+    text: 'OUT OF STOCK — NOTIFY ME WHEN AVAILABLE' 
+  %}
+
+  <template x-teleport='body'>
+    {% render 'back-in-stock-modal' %}
+  </template>
+
+  </div>

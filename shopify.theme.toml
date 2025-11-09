@@ -1,0 +1,5 @@
+[environments.live]
+store = "ee2461.myshopify.com"
+path = "./dist"
+ignore = ["config/settings_data.json"]
+live = true

@@ -1,0 +1,20 @@
+{%- comment -%}
+Snippet: Article Tag
+Description: This snippet is used to display a tag for an article.
+
+Accepts:
+- blog_handle: The handle of the blog the article is in.
+- article_tag: The tag to display.
+
+Usage:
+{% render 'article-tag', blog_handle:'news', article_tag:'beauty' %}
+{%- endcomment -%}
+
+<div class='article-tag border border-gray py-[5px] px-[23px] hover:border-black hover:text-white2 hover:bg-black transition-all'>
+  <a
+    href='/blogs/{{ blog_handle }}/tagged/{{ article_tag | handleize }}'
+    aria-label="{{ 'general.check_out' | t }} {{ article_tag | escape }}"
+    class='article-tag__name text-center text-14 uppercase'>
+    {{ article_tag }}
+  </a>
+</div>

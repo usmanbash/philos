@@ -1,0 +1,154 @@
+{%- comment -%}
+  Section: Press
+  Description:
+  Displays publication logos where the brand has been featured or mentioned.
+
+  Settings:
+  - title (Text): The section title
+  - text (Text): The section text
+  - show_text (Checkbox): Whether to show the section text
+  - number_of_columns (Range): The number of columns to display
+  - padding (Select): The section padding
+{%- endcomment -%}
+{% liquid
+
+  # section padding
+  assign section_padding = section.settings.padding | default: 'default'
+  assign section_padding_class = ''
+  if section_padding == 'default'
+    assign section_padding_class = 'py-14 lg:py-40'
+  elsif section_padding == 'small'
+    assign section_padding_class = 'py-10 lg:py-20'
+  endif
+
+  # columns
+  assign number_of_columns = section.settings.number_of_columns | default: 3
+  assign logo_column_class = ''
+  if number_of_columns == 3
+    assign logo_column_class = 'w-1/3'
+  elsif number_of_columns == 4
+    assign logo_column_class = 'w-1/4'
+  elsif number_of_columns == 5
+    assign logo_column_class = 'w-1/5'
+  elsif number_of_columns == 6
+    assign logo_column_class = 'w-1/6'
+  endif
+%}
+<div x-data="press" class="press w-full relative px-5 sm:px-10 {{ section_padding_class }}">
+  <div class="w-full">
+
+    {%- comment -%} Text {%- endcomment -%}
+    {%- if section.settings.show_text and section.settings.text != blank -%}
+      <div class="text-20 lg:text-24 text-black font-ivar text-center mb-24 lg:mb-32">
+        {{ section.settings.text | newline_to_br }}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Logos {%- endcomment -%}
+    {% if section.blocks.size > 0 %}
+      <div class="press-logo-list flex flex-row justify-center gap-6 md:gap-8">
+        {% for block in section.blocks %}
+          {% if block.settings.logo != blank %}
+            <div class="press-logo-item h-6 sm:h-10 md:h-20 flex justify-center md:px-5 {{ logo_column_class }}" {{ block.shopify_attributes }}>
+              {% if block.settings.link != blank %}
+                <a
+                  href="{{ block.settings.link }}"
+                  class="press-logo-link block"
+                  target="_blank"
+                  rel="noopener">
+              {% endif %}
+
+              <img
+                src='{{ block.settings.logo | image_url: width: 480, format: 'webp' }}'
+                alt='{{ block.settings.alt | escape }}'
+                loading='lazy'
+                class='h-full w-auto'>
+
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Press",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title",
+        "default": "Press"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Description",
+        "default": "<p>Is it a temple? Is it a running store? The first Philos store is both.</p>"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_text",
+        "label": "Show Text",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "number_of_columns",
+        "label": "Number of columns",
+        "min": 3,
+        "max": 6,
+        "step": 1,
+        "default": 3
+      }, 
+      {
+        "type": "select",
+        "id": "padding",
+        "label": "Section Padding",
+        "options": [
+          {
+            "value": "default",
+            "label": "default"
+          }, {
+            "value": "small",
+            "label": "small"
+          }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo",
+        "name": "Press Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo Image"
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "Logo Link",
+            "info": "Optional - Link to press article"
+          }, {
+            "type": "text",
+            "id": "alt",
+            "label": "Alt Text",
+            "info": "Descriptive text for accessibility"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Press"
+      }
+    ]
+  }
+{% endschema %}

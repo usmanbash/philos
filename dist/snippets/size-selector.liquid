@@ -1,0 +1,73 @@
+{%- comment -%}
+  Snippet: size-selector.liquid
+  Description:
+    A size selector for product
+
+  Parameters:
+    - options (array): Array of sizes
+    - index (number)
+
+  Usage:
+    {% raw %}
+      {% render 'size-selector', options: ['XS', 'S', 'M', 'L', 'XL'] %}
+    {% endraw %}
+{%- endcomment -%}
+<div class='size-selector relative'>
+  {% comment %}
+    <div>Index: {{ index }}</div>
+    <div>option{{ index }}</div>
+      <pre>{{ options | json }}</pre>
+      <button @click="printProductVariants($event)" type="button">Print Product Variants</button>
+      <button @click="printVariants($event)" type="button">Print Variants</button>
+  {% endcomment %}
+  <div class='size-selector-ctas flex mb-5'>
+    <span class='text-16'>{{ 'product.size_guide.select_eu_size' | t }}</span>
+    <button
+      type='button'
+      aria-label='{{ 'product.size_guide.title' | t }}'
+      class='link link--reversed ml-auto text-14 uppercase'
+      @click.prevent='openSizeGuide'
+    >
+      {{ 'product.size_guide.title' | t }}
+    </button>
+  </div>
+
+  <div class='size-selector-options grid grid-cols-3 gap-4'>
+    {%- for value in options -%}
+      <div class='relative inline-block group'>
+        <label
+          class='cursor-pointer w-full inline-block text-16 p-2'
+          :class="
+            {
+              'opacity-40': !isOptionAvailable( 'Size', '{{ value }}', {{ index }} ),
+              'selected': isSelected( '{{ value }}', 'Size' ),
+            }
+          "
+        >
+          <input
+            x-model='Size'
+            id='{{ value | escape }}'
+            value='{{ value | escape }}'
+            type='radio'
+            class='sr-only'
+          >
+
+          <div class='flex flex-nowrap items-center w-full'>
+            <span class='uppercase'>{{ value }}</span>
+            {% comment %}
+              <span class="ml-1" x-text="getOptionStockQuantity('Size', '{{ value }}', {{ index }})"></span>
+            {% endcomment %}
+            <div class='ml-auto italic text-[0.85em]'>
+              <template x-if="isOptionAvailable( 'Size', '{{ value }}', {{ index }} )">
+                {% render 'low-inventory-badge', value: value, optionName: 'Size', index: index %}
+              </template>
+              <template x-if="!isOptionAvailable( 'Size', '{{ value }}', {{ index }} )">
+                <span>notify me</span>
+              </template>
+            </div>
+          </div>
+        </label>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>

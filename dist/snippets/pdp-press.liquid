@@ -1,0 +1,34 @@
+{%- doc -%}
+  Renders press logos on the product page
+  
+  @param {array} logos - metaobject list of press logos (press_logo)
+
+{%- enddoc -%}
+{% liquid
+
+%}
+<div class="press w-full">
+  <div class="press-logo-list flex flex-row justify-between">
+    {% for logo in logos %}
+      <div class="press-logo-item h-4 sm:h-8 md:h-16 flex justify-center md:px-5">
+        {% if logo.url != blank -%}
+          <a
+            href="{{ logo.url }}"
+            class="press-logo-link block"
+            target="_blank"
+            rel="noopener">
+        {%- endif %}
+
+        <img
+          src='{{ logo.logo | image_url: width: 480, format: 'webp' }}'
+          alt='{{ logo.title }}'
+          loading='lazy'
+          class='h-full w-auto'>
+
+        {% if logo.url != blank -%}
+          </a>
+        {%- endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

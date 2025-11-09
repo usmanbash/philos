@@ -1,0 +1,71 @@
+{%- comment -%}
+	Snippet: pdp-swiper
+	Description: A snippet that displays a PDP Swiper for product images
+{%- endcomment -%}
+<div
+	x-data="
+		pdpSwiper({
+		  id: '{{ id }}',
+		  options: {
+        slidesPerView: 1,
+        effect: 'slide',
+        pagination: {
+          el: '.swiper-pagination-{{ id }}',
+          clickable: true,
+        },
+		    navigation: {
+		      nextEl: '.swiper-button-next-{{ id }}',
+		      prevEl: '.swiper-button-prev-{{ id }}',
+		    },
+        breakpoints: {
+          0: {
+            loop: true,
+          },
+          768: {
+            loop: true,
+          }
+        }
+		  }
+		})
+	"
+	class='pdp-swiper swiper relative w-full h-full'>
+
+  <div x-ref='pdpSwiperEl' class="swiper-container relative w-full h-full overflow-hidden">
+    <!-- Swiper -->
+    <div class='swiper-wrapper'>
+      {% comment %} If there is slider gallery {% endcomment %}
+      {%- if slides != blank or slides.size > 0 -%}
+        {%- for slide in slides -%}
+          <div class='swiper-slide'>
+            {%- render 'product-media', media: slide -%}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- comment -%} If there is no slider gallery {%- endcomment %}
+      {%- if slides == blank or slides.size == 0 -%}
+        <div class='swiper-slide'>
+          <img
+            :src='selectedVariant?.featured_image?.src || product?.featuredImage'
+            :alt='selectedVariant?.featured_image?.alt || selectedVariant?.title'
+            loading='lazy'
+            class='object-cover object-bottom w-full h-full bg-white4' />
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+
+  {% if showControls == true %}
+    <div
+      x-ref='pagination'
+      class='swiper-pagination swiper-pagination-{{ id }}'></div>
+    <div
+      x-ref='prev'
+      class='swiper-button-prev swiper-button-prev-{{ id }}'></div>
+    <div
+      x-ref='next'
+      class='swiper-button-next swiper-button-next-{{ id }}'></div>
+  {% endif %}
+
+</div>

@@ -1,0 +1,15 @@
+<div
+  x-ref="productCardImages"
+  class="product-variant-card__image w-full h-full">
+  <template x-for='(url, index) in productCardImageUrls' :key='index'>
+    <img
+      :data-src='url'
+      alt=''
+      loading="lazy"
+      :class="{
+        'active': index === currentImageIndex
+      }"
+      class="product-card-image absolute top-0 left-0 w-full h-full object-cover object-center"
+    />
+  </template>
+</div>

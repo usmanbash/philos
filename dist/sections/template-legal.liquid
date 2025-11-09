@@ -1,0 +1,400 @@
+{%- comment -%}
+Section: Template Legal
+Description: Legal page template with sidebar and content
+
+Accepts:
+- Blocks:
+  - Hero: Image, title, and text, limit 1
+  - Page Title: limit 1
+  - Page Subtitle: limit 1
+  - Page Text: no limit
+  - Page Content: limit 1
+  - FAQ Item: Question and Answer, no limit
+  - Country Info: Continent, Country Name, Delivery Time, Shipping Cost, no limit
+  - Return Policy Step: Step Title and Step Description, no limit
+{%- endcomment -%}
+
+{%- liquid
+  # Variables
+  # processed_continents is used to keep track of the continents that have been processed
+  assign processed_continents = ""
+
+  # return_policy_steps is used to keep track of the return policy steps indices inside the (main) loop
+  assign total_return_policy_steps = section.blocks | where: "type", "return_policy_step" | size
+  # default value for step_index
+  assign current_step_index = 0
+-%}
+
+<div class="template-page-legal relative w-full">
+  {%- comment -%}Image Hero{%- endcomment -%}
+  {% if section.settings.hero_image != blank %}
+    {% render 'image-hero',
+      title: section.settings.hero_title,
+      text: section.settings.hero_text,
+      image: section.settings.hero_image
+    %}
+  {% endif %}
+
+
+  {%- comment -%} Sidebar Menu and Page Content {%- endcomment -%}
+  <div
+    class="flex flex-wrap px-5 sm:px-10 lg:px-36 lg:py-16"
+    data-scroll
+    data-scroll-call="inViewportAnimation">
+    {%- comment -%} Sidebar Menu {%- endcomment -%}
+    <div
+      class="w-full lg:w-1/3 pt-8 pb-14 lg:py-0"
+      data-animate
+      data-preset='fadeUp'
+      data-to='{ "delay": 0.2 }'>
+      {%- if section.settings.sidebar_menu != blank -%}
+        {%- comment -%} MOBILE NAV {%- endcomment -%}
+        {% render 'legal-pages-navigation-mobile', menu: section.settings.sidebar_menu %}
+        {%- comment -%} DESKTOP NAV {%- endcomment -%}
+        {% render 'legal-pages-navigation', menu: section.settings.sidebar_menu %}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%}
+      Page Content: This block renders the main content of the legal page.
+      It includes fixed blocks such as Page Title and Page Subtitle, as well as dynamic blocks that can be reordered in the editor.
+    {%- endcomment -%}
+    <div
+      class="w-full lg:w-2/3 text-black"
+      data-animate
+      data-preset='fadeUp'
+      data-to='{ "delay": 0.4 }'>
+
+      {%- if section.settings.page_title != blank -%}
+        <h2 class="font-ivar text-30 lg:text-46 mb-8">{{ section.settings.page_title }}</h2>
+      {%- endif -%}
+
+      {%- comment -%}
+        Blocks are within a loop, allowing dynamic content handling.
+        Users can reorder and manage blocks in the editor for flexibility.
+        Enables easy customization and adaptability to changing content needs.
+      {%- endcomment -%}
+
+      {% for block in section.blocks %}
+        {% case block.type %}
+
+          {%- comment -%} Subtitle {%- endcomment -%}
+          {% when 'page_subtitle' %}
+            {%- if block.settings.subtitle != blank -%}
+
+              {%- liquid
+                assign margin_top = "mt-12"
+                if forloop.index == 1
+                 assign margin_top = "mt-0"
+                endif
+              -%}
+
+              <h3 class="font-ivar text-30 {{ margin_top }} mb-7">{{ block.settings.subtitle }}</h3>
+            {%- endif -%}
+
+          {%- comment -%} Rich text {%- endcomment -%}
+          {% when 'page_text' %}
+            {%- if block.settings.text != blank -%}
+              <div class='page__text content content--legal mt-8 text-16'>
+                {{ block.settings.text }}
+              </div>
+            {%- endif -%}
+
+          {%- comment -%} Privacy Policy {%- endcomment -%}
+          {%- when 'privacy_policy' -%}
+            {%- if shop.privacy_policy != blank -%}
+              <div id='privacy-policy' class='page_content content content--legal my-8 text-16'>{{ shop.privacy_policy }}</div>
+            {%- endif -%}
+
+          {%- comment -%} Terms of Service {%- endcomment -%}
+          {%- when 'terms_of_service' -%}
+            {%- if shop.terms_of_service != blank -%}
+              <div id='terms-of-service' class='page_content content content--legal my-8 text-16'>{{ shop.terms_of_service }}</div>
+            {%- endif -%}
+
+          {%- comment -%} Return and Refund Policy {%- endcomment -%}
+          {%- when 'return_policy' -%}
+            {%- if shop.refund_policy != blank -%}
+              <div id='refund-policy' class='page_content content content--legal my-8 text-16'>{{ shop.refund_policy }}</div>
+            {%- endif -%}
+
+          {%- comment -%} Shipping Policy {%- endcomment -%}
+          {%- when 'shipping_policy' -%}
+            {%- if shop.shipping_policy != blank -%}
+              <div id='shipping-policy' class='page_content content content--legal my-8 text-16'>{{ shop.shipping_policy }}</div>
+            {%- endif -%}
+
+          {%- comment -%} Page content {%- endcomment -%}
+          {%- when 'page_content' -%}
+            {%- if page.content != blank -%}
+              <div class='page_content content my-8 text-16'>
+                {{ page.content }}
+              </div>
+            {%- endif -%}
+
+          {%- comment -%} FAQS {%- endcomment -%}
+          {%- when 'faq_item' -%}
+            {% render 'accordion',
+              title: block.settings.question,
+              content: block.settings.answer,
+              accordion_wrapper_class: "border-b border-gray"
+              accordion_class: "py-8 flex items-center justify-between cursor-pointer",
+              title_class: "text-24",
+              content_class: "content pt-4 pb-10 text-16",
+              accordion_plus_class: "flex-shrink-0",
+              id: forloop.index
+            %}
+
+          {%- comment -%} Handling shipping country info blocks {%- endcomment -%}
+          {%- when 'shipping_country_info' -%}
+            {%- unless processed_continents contains block.settings.continent -%}
+              {%- assign processed_continents = processed_continents | append: block.settings.continent | append: "," -%}
+              <h3 class="shipping-info__continent-name mt-12 mb-2 font-proximaNova text-24">{{ block.settings.continent }}</h3>
+
+              {%- comment -%} Shipping Info Label {%- endcomment -%}
+              <div class="shipping-info_label flex items-center border-b border-gray py-4 uppercase font-proximaNova text-16">
+                <p class="w-[63%] sm:w-2/3 md:w-1/2 lg:w-1/3">{{ 'legal.shipping.country' | t }}</p>
+                <p class="w-[37%] sm::w-1/3 md:w-1/2 lg:w-1/3">{{ 'legal.shipping.delivery_time' | t }}</p>
+                <p class="hidden lg:block lg:w-1/3">{{ 'legal.shipping.shipping_cost' | t }}</p>
+              </div>
+            {%- endunless -%}
+
+            {%- comment -%} Snippet: Shipping Info {%- endcomment -%}
+            {% render 'shipping-info',
+              country_name: block.settings.country_name,
+              delivery_time: block.settings.delivery_time,
+              shipping_cost: block.settings.shipping_cost
+            %}
+
+          {%- comment -%} Handling return policy steps {%- endcomment -%}
+            {%- when 'return_policy_step' -%}
+              {%- assign current_step_index = current_step_index | plus: 1 -%}
+              {%- comment -%} Snippet: Return Policy Step {%- endcomment -%}
+              {% render 'return-policy-step',
+                total_steps: total_return_policy_steps,
+                current_step: current_step_index,
+                step_title: block.settings.step_title,
+                step_description: block.settings.step_description
+              %}
+
+            {%- if current_step_index == total_return_policy_steps -%}
+              {% comment %} {% render 'return-policy-button' %} {% endcomment %}
+            {%- endif -%}
+
+            {%- comment -%} Handling return policy button {%- endcomment -%}
+            {%- when 'return_policy_cta' -%}
+              {% render 'return-policy-button',
+                label: block.settings.cta_label,
+                link: block.settings.cta_link
+              %}
+
+        {% endcase %}
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</div>
+
+
+{% schema %}
+{
+  "name": "Legal Page Template",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Hero Title",
+      "id": "hero_title"
+    },
+    {
+      "type": "text",
+      "label": "Hero Text",
+      "id": "hero_text"
+    },
+    {
+      "type": "image_picker",
+      "label": "Hero Image",
+      "id": "hero_image"
+    },
+    {
+      "type": "link_list",
+      "label": "Sidebar",
+      "id": "sidebar_menu"
+    },
+    {
+      "type": "text",
+      "label": "Page Title",
+      "id": "page_title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "page_subtitle",
+      "name": "Subtitle",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Subtitle",
+          "id": "subtitle"
+        }
+      ]
+    },
+    {
+      "type": "page_text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "label": "Text",
+          "id": "text"
+        }
+      ]
+    },
+    {
+      "type": "page_content",
+      "name": "Page Content",
+      "limit": 1
+    },
+    {
+      "type": "privacy_policy",
+      "name": "Privacy Policy",
+      "limit": 1
+    },
+    {
+      "type": "return_policy",
+      "name": "Return Policy",
+      "limit": 1
+    },
+    {
+      "type": "shipping_policy",
+      "name": "Shipping Policy",
+      "limit": 1
+    },
+    {
+      "type": "terms_of_service",
+      "name": "Terms of Service",
+      "limit": 1
+    },
+    {
+      "type": "faq_item",
+      "name": "Faq",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Question",
+          "id": "question"
+        },
+        {
+          "type": "richtext",
+          "label": "Answer",
+          "id": "answer"
+        }
+      ]
+    },
+    {
+      "type": "shipping_country_info",
+      "name": "Shipping Country Info",
+      "settings": [
+        {
+          "type": "select",
+          "id": "continent",
+          "label": "Continent",
+          "default": "Europe",
+          "options": [
+            {
+              "value": "Africa",
+              "label": "Africa"
+            },
+            {
+              "value": "Asia",
+              "label": "Asia"
+            },
+            {
+            "value": "Australia",
+            "label": "Australia"
+            },
+            {
+              "value": "Europe",
+              "label": "Europe"
+            },
+            {
+              "value": "North America",
+              "label": "North America"
+            },
+            {
+              "value": "South America",
+              "label": "South America"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "country_name",
+          "label": "Country Name"
+        },
+        {
+          "type": "text",
+          "id": "delivery_time",
+          "label": "Delivery Time"
+        },
+        {
+          "type": "text",
+          "id": "shipping_cost",
+          "label": "Shipping Cost"
+        }
+      ]
+    },
+    {
+      "type": "return_policy_step",
+      "name": "Return Policy Step",
+      "settings": [
+          {
+            "type": "text",
+            "id": "step_title",
+            "label": "Step Title"
+          },
+          {
+            "type": "richtext",
+            "id": "step_description",
+            "label": "Step Description"
+          }
+        ]
+    },
+    {
+      "type": "accordion_item",
+      "name": "Accordion Item",
+      "settings": [
+          {
+            "type": "text",
+            "id": "accordion_title",
+            "label": "Accordion Title"
+          },
+          {
+            "type": "richtext",
+            "id": "accordion_text",
+            "label": "Accordion Text"
+          }
+        ]
+    },
+    {
+      "type": "return_policy_cta",
+      "name": "Return Product Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Link"
+        }
+      ],
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}

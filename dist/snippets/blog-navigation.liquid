@@ -1,0 +1,74 @@
+{%- comment -%}
+Sniipet: Blog Navigation
+Description: This snippet is used to display the blog navigation on the blog page.
+              Nav items are all blog posts and blog posts tagged with a specific tag.
+
+Accepts:
+  - blog: The blog object to display the navigation for.
+
+Usage:
+  {% render 'blog-navigation' %}
+{%- endcomment -%}
+
+<nav
+  x-data="blogNavigation()"
+  data-scroll
+  data-scroll-call="inViewportAnimation"
+  class="blog-navigation mt-7 lg:mt-0 lg:mb-10">
+  <ul
+    x-ref="blogNavigation"
+    data-animate
+    data-preset='fadeUp'
+    data-to='{ "delay": 0.1 }'
+    class="flex justify-center items-center flex-wrap gap-4 lg:gap-9 w-full px-5 sm:px-10 text-black">
+    {%- comment -%}Display All Articles tab{%- endcomment -%}
+    <li
+      class="text-center">
+      {%- liquid
+        assign blog_page = blogs[blog.handle]
+        assign blog_url = blog_page.url
+        assign count_all_articles = blog_page.articles.size
+      -%}
+
+      <a
+        href="{{ blog_url }}"
+        aria-label="{{ 'general.check_out' | t }} All"
+        :class="{
+          'link link--line': isActive('{{ blog_url }}'),
+          'link link--reversed': !isActive('{{ blog_url }}')
+        }"
+        class="uppercase text-14 pb-1">
+        All
+        <span class="align-top text-[.7em] -translate-y-1/2">{{ count_all_articles }}</span>
+      </a>
+    </li>
+
+    {%- comment -%}Display Tags tab{%- endcomment -%}
+    {% for tag in blog_page.all_tags %}
+      {% assign count_articles_per_tag = 0 %}
+      {% for article in blog_page.articles %}
+        {% if article.tags contains tag %}
+          {% assign count_articles_per_tag = count_articles_per_tag | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+
+      {%- assign tag_handle = tag | handleize -%}
+      {%- assign blog_tag_url = blog_url | append: '/tagged/' | append: tag_handle -%}
+
+      <li class='text-center'>
+        <a
+          href="{{ blog_tag_url }}"
+          aria-label="{{ 'general.check_out' | t }} {{ tag | escape }}"
+          :class="{
+            'link link--line': isActive('{{ blog_tag_url }}'),
+            'link link--reversed': !isActive('{{ blog_tag_url }}')
+          }"
+          class="uppercase text-14 pb-1">
+          <span>{{ tag }}</span>
+          <span class="align-top text-[.8em]">{{ count_articles_per_tag }}</span>
+        </a>
+      </li>
+    {% endfor %}
+
+  </ul>
+</nav>

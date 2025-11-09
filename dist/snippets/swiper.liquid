@@ -1,0 +1,37 @@
+{%- comment -%}
+Snippet: Swiper
+Description: A snippet that displays a Swiper slider for product media
+{%- endcomment -%}
+<div
+  x-data="swiper({
+    id: '{{ id }}',
+    options: {
+      slidesPerView: 1,
+      effect: 'fade',
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      {% comment %} allowTouchMove: false {% endcomment %}
+    }
+  })"
+  x-ref="swiperEl"
+  @set-active-slide.window='setActiveSlide($event.detail)'
+  class="swiper {{ swiper_class}}">
+
+
+  <!-- Swiper -->
+  <div class="swiper-wrapper">
+    {%- for slide in slides -%}
+      <div class="swiper-slide">
+        {%- render 'product-media', media: slide -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {% if showControls == true %}
+    {% comment %} <div x-ref="pagination" class="swiper-pagination"></div> {% endcomment %}
+    <div x-ref="prev" class="swiper-button-prev"></div>
+    <div x-ref="next" class="swiper-button-next"></div>
+  {% endif %}
+</div>

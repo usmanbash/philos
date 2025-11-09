@@ -1,0 +1,53 @@
+{%- comment -%}
+Section: Template Cart
+Description: This section is used to display the cart
+
+Accepts:
+- Headline: Text field that represents headline
+- Text: Text field that represents the description
+{%- endcomment -%}
+
+<section class='template-cart xl:px-48'>
+
+  {% render 'headline',
+    headline: section.settings.headline,
+    text: section.settings.text,
+    vertical: true
+  %}
+
+	{% render 'mini-cart', vertical: true, showTotalPrice: true %}
+</section>
+{% schema %}
+{
+	"name": "Template Cart",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Headline",
+      "id": "headline"
+    },
+    {
+      "type": "text",
+      "label": "Text",
+      "id": "text"
+    }
+  ],
+	"blocks": [
+		{
+			"type": "subtotal",
+			"name": "Subtotal",
+			"limit": 1
+		},
+		{
+			"type": "update_button",
+			"name": "Update Button",
+			"limit": 1
+		},
+		{
+			"type": "checkout_button",
+			"name": "Checkout Button",
+			"limit": 1
+		}
+	]
+}
+{% endschema %}

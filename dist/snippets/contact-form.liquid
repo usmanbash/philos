@@ -1,0 +1,157 @@
+{%- comment -%}
+Snippet: Contact Form
+Description: A simple contact form with name, email, order and message fields.
+
+Useful resources:
+@see: https://shopify.dev/docs/themes/customer-engagement/add-contact-form
+{%- endcomment -%}
+<div
+  x-data='contactForm({
+    formFields: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      orderNumber: "",
+      message: ""
+    },
+    errors: {
+      firstName: { isError: false, message: "" },
+      lastName: { isError: false, message: "" },
+      email: { isError: false, message: "" },
+      orderNumber: { isError: false, message: "" },
+      message: { isError: false, message: "" }
+    }
+  })'
+  class="contact-form relative">
+
+  {% form 'contact', id: 'ContactForm', class: 'contact-form pt-8' %}
+
+    <div class="flex flex-wrap -mx-3 mb-6">
+
+      <div class="w-full lg:w-1/2 px-3 py-2 mb-6 md:mb-0">
+        <label class="block mb-2 text-black font-proximaNova text-16" for="firstName">
+          {{ 'forms.contact.first_name' | t }}
+        </label>
+        <input
+          x-model="formFields.firstName"
+          x-ref="firstName"
+          id="firstName"
+          type="text"
+          name="contact[first_name]"
+          @blur="validateField($event.target)"
+          @input="validateField($event.target)"
+          :class="{ 'error': errors.firstName.isError }"
+          class="field__input block w-full border border-gray py-3 px-4 leading-tight appearance-none bg-white2 text-16 text-black" />
+
+        <div x-show="errors.firstName.isError" class="mt-2 text-errorRed text-14" x-text="errors.firstName.message"></div>
+
+      </div>
+
+      <div class="w-full lg:w-1/2 px-3 py-2">
+        <label class="block mb-2 text-black font-proximaNova text-16" for="lastName">
+          {{ 'forms.contact.last_name' | t }}
+        </label>
+        <input
+          x-model="formFields.lastName"
+          x-ref="lastName"
+          id="lastName"
+          type="text"
+          name="contact[last_name]"
+          @blur="validateField($event.target)"
+          @input="validateField($event.target)"
+          :class="{ 'error': errors.lastName.isError }"
+          class="field__input block w-full border border-gray py-3 px-4 leading-tight appearance-none bg-white2 text-16 text-black" />
+
+         <div x-show="errors.lastName.isError" class="mt-2 text-errorRed text-14" x-text="errors.lastName.message"></div>
+      </div>
+
+      <div class="w-full lg:w-1/2 px-3 py-2">
+        <label class="block mb-2 text-black font-proximaNova text-16" for="email">
+          {{ 'forms.contact.email' | t }}*
+        </label>
+        <input
+          x-model="formFields.email"
+          x-ref="email"
+          id="email"
+          type="email"
+          name="contact[email]"
+          @blur="validateField($event.target)"
+          @input="validateField($event.target)"
+          :class="{ 'error': errors.email.isError }"
+          class="field__input block w-full border border-gray py-3 px-4 mb-3 leading-tight appearance-none bg-white2 text-16 text-black" />
+
+        <div x-show="errors.email.isError" class="mt-2 text-errorRed text-14" x-text="errors.email.message"></div>
+      </div>
+
+      <div class="w-full lg:w-1/2 px-3 py-2">
+        <label class="block mb-2 text-black font-proximaNova text-16" for="orderNumber">
+          {{ 'forms.contact.order_number' | t }}
+        </label>
+        <input
+          x-model="formFields.orderNumber"
+          x-ref="orderNumber"
+          id="orderNumber"
+          type="text"
+          name="contact[order_number]"
+          @blur="validateField($event.target)"
+          @input="validateField($event.target)"
+          :class="{ 'error': errors.orderNumber.isError }"
+          class="field__input block w-full border border-gray py-3 px-4 mb-3 leading-tight appearance-none bg-white2 text-16 text-black" />
+
+        <div x-show="errors.orderNumber.isError" class="mt-2 text-errorRed text-14" x-text="errors.orderNumber.message"></div>
+      </div>
+
+      <div class="w-full px-3 py-2">
+        <label class="block mb-2 text-black font-proximaNova text-16" for="message">
+          {{ 'forms.contact.message' | t }}
+        </label>
+        <textarea
+          x-model="formFields.message"
+          x-ref="message"
+          id="message"
+          name="contact[body]"
+          @blur="validateField($event.target)"
+          :class="{ 'error': errors.message.isError }"
+          class="field__input block w-full min-h-[129px] border border-gray py-3 px-4 leading-tight appearance-none bg-white2 text-16 text-black"></textarea>
+
+        <div x-show="errors.message.isError" class="mt-2 text-errorRed text-14" x-text="errors.message.message"></div>
+      </div>
+
+      <div class="w-full px-3 pt-8">
+        <input
+          x-ref="submitBtn"
+          :disabled="!isFormValid()"
+          :class="{
+            'cursor-not-allowed opacity-50': !isFormValid(),
+            'cursor-pointer hover:text-black hover:bg-white2': isFormValid()
+          }"
+          class="inline-block w-full h-[45px] px-[22px] bg-black border border-black font-proximaNova text-center text-16 align-middle uppercase text-white transition-color"
+          type="submit"
+          value="{{ 'forms.contact.send' | t }}">
+      </div>
+    </div>
+
+    {%- if form.errors -%}
+      <div class="py-5">
+        <div class="flex flex-row items-center w-full py-5 lg:py-10 text-24">
+          <div class="text-errorRed h-auto w-[1em]">
+            {% render 'icon-failed' %}
+          </div>
+          <div class="ml-3 text-[1em]">
+            {{ 'forms.contact.error' | t }}
+          </div>
+        </div>
+      </div>
+    {%- elsif form.posted_successfully? -%}
+      <div
+        x-data="{ showSuccess: true }"
+        x-init="setTimeout(() => showSuccess = false, 4000)"
+        x-show="showSuccess"
+        x-transition.opacity
+        class="flex flex-row items-center w-full text-24 absolute left-0 top-full translate-y-full">
+        <span class="success-message">{{ 'forms.contact.success' | t }}</span>
+      </div>
+    {%- endif -%}
+
+  {% endform %}
+</div>

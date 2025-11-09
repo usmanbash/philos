@@ -1,0 +1,31 @@
+{%- comment -%}
+  Snippet: button-cta.liquid
+  Description:
+    A button component for the website.
+
+  Parameters:
+    - url (string): The URL of the button
+    - text (string): The text of the button
+
+{%- endcomment -%}
+
+<a
+
+  href="{{ url }}"
+  aria-label="Navigate to: {{ url }}"
+  class="
+    button-cta 
+    inline-flex justify-center items-center 
+    border-1 border-cloud
+    ring-offset-2 ring-2 ring-black/10 hover:ring-transparent
+    px-6 py-3 
+    rounded-lg
+    bg-cloud hover:bg-transparent
+    text-black hover:text-white
+    text-14 text-center uppercase
+    transition-all duration-300 ease-in-out
+    scale-100 hover:scale-[1.01] active:scale-95
+  "
+>
+  <span class="font-semibold">{{ text }}</span>
+</a>

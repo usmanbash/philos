@@ -1,0 +1,99 @@
+{% comment %}
+  Section: shop-categories.liquid
+  Description:
+  This section showcases selected collections within a slider.
+
+  Settings:
+  - title (Text): The section title
+
+  Blocks:
+  - collection_card
+
+  Dependencies:
+  - card-slider.liquid (snippet)
+  - slider-navbar.liquid (snippet)
+  - shop-category-card.liquid (snippet)
+{% endcomment %}
+<div class="shop-categories relative w-full py-14 sm:px-10">
+
+  {% comment %} Prepare slider navigation {% endcomment %}
+  {% capture header %}
+    {%- render 'slider-navbar',
+      title: section.settings.title,
+      slider_navbar_class: 'px-5 sm:px-0'
+    -%}
+  {% endcapture %}
+  {% comment %} Prepare slider slides {% endcomment %}
+{% capture slides %}
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'collection_card' -%}
+            <div class="swiper-slide relative">      
+              {%- render 'shop-category-card', data: block.settings -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {% endcapture %}
+  {% comment %} Render Card Slider {% endcomment %}
+  {%- render 'card-slider'
+    , header: header
+    , slides: slides
+  -%}
+
+</div>
+{% schema %}
+  {
+    "name": "shop-categories",
+    "tag": "section",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection_card",
+        "name": "Collection Card",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Card Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Card Title",
+            "info": "If left blank, the collection title will be used."
+          },
+          {
+            "type": "text",
+            "id": "description",
+            "label": "Card Description",
+            "info": "If left blank, the collection description will be used."
+          }, {
+            "type": "text",
+            "id": "cta_text",
+            "label": "Card CTA Text",
+            "default": "Shop Now"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Shop Categories"
+      }
+    ]
+  }
+{% endschema %}

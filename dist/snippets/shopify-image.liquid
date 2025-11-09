@@ -1,0 +1,39 @@
+{%- comment -%}
+Snippet: Shopify Image
+Description: This snippet is used to render an image with lazy loading and animation.
+
+Accepts:
+  - image: The image object to render.
+  - imgRatio: The aspect ratio of the image. If not provided, the aspect ratio of the original image will be used.
+  - animationPreset: The animation preset to use. Default is 'scaleDown'.
+  - className: Additional classes to add to the image.
+  - originalRatio: If true, the aspect ratio of the original image will be used.
+{%- endcomment -%}
+{%- if image != blank -%}
+
+  {%- liquid
+    assign image_style = ''
+    if imgRatio != blank
+      assign image_style = 'aspect-ratio: ' | append: imgRatio | append: ';'
+    elsif originalRatio == true
+      assign image_style = 'aspect-ratio: ' | append: image.width | append: '/' | append: image.height | append: ';'
+    else
+      assign image_style = 'height: 100%;'
+    endif
+  -%}
+
+  {% comment %} {% assign animationPreset = animationPreset | default: 'scaleDown' %} {% endcomment %}
+  {% comment %} <div> {% endcomment %}
+    <img
+      x-data='shopifyImage'
+      src='{{ image | image_url: width: image.width,  format: 'webp' }}'
+      alt='{{ image.alt | strip_html | escape }}'
+      :loading='loading'
+      loading='lazy'
+      data-animate
+      data-preset='{{ animationPreset }}'
+      style='{{ image_style }}'
+      class='shopify-image w-full object-cover object-center {{ className }}' />
+  {% comment %} </div> {% endcomment %}
+
+{%- endif -%}

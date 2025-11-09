@@ -1,0 +1,44 @@
+{%- comment -%}
+  Snippet: hero-slide-content.liquid
+  Description:
+    This snippet is used to display the content of the hero slide.
+
+  Parameters:
+    - data (object): The slide object (block)
+
+  Usage:
+    {% raw %}
+      {% render 'hero-slide-content', data: block.settings %}
+    {% endraw %}
+
+  Dependencies:
+    - button-cta.liquid
+
+{%- endcomment -%}
+{%- liquid
+
+  assign headline = data.headline
+  assign cta = data.cta
+  assign cta_text = data.cta_text
+
+-%}
+<div class="hero-slide-content absolute top-1/2 md:top-[42%] left-0 w-full flex flex-col items-center">
+
+  {%- comment -%} Headline {%- endcomment -%}
+  {%- if headline != blank -%}
+    <div class="hero-slide-content__headline px-7 lg:px-0 pb-8 text-cloud text-center">
+      <h2 class="font-ivar text-30 lg:text-100">{{ headline | newline_to_br }}</h2>
+    </div>
+  {%- endif -%}
+
+  {%- if cta != blank -%}
+    <div class="hero-slide-content__cta-wrapper flex flex-col justify-center items-center w-full h-[64px] px-[90px]">
+      {%- 
+        render 'button-cta', 
+        url: cta.url, 
+        text: cta_text 
+      -%}
+    </div>
+  {%- endif -%}
+
+</div>

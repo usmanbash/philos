@@ -1,0 +1,39 @@
+{%- comment -%}
+Snippet: Pagination
+Description: A snippet that displays pagination links
+{%- endcomment -%}
+
+{%- if pagination.pages > 0 -%}
+  <nav role="navigation" class="pagination flex justify-center items-center mb-40 text-black" >
+    {%- if pagination.previous -%}
+      <a
+        href="{{ pagination.previous.url }}"
+        aria-label="{{ 'general.previous' | t }}"
+        class="px-5 py-3 mx-1">
+        {% render 'icon-arrow-left' %}
+      </a>
+    {%- endif -%}
+
+    {%- for part in pagination.parts -%}
+      {%- if part.is_link -%}
+        <a
+          href="{{ part.url }}"
+          aria-label="{{ part.title }}"
+          class="px-5 py-3 mx-1">
+          {{ part.title }}
+        </a>
+      {%- else -%}
+        <span class="px-5 py-3 mx-1">{{ part.title }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if pagination.next -%}
+      <a
+        href="{{ pagination.next.url }}"
+        aria-label="{{ 'general.next' | t }}"
+        class="px-5 py-3 mx-1">
+        {% render 'icon-arrow-right' %}
+      </a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

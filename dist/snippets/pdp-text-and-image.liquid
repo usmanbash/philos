@@ -1,0 +1,66 @@
+{% doc %}
+	Renders "Text and Image" section in product variant gallery.
+
+  @param {string} text - The text for the section
+  @param {string} image - The image source
+  @param {boolean} is_reversed - A boolean to determine if the text and image should be reversed
+	
+  @example
+  {% render 'pdp-text-and-image',
+    text: 'This is the text',
+    image: 'image.jpg',
+    is_reversed: true
+  %}
+
+{% enddoc %}
+
+{%- liquid
+	# Set the is_reversed flag to the value passed in or default to false
+	assign is_reversed = is_reversed | default: false
+
+	# Set the default classes for the text and image wrappers based on the reversed flag
+	# if reversed is true, the text will be on the left and the image on the right
+	if is_reversed
+		assign text_content_wrapper_classes = 'xl:col-start-1 xl:col-span-5 lg:pr-20'
+		assign image_wrapper_classes = 'xl:col-start-6 xl:col-span-7'
+	else
+		assign text_content_wrapper_classes = 'xl:col-start-8 xl:col-span-5 xl:text-right xl:pl-20'
+		assign image_wrapper_classes = 'xl:col-start-1 xl:col-span-7'
+	endif
+-%}
+<section
+	x-data="pdpTextAndImage"
+	class="text-and-image relative w-full px-5 sm:px-10 md:pr-0 my-14 text-black">
+	<div
+    data-scroll
+    data-scroll-repeat
+    data-scroll-call="inViewportAnimation"
+    class="grid grid-cols-1 xl:grid-cols-12">
+		
+    {%- comment -%} Image {%- endcomment -%}
+		<div class="text-and-image__image-wrapper row-span-full {{ image_wrapper_classes }}">
+			{%- if image != blank -%}
+        {%- render 'scale-down-image',
+          image: image,
+          alt: text,
+          imgRatio: 0.73,
+          animation_preset: animation_preset
+        -%}
+			{%- endif -%}
+		</div>
+
+		{%- comment -%} Text {%- endcomment -%}
+		<div
+		  class="text-and-image__text-content-wrapper row-span-full {{ text_content_wrapper_classes }} pt-8 xl:pt-0">
+			{%- if text != blank -%}
+				<div
+				  data-animate
+			    data-preset="fade"
+			    data-to='{ "delay": 0.2 }'
+          class="text-and-image__text content font-ivar text-18">
+					{{ text |  metafield_tag }}
+				</div>
+			{%- endif -%}
+		</div>
+	</div>
+</section>

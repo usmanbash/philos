@@ -1,0 +1,324 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "template": {
+      "type": "template-legal",
+      "blocks": {
+        "subtitle-most-asked": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "FREQUENTLY ASKED QUESTIONS"
+          }
+        },
+        "page_subtitle_BKjnRz": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "Shipping & Delivery"
+          }
+        },
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Which countries does Philos ship to?",
+            "answer": "<p>Please see the complete list of countries Philos ships to on the <a href=\"\/pages\/shipping\" target=\"_blank\" title=\"Shipping\">Shipping page<\/a>.<\/p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long will it take to receive my order?",
+            "answer": "<p>For estimated delivery times, please visit the Philos <a href=\"\/pages\/shipping\" target=\"_blank\" title=\"Shipping\">Shipping page<\/a>.<\/p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "I think my package is lost, what do I do?",
+            "answer": "<p>Philos aims to provide the best service. If your package appears lost or arrives damaged, <a href=\"\/pages\/contact\" target=\"_blank\" title=\"Contact\">please contact the Philos Customer Support team<\/a> so you can be helped as soon as possible.<\/p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why does Philos not offer worldwide shipping?",
+            "answer": "<p>Philos is working on expanding the shipping coverage and hopes to offer worldwide shipping soon.<\/p>"
+          }
+        },
+        "faq_item_QjpVFD": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I use a PO Box for my delivery address?",
+            "answer": "<p>Philos currently does not ship to PO Boxes.<\/p>"
+          }
+        },
+        "faq_item_6V8D7H": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What courier providers does Philos use?",
+            "answer": "<p>Orders outside the Netherlands are shipped with UPS, while deliveries within the Netherlands are handled by PostNL.<\/p>"
+          }
+        },
+        "page_subtitle_6mcXtc": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "Returns"
+          }
+        },
+        "faq_item_aaATTP": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I return my order?",
+            "answer": "<p>Yes, you can return unused products within 30 days of receiving them. For details on how to process your return, please review the Philos Returns Policy on the <a href=\"\/pages\/returns\" target=\"_blank\" title=\"Returns\">Returns page<\/a>.<\/p>"
+          }
+        },
+        "faq_item_Hm9Gef": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I return my order?",
+            "answer": "<p>You can return products within 30 days of receiving them. Items can be returned in-store during opening hours with your order number or receipt, or by <a href=\"\/pages\/contact\" target=\"_blank\" title=\"Contact\">contacting the Philos Customer Support team<\/a> with your order number to initiate the return. Ensure the items are properly packed and in their original condition. Once Philos receives the returned products, your refund will be processed.<\/p>"
+          }
+        },
+        "faq_item_hJRTka": {
+          "type": "faq_item",
+          "settings": {
+            "question": "I returned my order but have not received my refund yet.",
+            "answer": "<p>If it has been more than 14 days since you notified Philos of your return and you have not received your refund, please <a href=\"\/pages\/contact\" target=\"_blank\" title=\"Contact\">contact the Philos Customer Support team<\/a> for assistance.<\/p>"
+          }
+        },
+        "faq_item_kQ9xUR": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does it take to receive my refund?",
+            "answer": "<p>Your refund will be processed no later than 14 days after Philos receives your return notice. The amount will be refunded to the same payment method used for the original purchase.<\/p>"
+          }
+        },
+        "page_subtitle_xJNy4n": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "Payments"
+          }
+        },
+        "faq_item_8LQ4dV": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Which payment methods does Philos accept?",
+            "answer": "<p>Philos accepts the following payment options:<\/p><ul><li>iDeal<\/li><li>Credit Cards: Mastercard, VISA, Maestro, American Express<\/li><li>PayPal<\/li><li>Apple Pay<\/li><li>Google Pay<\/li><li>Shop Pay<\/li><li>Union Pay<\/li><\/ul><p>While other credit cards are not directly accepted, you can add them to your PayPal account and pay through PayPal on the Philos website.<\/p>"
+          }
+        },
+        "faq_item_FAVzFQ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "In what currency can I make my payment?",
+            "answer": "<p>You can make payments in the following currencies based on your location:<\/p><ul><li>EUR: Netherlands, Europe, and Rest of the World.<\/li><li>HUF, CZK, BGN, RON, PLN, GBP, SEK, CHF, DKK: Other European countries.<\/li><li>USD: United States.<\/li><li>CAD: Canada.<\/li><li>GBP: United Kingdom.<\/li><\/ul>"
+          }
+        },
+        "faq_item_Qyzmta": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will I have to pay import duties?",
+            "answer": "<p>For orders shipped to the UK, US, and Canada, import duties may apply depending on local customs regulations. While taxes are included in the price, any additional import duties are the responsibility of the customer and are not covered by Philos. We recommend checking with your local customs office for more information on potential duties before placing your order.<\/p>"
+          }
+        },
+        "faq_item_pj9eTt": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What can I do if my payment has failed?",
+            "answer": "<p>Payment failures can happen for various reasons. Please <a href=\"\/pages\/contact\" title=\"Contact\">contact the Philos Customer Service team<\/a> for assistance.<\/p>"
+          }
+        },
+        "faq_item_WUtpgF": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where can I find my invoices?",
+            "answer": "<p>After placing an order, you will receive an order summary in your confirmation email. If you need an invoice, <a href=\"\/pages\/contact\" title=\"Contact\">reach out to the Philos Customer Service team<\/a>.<\/p>"
+          }
+        },
+        "faq_item_GbxMWx": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does it take to receive my refund?",
+            "answer": "<p>Refunds may take up to 14 days to process, depending on your bank. The refund will be returned to the same account used for payment.<\/p>"
+          }
+        },
+        "page_subtitle_nWNGPE": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "My Order"
+          }
+        },
+        "faq_item_LGDPKR": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I place an order?",
+            "answer": "<p>To place an order, select the product(s) you would like to buy by clicking “Add to Cart.” You can either continue shopping or proceed to checkout. When you are ready, go to your shopping cart and click “Checkout.” Enter your contact information and shipping address, then choose your preferred shipping method. Next, provide your credit card details, select your billing address, and finalize your order.<\/p>"
+          }
+        },
+        "faq_item_7rhRJK": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why can I not add certain products to my cart?",
+            "answer": "<p>If you are unable to add specific products to your cart, it means those items are currently sold out. Feel free <a href=\"\/pages\/contact\" title=\"Contact\">to contact the Philos Customer Support Team<\/a>, and you will be notified when the item is back in stock.<\/p>"
+          }
+        },
+        "faq_item_JVaKaa": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How can I track my order?",
+            "answer": "<p>You will receive a Track and Trace code once your order has been shipped.<\/p>"
+          }
+        },
+        "faq_item_aLHdkJ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How will I know if my order has been placed and is being processed?",
+            "answer": "<p>After placing your order, you will receive a confirmation email, indicating that Philos has received your order and is in the process of fulfilling it.<\/p>"
+          }
+        },
+        "page_subtitle_iEMRPM": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "Sizing"
+          }
+        },
+        "faq_item_fd73bi": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I know what size I am? ",
+            "answer": "<p>Please consult the sizing chart for the specific item you are interested in. Philos Running Clothing is true to size, but if you are uncertain about which size to select, do not hesitate to <a href=\"\/pages\/contact\" title=\"Contact\">reach out to the Philos Customer Support team<\/a> for assistance.<\/p>"
+          }
+        },
+        "page_subtitle_zXJheP": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "Care"
+          }
+        },
+        "faq_item_dGwKrB": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How should I care form my Philos Running apparel? ",
+            "answer": "<p>To care for your Philos Running apparel, machine wash cold without fabric softener, hang to dry, and avoid ironing, dry cleaning, bleaching, or tumble drying.<\/p>"
+          }
+        },
+        "page_subtitle_NNN8ng": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "Transparency"
+          }
+        },
+        "faq_item_a9MH3g": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where are the fabrics sourced?",
+            "answer": "<p>The fabrics used for the Philos Running apparel are sourced from the south of France.<\/p>"
+          }
+        },
+        "faq_item_wCh7qV": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where are the Philos products manufactured?",
+            "answer": "<p>The Philos running shoes are made in Italy, while the clothing is expertly crafted in Portugal.<\/p>"
+          }
+        },
+        "page_subtitle_GXyVir": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "Changes & Cancellations"
+          }
+        },
+        "faq_item_BDdV8F": {
+          "type": "faq_item",
+          "settings": {
+            "question": "I just placed an order; can I change or cancel it?",
+            "answer": "<p>If you need to modify or cancel your order, <a href=\"\/pages\/contact\" title=\"Contact\">please contact the Philos Customer Support team as soon as possible<\/a>. Depending on whether your order has already been dispatched, Philos can assist with modifications or cancellations for orders that have not yet been processed.<\/p>"
+          }
+        },
+        "faq_item_eXdzcb": {
+          "type": "faq_item",
+          "settings": {
+            "question": "I received my order, but it is defective. What should I do?",
+            "answer": "<p>If you find that your order is defective, <a href=\"\/pages\/contact\" title=\"Contact\">please contact the Philos Customer Support team<\/a>, and you will be guided through the next steps.<\/p>"
+          }
+        },
+        "faq_item_nDmkgn": {
+          "type": "faq_item",
+          "settings": {
+            "question": "I received the wrong order. What should I do?",
+            "answer": "<p>If you received the wrong order, <a href=\"\/pages\/contact\" target=\"_blank\" title=\"Contact\">please let us know right away.<\/a> Afterward, you will need to return the incorrect order and place a new one.<\/p>"
+          }
+        },
+        "page_subtitle_CAyDi9": {
+          "type": "page_subtitle",
+          "settings": {
+            "subtitle": "Contact"
+          }
+        },
+        "faq_item_6NhwGw": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How can I contact Customer Support?",
+            "answer": "<p>For the fastest response, please leave your question in the <a href=\"\/pages\/contact\" target=\"_blank\" title=\"Contact\">contact form<\/a> and the Philos Customer Support team will be happy to assist you.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "subtitle-most-asked",
+        "page_subtitle_BKjnRz",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_item_QjpVFD",
+        "faq_item_6V8D7H",
+        "page_subtitle_6mcXtc",
+        "faq_item_aaATTP",
+        "faq_item_Hm9Gef",
+        "faq_item_hJRTka",
+        "faq_item_kQ9xUR",
+        "page_subtitle_xJNy4n",
+        "faq_item_8LQ4dV",
+        "faq_item_FAVzFQ",
+        "faq_item_Qyzmta",
+        "faq_item_pj9eTt",
+        "faq_item_WUtpgF",
+        "faq_item_GbxMWx",
+        "page_subtitle_nWNGPE",
+        "faq_item_LGDPKR",
+        "faq_item_7rhRJK",
+        "faq_item_JVaKaa",
+        "faq_item_aLHdkJ",
+        "page_subtitle_iEMRPM",
+        "faq_item_fd73bi",
+        "page_subtitle_zXJheP",
+        "faq_item_dGwKrB",
+        "page_subtitle_NNN8ng",
+        "faq_item_a9MH3g",
+        "faq_item_wCh7qV",
+        "page_subtitle_GXyVir",
+        "faq_item_BDdV8F",
+        "faq_item_eXdzcb",
+        "faq_item_nDmkgn",
+        "page_subtitle_CAyDi9",
+        "faq_item_6NhwGw"
+      ],
+      "settings": {
+        "hero_title": "Support",
+        "hero_text": "Need assistance? Our support team is here to help",
+        "hero_image": "shopify:\/\/shop_images\/legal_hero.png",
+        "sidebar_menu": "legal-menu",
+        "page_title": ""
+      }
+    }
+  },
+  "order": [
+    "template"
+  ]
+}

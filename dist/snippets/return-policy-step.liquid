@@ -1,0 +1,34 @@
+{%- comment -%}
+Snippet: Return Policy
+Description: Displays the return policy step with the order, title, and description.
+
+Accepts:
+  - total_steps: The total number of steps in the return policy.
+  - current_step: The order of the step.
+  - step_title: The title of the step.
+  - step_description: The description of the step.
+
+Usage:
+  {% render 'return-policy',
+    total_steps: '3',
+    current_step: '1',
+    step_title: 'Step Title',
+    step_description: 'Step Description'
+  %}
+{%- endcomment -%}
+
+{%- liquid
+  if current_step == total_steps
+    assign border_bottom = 'border-b'
+  endif
+-%}
+
+<div class="return-policy__step py-8 border-t {{ border_bottom }} border-gray">
+  <p class="mb-8 font-proximaNova text-24">
+    <span>{{ current_step }}:</span>
+    <span>{{ step_title }}</span>
+  </p>
+  <div class="font-proximaNova text-16">
+    {{ step_description }}
+  </div>
+</div>

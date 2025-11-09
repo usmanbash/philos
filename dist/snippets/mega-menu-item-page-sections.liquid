@@ -1,0 +1,74 @@
+{%- comment -%}
+Snippet: Mega Menu Item: Page Sections
+
+Usage:
+{% render 'mega-menu-item-page-sections', block: block %}
+
+Accepts:
+- block: the block object
+
+{%- endcomment -%}
+<div class="mega-menu-item mega-menu-item--page-sections flex flex-col lg:flex-row h-full w-full">
+  <div class="lg:w-1/4 pr-4">
+    {%- comment -%} First Column: Content{%- endcomment -%}
+    <div class="flex flex-col w-full h-full justify-end">
+
+      <h2 class="font-ivar text-46 mb-8">{{ block.settings.headline }}</h2>
+
+
+      <div class="text-16 pr-32 mb-8">{{ block.settings.text }}</div>
+
+      <a
+        href="{{ block.settings.url }}"
+        aria-label="{{ 'general.check_out' | t }} {{ block.settings.cta_text | escape }}"
+        class="text-24">
+        <div class="link link--reversed">
+          {{ block.settings.cta_text }}
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  {%- comment -%} Article Cards {%- endcomment -%}
+  <div class="w-3/4 flex flex-col lg:flex-row">
+    {%- comment -%}
+      Iterates through a predefined set (1 to 3) to handle up to three sections. This loop constructs
+      the necessary keys to access each section's specific settings (label, ID, and image).
+    {%- endcomment -%}
+    {% for i in (1..3) %}
+      {%- comment -%}
+        The 'capture' tag is used to dynamically create the setting keys for each section's label, ID, and image.
+        It concatenates 'section_', the current loop index, and the setting type (label, ID, image) to form the key.
+        This allows us to access these settings from the block dynamically based on the loop iteration.
+      {%- endcomment -%}
+      {% capture section_label_key %}section_{{ i }}_label{% endcapture %}
+      {% capture section_id_key %}section_{{ i }}_id{% endcapture %}
+      {% capture section_image_key %}section_{{ i }}_image{% endcapture %}
+
+      {%- comment -%}
+        Using the dynamically created keys from above, we assign the corresponding values from the block's settings
+        to variables. This step effectively fetches the label, ID, and image for each section based on the loop index.
+      {%- endcomment -%}
+      {% assign section_label = block.settings[section_label_key] %}
+      {% assign section_id = block.settings[section_id_key] %}
+      {% assign section_image = block.settings[section_image_key] %}
+
+      {%- comment -%}
+        Checks if the current section has a label defined. If so, it proceeds to render the section's content.
+        This condition ensures we only display sections that have been configured.
+      {%- endcomment -%}
+      {% if section_label %}
+        <div class="lg:w-1/3 lg:ml-5 first:ml-0">
+          {%- comment -%}Add anchor to page url{%- endcomment -%}
+          {% assign url_with_anchor = block.settings.url | append: '#' | append: section_id %}
+          {% render 'menu-card',
+            image: section_image,
+            title: section_label,
+            page_url: url_with_anchor
+          %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

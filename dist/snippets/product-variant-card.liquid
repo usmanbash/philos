@@ -1,0 +1,241 @@
+{%- comment -%}
+Snippet: Product Variant Card
+This snippet is used to display a product variant card in the product grid (collection page).
+
+Accepts:
+  - _product: The product object
+  - first_color_variant: The first variant of the product with the specified color
+  - color: The color of the product variant
+  - sorted_sizes: An array of sizes that are available for the product variant
+  - color_option: The color option of the product
+  - size_option: The size option of the product
+  - is_menu: A boolean value to determine if the product variant card is rendered in the mega menu
+
+Usage:
+  {% render 'product-variant-card',
+    product: product,
+    first_color_variant: first_color_variant,
+    color: color,
+    sorted_sizes: sorted_sizes,
+    color_option: color_option,
+    size_option: size_option
+  %}
+NOTE:
+Not sure is it old or new docs, but it says that option1, option2 and option3 are depraceted and there is no replacement for them.
+@see https://shopify.dev/docs/api/liquid/objects/variant
+{%- endcomment -%}
+
+{% liquid
+  # Assign the URL of the product variant
+  assign variant_id = first_color_variant.id
+
+  # assign product_variant_url = product.url
+  assign product_variant_url = product.url | append: '?variant=' | append: variant_id
+
+  # SIZE GUIDE
+  assign size_guide_type = product.metafields.custom.size_guide.value
+  assign gallery_models = product.metafields.custom.gallery_models.value
+  assign measurement_disclaimer = product.metafields.custom.measurement_disclaimer.value
+
+  if size_guide_type.shoes == true
+    assign type = 'Shoes'
+  elsif size_guide_type.clothing == true
+    assign type = 'Clothing'
+  else
+    assign type = 'Clothing'
+  endif
+
+
+  # Assign classes
+  assign padding_classes = ''
+  assign color_classes = 'text-black'
+  assign image_scale = ''
+  if is_menu
+    assign padding_classes = 'px-2'
+    assign color_classes = 'text-white4'
+    assign image_scale = 'transition duration-500 ease-in-out transform hover:scale-105'
+  endif
+
+  assign currency_code = cart.currency.iso_code
+  assign currency_symbol = cart.currency.symbol
+
+  assign number_of_available_sizes = 0
+  if sorted_sizes != blank
+    assign number_of_available_sizes = sorted_sizes.size
+  endif
+
+  # if there are no available sizes, conditionally assign data attributes for quickAddToCart
+  assign data_variant_id = null
+  assign data_variant_inventory_quantity = null
+
+  unless number_of_available_sizes > 0
+    assign data_variant_id = first_color_variant.id
+    assign data_variant_inventory_quantity = first_color_variant.inventory_quantity
+  endunless
+%}
+
+{% liquid
+  # Hover over images
+  assign color_variant_galleries = first_color_variant.product.metafields.custom.color_variant_gallery.value
+
+  # Assign the product images
+  for metaobject in color_variant_galleries
+    assign color_value = metaobject.color.value
+    assign color_label = color_value.label | escape
+    if color_label == color
+      assign product_card_images = metaobject.product_card_images.value
+    endif
+  endfor
+%}
+
+<div
+  x-data='productVariantCard({
+    type: "{{ type }}",
+    galleryModels: {{ gallery_models | json }},
+    measurementDisclaimer: {
+      title: "{{ measurement_disclaimer.title }}",
+      text: "{{ measurement_disclaimer.text }}"
+    },
+    productCardImages: {{ product_card_images | json }},
+    productAvailable: {{ product.available |  default: false }},
+    firstColorVariantAvailable: {{ first_color_variant.available |  default: false }},
+    availableSizes: {{ number_of_available_sizes }}
+  })'
+  class="product-variant-card relative w-full {{ color_classes }}">
+  {%- comment -%} Card Body{%- endcomment -%}
+  <div class="card-body">
+    {%- comment -%} Render the product variant image, title, and price {%- endcomment -%}
+
+    <div class="relative overflow-hidden flex aspect-[.82]">
+      <div class="product-availability__wrapper text-16 absolute right-0 top-0 text-black z-10 p-4 w-full h-full flex flex-col justify-between items-end pointer-events-none">
+        <span class="product-availability-status">
+          {% render 'product-availability',
+            _product: product,
+            is_pdp: false,
+          %}
+        </span>
+
+        <div
+          class="quick-buy__wrapper w-[39px] h-[39px] z-10 pointer-events-auto"
+          :class="{ 'opacity-50 pointer-events-none': !availableSizes && !productAvailable }">
+          <button
+            x-ref="quickAtcBtn"
+            type="button"
+            aria-label="{{ 'general.quick_buy' | t }}"
+            {% if data_variant_id %}
+              data-variant-id="{{ data_variant_id }}"
+            {% endif %}
+            {% if data_variant_inventory_quantity %}
+              data-variant-inventory-quantity="{{ data_variant_inventory_quantity }}"
+            {% endif %}
+            :disabled="!availableSizes && !productAvailable"
+            class="quick-buy__btn flex items-center justify-center w-full h-full bg-gray rounded-full z-10"
+            @click.prevent='handleQuickAtcOrSizeSelector($event)'>
+            <span class="pointer-events-none">
+              {% render 'icon-plus' %}
+            </span>
+          </button>
+        </div>
+
+        {%- comment -%} Render the available sizes {%- endcomment -%}
+        <div
+          x-ref="isSizeSelectorOpened"
+          :class="{
+            'translate-y-0': !isSizeSelectorOpened,
+            '-translate-y-full': isSizeSelectorOpened,
+          }"
+          class="available-sizes__wrapper bg-white3 w-full lg:pb-5 pt-7 absolute left-0 bottom-auto top-full transition duration-500 z-20 pointer-events-auto"
+          @mouseleave="closeSizeSelector($event)"
+          @click.stop.prevent="closeSizeSelector($event)"
+          x-transition.duration.500ms>
+          <div class="flex items-center mb-4 text-black {{ padding_classes }}">
+            <div class="available-sizes__label text-16">{{ 'product.size_guide.select_eu_size' | t }}</div>
+            <button
+              type="button"
+              aria-label="{{ 'product.size_guide.title' | t }}"
+              @click.prevent='setSizeGuide'
+              class="available-sizes__size-guide-label link link--reversed ml-auto text-16 lg:text-14 xl:text-16 uppercase">
+              {{ 'product.size_guide.title' | t }}
+            </button>
+          </div>
+
+          <div class="available-sizes flex gap-5 text-16 lg:text-14 xl:text-16 {{ padding_classes }} overflow-x-auto invisible-scrollbar">
+            {% for size in sorted_sizes %}
+              {% assign available_variants = product.variants | where: size_option, size | where: color_option, color | where: 'available', true %}
+              {% if available_variants != blank %}
+                {%- assign variant = available_variants.first -%}
+                {%- assign available_variant_url = product.url | append: '?variant=' | append: variant.id  -%}
+                <a
+                  href="{{ available_variant_url }}"
+                  aria-label="{{ 'product.size_guide.select_eu_size' | t }} {{ size }}"
+                  class="size size--available inline-block text-black uppercase cursor-pointer"
+                  data-variant-inventory-quantity="{{ variant.inventory_quantity }}"
+                  data-variant-id="{{ variant.id }}"
+                  @click.stop.prevent='quickAddToCart($event)'>
+                  {{ size }}
+                </a>
+              {% else %}
+                <span class="size size--unavailable text-gray uppercase">{{ size }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="image-and-quick-buy__wrapper relative flex flex-col w-full h-full"
+        @mouseenter="showProductCardImages"
+        @mouseleave="resetProductImage">
+
+        <a
+          x-ref="productImageWrapper"
+          href="{{ product_variant_url }}"
+          aria-label="{{ 'general.check_out' | t }} {{ product.title | escape }}"
+          class="flex flex-col w-full h-full cursor-pointer">
+
+          <div class="product-variant-card__images relative flex flex-col w-full h-full bg-gray-100">
+            <div class="product-variant-card__image {{ image_scale }} absolute top-0 left-0 w-full h-full">
+            {% if first_color_variant.featured_image %}
+              <img
+                x-ref='productImage'
+                src='{{ first_color_variant.featured_image.src | image_url: width: image.width, format: 'webp' }}'
+                alt='{{ image.alt | strip_html | escape }}'
+                loading='lazy'
+                class='product-card-image featured absolute top-0 left-0 w-full h-full object-cover object-center opacity-100' />
+              {% else %}
+              <img
+                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                alt="Image Placeholder"
+                class="product-card-image featured absolute top-0 left-0 w-full h-full object-cover object-center opacity-100" />
+            {% endif %}
+            </div>
+
+            {% render 'product-card-images' %}
+          </div>
+
+        </a>
+      </div>
+
+    </div>
+
+    {%- comment -%} Render the product title and price {%- endcomment -%}
+    <div class="product-varaint-card__content flex flex-row flex-nowrap justify-between items-start pt-5 text-16 w-full">
+      {% liquid
+        assign product_title = product.title
+        if color != blank
+          assign product_title = product.title | append: ' | ' | append: color
+        endif
+      %}
+      <h3 class="product-title font-normal overflow-hidden truncate">
+        <a
+          href="{{ product_variant_url }}"
+          aria-label="{{ 'general.check_out' | t }} {{ product.title | escape }}">
+          {{ product_title }}
+        </a>
+      </h3>
+      {% comment %} @todo update price currency display {% endcomment %}
+      <span class="product-price ml-2">{{ first_color_variant.price | money_without_trailing_zeros }}</span>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,169 @@
+{%- doc -%}
+  Renders the mega menu.
+
+  @param {object} featured_nav_page - shopify page object.
+
+{%- enddoc -%}
+<div class="mega-menu hidden xl:flex flex-row items-center h-[4.5rem] w-full">
+
+  {%- comment -%} Primary Nav (horizontal) {%- endcomment -%}
+  <ul class="flex items-center h-full">
+    {% for block in section.blocks %}
+      {%- liquid
+        # Primary Nav ID: block.type + '-' + forloop.index, it is used to show/hide the dropdown.
+        # The ID has to be unique for each primary nav and to match the ID in the dropdown (dropdown_id).
+        assign primary_nav_id = block.type | append: '-' | append: forloop.index
+      -%}
+
+      {% comment %} skip announcement bar {% endcomment %}
+      {% if block.type == 'anouncement_bar' %}
+        {% continue %}
+      {% endif %}
+
+      {% comment %} Menu Items {% endcomment %}
+      {%- case block.type -%}
+
+        {% comment %} simple link {% endcomment %}
+        {% when 'link' %}
+          <li class="flex items-center h-full mr-5 xl:mr-6 last:mr-0">
+            <a
+              href="{{ block.settings.url }}"
+              aria-label="{{ 'general.check_out' | t }} {{ block.settings.label | escape }}"
+              class="link link--reversed text-nav-font font-medium uppercase cursor-pointer">
+              {{ block.settings.label | escape }}
+            </a>
+          </li>
+
+        {% comment %} menus {% endcomment %}
+        {%- else -%}
+          {%- liquid
+
+            assign superset_label = ''
+            assign page_url = ''
+
+            case block.type
+              when 'shop_menu'
+                assign page_url = block.settings.url | default: '#'
+
+              when 'collection_menu'
+                # Get the collection from the block settings
+                assign menu_collection = block.settings.collection
+                
+                # Get the url of the collection
+                assign page_url = menu_collection.url
+
+                # get number of products in the collection
+                assign total_products_count = menu_collection.products.size
+
+                # Products are grouped by color on collection page
+                # Count number of color variants in the collection
+                assign total_color_count = 0
+                for product in menu_collection.products
+                  # Reset product_color_count for each product
+                  assign product_color_count = 0
+                  for option in product.options_with_values
+                    if option.name == 'Color'
+                      assign product_color_count = option.values | size
+                    endif
+                  endfor
+
+                  # Accumulate the total color count across all products
+                  assign total_color_count = total_color_count | plus: product_color_count
+                endfor
+                
+                # Assign the total number of products color variants in the collection to superset_label
+                assign superset_label = total_color_count
+
+                # if number of colors is 1, then page_url is product page url
+                if total_color_count == 1
+                  assign page_url = menu_collection.products.first.url
+                endif
+
+              when 'page_sections_menu'
+                assign page_url = block.settings.url | default: '#'
+                # Determine if the current link is the featured navigation page
+                if page_url contains featured_nav_page
+                  assign superset_label = '∞'
+                endif
+              
+              when 'blog_menu'
+                assign page_url = blogs[block.settings.blog].url
+            
+            endcase
+          -%}
+
+          <li
+            class="flex items-center h-full mr-5 xl:mr-6 last:mr-0"
+            @mouseenter="openMenu('{{ primary_nav_id }}')"
+            @mouseleave="closeMenu()"
+            @click="closeMenu()">
+            <div class="label-wrapper relative">
+              <a
+                href="{{ page_url }}"
+                aria-label="{{ 'general.check_out' | t }} {{ block.settings.label | escape }}"
+                class="link link--reversed text-nav-font font-medium uppercase cursor-pointer">
+                {{ block.settings.label | escape }}
+              </a>
+              {%- if superset_label != blank and superset_label != 0 -%}
+                <span class="align-top text-[.7em] -translate-y-1/2">{{ superset_label }}</span>
+              {%- endif -%}
+            </div>
+          </li>
+
+      {%- endcase -%}
+    {% endfor %}
+  </ul>
+
+  {%- comment -%} Dropdown {%- endcomment -%}
+  {% for block in section.blocks %}
+    
+    {% comment %} skip announcement bar {% endcomment %}
+    {% if block.type == 'anouncement_bar' %}
+      {% continue %}
+    {% endif %}
+    
+    {%- comment -%}
+      Dropdown ID: block.type + '-' + forloop.index, it is used to show/hide the dropdown.
+      The ID has to be unique for each dropdown and to match the ID in the primary nav (primary_nav_id).
+    {%- endcomment -%}
+    {%- assign dropdown_id = block.type | append: '-' | append: forloop.index -%}
+    <div
+      x-show="isMenuOpen('{{ dropdown_id }}')"
+      x-transition:leave='transition duration-300 ease-in pointer-events-none delay-75'
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      x-transition:enter="transition duration-200 ease-out"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      @mouseenter="openMenu('{{ dropdown_id }}')"
+      @mouseleave="closeMenu()">
+
+      {% comment %} Dropdown {% endcomment %}
+      <div 
+        class="absolute left-0 top-full w-screen z-50 bg-charcoal"
+        @click="closeMenu()" >
+        <div class="flex h-full w-full px-10 pt-8 pb-20 text-white4">
+          {% liquid
+            case block.type
+              when 'shop_menu'
+                render 'mega-menu-item-shop', block: block
+              
+              when 'collection_menu'
+                render 'mega-menu-item-collection', block: block
+              
+              when 'page_menu'
+                render 'mega-menu-item-pages', block: block
+              
+              when 'page_sections_menu'
+                render 'mega-menu-item-page-sections', block: block
+              
+              when 'blog_menu'
+                render 'mega-menu-item-blog', block: block
+            
+            endcase
+          %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,15 @@
+{% comment %}
+Snippet: Section Headline
+Description: This snippet renders a section headline
+
+Accepts:
+- title (String): The headline text to display
+{% endcomment %}
+
+{%- if title != blank -%}
+  <div class="py-4">
+    <h2 class="font-ivar text-30 lg:text-46">
+      {{ title }}
+    </h2>
+  </div>
+{%- endif -%}

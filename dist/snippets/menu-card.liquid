@@ -1,0 +1,54 @@
+{%- comment -%}
+Snippet: Menu Card
+Description: A simple card with an image and title (for mega menu)
+
+Usage:
+{% render 'menu-card',
+  page_type: 'page',
+  image: image,
+  title: label,
+  page_url: url
+%}
+
+{%- endcomment -%}
+
+{% liquid
+  # Set the image source based on the type of content
+  # Page type 'page' uses the metafield image type file, so in that case
+  # filter is file_url, otherwise filter is image_url
+  assign image_src = image | image_url
+
+  if page_type != blank
+    case page_type
+      when 'page'
+        assign image_src = image | file_url
+      else
+        assign image_src = image | image_url
+    endcase
+  endif
+%}
+
+<div class="menu-card flex flex-col h-full">
+  <a
+    href="{{ page_url }}"
+    aria-label="{{ 'general.check_out' | t }} {{ title | escape }}"
+    class="inline-block">
+    {% if image != blank %}
+    <div class="image_wrapper overflow-hidden flex aspect-[.82]">
+      <img
+        src="{{ image_src }} "
+        alt="{{ title }}"
+        loading="lazy"
+        class="w-full h-full object-cover">
+    </div>
+    {% endif %}
+  </a>
+
+  <a
+    href="{{ page_url }}"
+    aria-label="{{ 'general.check_out' | t }} {{ title | escape }}"
+    class="inline-block pt-4 pr-2">
+    <h3 class="inline text-16 link link--line pb-0.5">{{ title }}</h3>
+    <h3 class="opacity-0 text-16">{{ title }}</h3>
+  </a>
+</div>

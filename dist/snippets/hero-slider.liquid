@@ -1,0 +1,72 @@
+{%- comment -%}
+Snippet: Hero Slider
+
+Slider settings
+  slides: Array of slides (blocks)
+{%- endcomment -%}
+
+<div 
+  x-data="heroSlider"
+  class="hero-slider slider-wrapper relative w-full h-full"
+>
+  <div 
+    x-ref="sliderEl" 
+    class="swiper-container relative w-full h-full"
+  >
+    {%- comment -%} Slider {%- endcomment -%}
+    <div class="swiper-wrapper"> 
+      {%- if slides.size > 0 -%}
+        {%- for block in slides -%}
+          <div class="swiper-slide relative h-full">
+            <div class="flex flex-col h-full">
+            
+              {% comment %} Slide Media {% endcomment %}
+              <div class="relative w-full flex-grow">
+                {%- case block.type -%}
+                  
+                  {%- comment %} Image {% endcomment -%}
+                  {%- when 'image' -%}
+                    {%- render 'hero-slide-image', data: block.settings -%}
+
+                  {%- comment %} Image {% endcomment -%}
+                  {%- when 'video' -%}
+                    {%- render 'hero-slide-video', data: block.settings -%}
+
+                {%- endcase -%}
+
+                {% comment %} 
+                {%- if block.settings.cta != blank -%}
+                  <div 
+                    data-href="{{ block.settings.cta.url }}" 
+                    class="hero-slide-clickable absolute top-0 left-0 w-full h-full z-0"
+                    @click="handleSlideClick">
+                  </div>
+                {%- endif -%} 
+                {% endcomment %}
+              </div>
+            
+              {% comment %} Slide Text (desktop) {% endcomment %}
+              <div class="hidden md:flex md:flex-row md:justify-between md:items-start md:h-28 py-4">
+                <div class="w-1/2 mr-auto">
+                  {%- if block.settings.title != blank -%}
+                  <h3 class="font-ivar text-black text-20 lg:text-30">
+                    {{ block.settings.title }}
+                  </h3>
+                  {%- endif -%}
+                </div>
+                
+                <div class="w-1/4 text-black text-base text-right">
+                  {%- if block.settings.text != blank -%}
+                    {{ block.settings.text }}
+                  {%- endif -%}
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</div>

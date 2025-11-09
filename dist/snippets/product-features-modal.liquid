@@ -1,0 +1,108 @@
+{%- comment -%}
+Snippet: Product Features Modal
+
+Description: This snippet renders the product features.
+
+{%- endcomment -%}
+
+{%- liquid
+  # Product Features
+  assign product_features = product.metafields.custom.product_features.value
+-%}
+
+<div 
+  x-data='productFeaturesModal({ 
+    productFeaturesHandles: {{ product_features | map: 'system' | map: 'handle' | json }} 
+  })'
+  class="product-features-modal"> 
+
+  <div 
+    x-show="modalOpen"
+    role="dialog" 
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    class="fixed inset-0 z-50 overflow-y-auto">
+
+    {% comment %} BACKDROP {% endcomment %}
+    <div 
+      x-cloak
+      x-show="modalOpen"
+      @click="closeModal()"
+      x-transition:enter="transition ease-out duration-300 transform"
+      x-transition:enter-start="opacity-0" 
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200 transform"
+      x-transition:leave-start="opacity-100" 
+      x-transition:leave-end="opacity-0"
+      aria-hidden="true"
+      class="modal__backdrop fixed inset-0 transition-opacity bg-black/25" >
+    </div>
+
+    <div class="flex items-center justify-center min-h-screen px-4 sm:p-0">
+      <div 
+        x-cloak 
+        x-show="modalOpen" 
+        x-transition:enter="transition ease-out duration-300 transform"
+        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
+        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+        x-transition:leave="transition ease-in duration-200 transform"
+        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" 
+        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        class="modal_panel w-full max-w-xl 2xl:max-w-2xl p-6 md:p-8 pt-4 my-20 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
+
+        <div class="flex justify-end pb-2">
+          <button 
+            type="button" 
+            aria-label="Close" 
+            class="ml-auto" 
+            @click="closeModal()">
+            <span class="link link--line text-16">Close</span>
+          </button>
+        </div>
+
+        <div class="feature-content py-6 relative">
+          {%- if product_features -%}
+          <div 
+            x-ref="sliderEl" 
+            class="swiper-container">
+            <div class="swiper-wrapper"> 
+            {%- for feature in product_features -%}
+              <div 
+                class="swiper-slide">
+                <div class="feature-item text-center" >
+                  <h3 
+                    id="modal-title"
+                    class="text-24 uppercase mb-4">
+                    {{ feature.title | escape }}
+                  </h3>
+                  <div class="feature-description prose mx-auto">
+                    {%- if feature.description != blank -%}
+                      {{ feature.description | metafield_tag }}
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+        </div>
+
+        <div class="flex flex-wrap justify-center border-t border-gray pt-6 md:pt-8">
+          {%- if product_features %}
+            {%- for feature in product_features -%}
+              <span
+                data-index="{{ forloop.index0 }}"
+                data-handle="{{ feature.system.handle }}"
+                class="product-feature__btn text-14 text-center border border-gray uppercase px-5 py-2 m-0.5 text-black rounded-lg cursor-pointer"
+                @click="setActiveFeature( {{ forloop.index0 }} )">
+                {{ feature.title.value | escape }}
+              </span>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

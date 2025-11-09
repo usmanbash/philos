@@ -1,0 +1,824 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "home_hero_logo_MQKJAK": {
+      "type": "home-hero-logo",
+      "blocks": {
+        "image_UbrAUU": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/philos_running_homepage_3-01.jpg",
+            "image_mobile": "shopify://shop_images/Philos_Running_Homepage_Mobile.jpg",
+            "headline": "Fall Running 2025",
+            "text": "<p>Precision-tailored for running</p>",
+            "cta": "shopify://collections/shop-all",
+            "cta_text": "SHOP NOW"
+          }
+        }
+      },
+      "block_order": [
+        "image_UbrAUU"
+      ],
+      "name": "Home Hero Logo",
+      "settings": {}
+    },
+    "home_hero_iqPNje": {
+      "type": "home-hero",
+      "blocks": {
+        "image_WF3wje": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Philos_Running_Home_1.jpg",
+            "image_mobile": "shopify://shop_images/Philos_Running_Black_Nylon_Wind_Jacket-11.jpg",
+            "headline": "Fall Running 2025",
+            "title": "",
+            "text": "<p>Lightweight, breathable, and precision tailored for running</p>",
+            "cta": "shopify://collections/shop-all",
+            "cta_text": "SHOP NOW"
+          }
+        },
+        "image_bbUTcD": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Philos_Running_Home_2.jpg",
+            "image_mobile": "shopify://shop_images/Philos_Running_Home_3.jpg",
+            "headline": "Coming Soon: Olive Green",
+            "title": "",
+            "text": "",
+            "cta": "shopify://collections/new-in",
+            "cta_text": "THURSDAY"
+          }
+        },
+        "image_t9fTJt": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_11.png",
+            "image_mobile": "shopify://shop_images/Philos_Running_Jacket_Womens-06_1.jpg",
+            "headline": "Layers for the Elements",
+            "title": "",
+            "text": "<p>Introducing the Wind Jacket & Vest</p>",
+            "cta": "shopify://collections/new-in",
+            "cta_text": "SHOP NOW"
+          }
+        },
+        "video_XVXTUE": {
+          "type": "video",
+          "disabled": true,
+          "settings": {
+            "video": "shopify://files/videos/PHILOS LAUNCH VIDEO SQUARE 1080p.mp4",
+            "video_mobile": "shopify://files/videos/PHILOS LAUNCH VIDEO.mp4",
+            "headline": "purity in performance 2",
+            "title": "",
+            "text": "<p>PHILOS RUNNING SPRING 2025</p>",
+            "cta": "",
+            "cta_text": "SHOP ALL"
+          }
+        },
+        "image_7rD4FB": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Nena_final.jpg",
+            "image_mobile": "shopify://shop_images/Untitled_design_6.jpg",
+            "headline": "summer running apparel",
+            "title": "",
+            "text": "<p>RUNNING SHORTS, BRAS, TOPS</p>",
+            "cta": "shopify://collections/running-apparel",
+            "cta_text": "SHOP NOW"
+          }
+        }
+      },
+      "block_order": [
+        "image_WF3wje",
+        "image_bbUTcD",
+        "image_t9fTJt",
+        "video_XVXTUE",
+        "image_7rD4FB"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "press_MAkNUD": {
+      "type": "press",
+      "blocks": {
+        "logo_Qy84wB": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/PHILOS_PRESS_ICONS-03.png",
+            "link": "",
+            "alt": ""
+          }
+        },
+        "logo_f8zcVR": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/PHILOS_PRESS_ICONS-01_4870804a-67af-43a1-8767-be767547eccc.png",
+            "link": "",
+            "alt": ""
+          }
+        },
+        "logo_hEjeCb": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/PHILOS_PRESS_ICONS-04.png",
+            "link": "",
+            "alt": ""
+          }
+        },
+        "logo_3VEKck": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/PHILOS_PRESS_ICONS-02.png",
+            "link": "",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_Qy84wB",
+        "logo_f8zcVR",
+        "logo_hEjeCb",
+        "logo_3VEKck"
+      ],
+      "settings": {
+        "title": "Press",
+        "text": "<p>\"Is it a temple? Is it a running store?<br/>The first Philos store is both.\"</p>",
+        "show_text": false,
+        "number_of_columns": 5,
+        "padding": "small"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "New Releases",
+        "link_text": "",
+        "featured_collection": "new-in"
+      }
+    },
+    "featured_pages_list_6yMxXa": {
+      "type": "featured-pages-list",
+      "blocks": {
+        "featured_pages_list_item_nRArdw": {
+          "type": "featured_pages_list_item",
+          "settings": {
+            "link_url": "shopify://collections/tops",
+            "link_name": "running tops",
+            "image": "shopify://shop_images/Philos-Running-Tops.gif"
+          }
+        },
+        "featured_pages_list_item_xc3MHY": {
+          "type": "featured_pages_list_item",
+          "settings": {
+            "link_url": "shopify://collections/bottoms",
+            "link_name": "running bottoms",
+            "image": "shopify://shop_images/Philos-Running-Bottoms.gif"
+          }
+        },
+        "featured_pages_list_item_KzWqnD": {
+          "type": "featured_pages_list_item",
+          "settings": {
+            "link_url": "shopify://collections/accessories",
+            "link_name": "running accessories",
+            "image": "shopify://shop_images/Philos-Running-Accessories.gif"
+          }
+        }
+      },
+      "block_order": [
+        "featured_pages_list_item_nRArdw",
+        "featured_pages_list_item_xc3MHY",
+        "featured_pages_list_item_KzWqnD"
+      ],
+      "name": "Featured Pages List",
+      "settings": {
+        "padding": "sm"
+      }
+    },
+    "shop_categories_D6Ujdm": {
+      "type": "shop-categories",
+      "blocks": {
+        "collection_card_fT7exx": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "bottoms",
+            "image": "shopify://shop_images/PHILOS_WOMENS_RUNNING_NYC-04.jpg",
+            "title": "Shorts",
+            "description": "Precision tailored for running",
+            "cta_text": "Shop Shorts"
+          }
+        },
+        "collection_card_CirzHE": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "tops",
+            "image": "shopify://shop_images/Philos_Soho_DSC3659_logo.jpg",
+            "title": "Tops",
+            "description": "Sleek, refined, supportive",
+            "cta_text": "Shop Tops"
+          }
+        },
+        "collection_card_xyxEwA": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "accessories",
+            "image": "shopify://shop_images/Philos_Soho_DSC3545.jpg",
+            "title": "Caps",
+            "description": "Wind, rain, and SPF protection",
+            "cta_text": "Shop Caps"
+          }
+        }
+      },
+      "block_order": [
+        "collection_card_fT7exx",
+        "collection_card_CirzHE",
+        "collection_card_xyxEwA"
+      ],
+      "name": "Shop Categories",
+      "settings": {
+        "title": ""
+      }
+    },
+    "featured_pages_list_bieUgD": {
+      "type": "featured-pages-list",
+      "blocks": {
+        "featured_pages_list_item_gaC6nW": {
+          "type": "featured_pages_list_item",
+          "settings": {
+            "link_url": "",
+            "link_name": "RUNNING TOPS"
+          }
+        },
+        "featured_pages_list_item_gX6n7F": {
+          "type": "featured_pages_list_item",
+          "settings": {
+            "link_url": "",
+            "link_name": "RUNNING BOTTOMS"
+          }
+        },
+        "featured_pages_list_item_N866W3": {
+          "type": "featured_pages_list_item",
+          "settings": {
+            "link_url": "",
+            "link_name": "RUNNING ACCESSORIES"
+          }
+        }
+      },
+      "block_order": [
+        "featured_pages_list_item_gaC6nW",
+        "featured_pages_list_item_gX6n7F",
+        "featured_pages_list_item_N866W3"
+      ],
+      "disabled": true,
+      "name": "Featured Pages List",
+      "settings": {
+        "padding": "md"
+      }
+    },
+    "fabric_eDDdxB": {
+      "type": "fabric",
+      "blocks": {
+        "fabric_detail_CegbLA": {
+          "type": "fabric_detail",
+          "settings": {
+            "title": "Engineered for running",
+            "description": "<p>Our award-winning <strong>Aéras™ fabric</strong> is made in France using specially treated nylon and elastane fibers –– super-smooth on the skin, light compression, breathable, sweat-wicking, sleek on the body, and responsibly-made.<br/><br/>Aéras™ is matte (not shiny!), contains no polyester, and is not coated in any chemical finishings. It is pure performance fabric.</p>"
+          }
+        },
+        "fabric_detail_nEbBj3": {
+          "type": "fabric_detail",
+          "settings": {
+            "title": "Super-smooth second-skin feel",
+            "description": "<p>The ultra-smooth surface created using new knitting technology offers a <strong>second-skin feel that prevents chafing</strong> over long distances. Every detail considered so you can stay in the flow, distraction-free, and focus on your run.</p>"
+          }
+        },
+        "fabric_detail_UzdtF7": {
+          "type": "fabric_detail",
+          "settings": {
+            "title": "Every detail considered",
+            "description": "<p><strong>Sweat-wicking & fast-drying</strong><br/>Built with <strong>moisture management fibers</strong>, Aéras™ actively pulls sweat away from the skin to keep you comfortable and dry on your daily runs all the way through to race day.<br/><br/><strong>Stretch & SPF protection</strong><br/>The <strong>4-way performance stretch</strong> provides gentle compression that supports without restriction, moving comfortably with your body. Integrated <strong>SPF protection</strong> shields you from the elements.<br/></p>"
+          }
+        },
+        "fabric_detail_rQi4jB": {
+          "type": "fabric_detail",
+          "settings": {
+            "title": "Responsibly made in France",
+            "description": "<p>We sought out the finest performance materials in world and found them in France. The fabrics are made with a focus on the highest level of quality while also adhering to French and EU climate objectives and laws.<br/><br/>Aéras™ <em>(Greek for “air”) </em>embodies our design philosophy of purity in performance and is designed for your daily run all the way up to race day.</p>"
+          }
+        },
+        "fabric_detail_nzay9M": {
+          "type": "fabric_detail",
+          "disabled": true,
+          "settings": {
+            "title": "4-Way Stretch & SPF Protection",
+            "description": "<p>The <strong>4-way performance stretch</strong> provides gentle compression that supports without restriction, moving comfortably with your body. Integrated <strong>SPF protection</strong> shields you from the elements.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "fabric_detail_CegbLA",
+        "fabric_detail_nEbBj3",
+        "fabric_detail_UzdtF7",
+        "fabric_detail_rQi4jB",
+        "fabric_detail_nzay9M"
+      ],
+      "name": "Fabric",
+      "settings": {
+        "section_title": "",
+        "card_headline": "<p>Introducing Aéras™ –<br/>Our signature fabric engineered for running & precision tailored for women.</p>",
+        "card_image": "shopify://shop_images/PHILOS-5609.jpg"
+      }
+    },
+    "headline_and_image_BN9Ama": {
+      "type": "headline-and-image",
+      "blocks": {
+        "headline_9bxLUb": {
+          "type": "headline",
+          "settings": {
+            "headline": "Introducing"
+          }
+        },
+        "headline_PHzkfL": {
+          "type": "headline",
+          "settings": {
+            "headline": "the"
+          }
+        },
+        "headline_wihgrz": {
+          "type": "headline",
+          "settings": {
+            "headline": "Athena"
+          }
+        }
+      },
+      "block_order": [
+        "headline_9bxLUb",
+        "headline_PHzkfL",
+        "headline_wihgrz"
+      ],
+      "name": "Headline And Image",
+      "settings": {
+        "image": "shopify://shop_images/Philos_Athena_Running_Shoe_Clear_copy.png",
+        "image_link": "shopify://products/philos-athena",
+        "text": "<p>Inspired by the Greek goddess of wisdom and strength. Philos Athena is laceless and lightweight with a 5mm drop for a natural, grounded run with QuietRun™ sole technology, and a breathable 360º knit performance linen upper. <br/>Made in Italy.</p>",
+        "link_text": "SHOP NOW",
+        "link": "shopify://products/philos-athena"
+      }
+    },
+    "intro-callout-text": {
+      "type": "callout-text",
+      "settings": {
+        "text": "<p><strong>A new philosophy for running.</strong> Inspired by ancient Athens and the Greek ideal of beauty in motion, Philos embodies a reconnection to the origins of sport: elegance, form, and purity in performance. The spirit of the classical world with forward vision, celebrating the body as temple and <strong>running as ceremony.</strong></p>",
+        "caption": "",
+        "theme": "charcoal"
+      }
+    },
+    "seen_on_you_GfUqYK": {
+      "type": "seen-on-you",
+      "name": "Seen On You",
+      "settings": {
+        "title": "Seen On You",
+        "mode": "manual",
+        "manual_items": [
+          "leahbroger",
+          "seen-on-bridgerunner",
+          "victoria-schneiderr",
+          "julie-vendelbo"
+        ],
+        "limit": 4
+      }
+    },
+    "featured-pages": {
+      "type": "featured-pages-list",
+      "blocks": {
+        "running-shoes": {
+          "type": "featured_pages_list_item",
+          "disabled": true,
+          "settings": {
+            "link_url": "shopify://products/philos-athena",
+            "link_name": "Running Shoes",
+            "image": "shopify://shop_images/Philos-Running-Shoes.gif"
+          }
+        },
+        "running-clothing": {
+          "type": "featured_pages_list_item",
+          "settings": {
+            "link_url": "shopify://collections/running-apparel",
+            "link_name": "Running Apparel",
+            "image": "shopify://shop_images/Philos-Running-Apparel.gif"
+          }
+        },
+        "running-together": {
+          "type": "featured_pages_list_item",
+          "settings": {
+            "link_url": "shopify://pages/togetherness",
+            "link_name": "Running Together",
+            "image": "shopify://shop_images/PHILOS-Running-Together.gif"
+          }
+        }
+      },
+      "block_order": [
+        "running-shoes",
+        "running-clothing",
+        "running-together"
+      ],
+      "disabled": true,
+      "settings": {
+        "padding": "md"
+      }
+    },
+    "testimonials": {
+      "type": "cards-slider",
+      "blocks": {
+        "slide_iDJzEp": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>\"I run because it’s a challenge against myself\"</p><p>Aurora, Verona</p>",
+            "image": "shopify://shop_images/WDYR_Aurora_IG-01.jpg",
+            "link": "https://philos.run/blogs/running-philosophy/why-do-you-run-chapter-ii-aurora-papotti"
+          }
+        },
+        "slide_PPBqVF": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>\"I run for my peace of mind”<br/>Awura, Amsterdam</p>",
+            "image": "shopify://shop_images/PHILOS_RUNNING_AWURA.jpg",
+            "link": "https://philos.run/blogs/running-philosophy"
+          }
+        },
+        "slide_mngff8": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>\"I run because I like to meet new people and experience new places.\"</p><p>Wietske, Amsterdam</p>",
+            "image": "shopify://shop_images/Philos_Wietske_IG-01.jpg",
+            "link": "https://philos.run/blogs/running-philosophy/why-do-you-run-chapter-iii-wietske"
+          }
+        },
+        "slide_PKpEAG": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>\"I run because I love to connect with others.”<br/>Athena, Antwerp</p>",
+            "image": "shopify://shop_images/Philos_IG_Athena-03.jpg",
+            "link": ""
+          }
+        },
+        "slide_tfiLaV": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>\"I run because I am super competitive.\"</p><p>Rebecca, London</p>",
+            "image": "shopify://shop_images/WDYR_Rebecca_IG-01_3.jpg",
+            "link": "https://philos.run/blogs/running-philosophy/why-do-you-run-chapter-v-rebecca-rosborough"
+          }
+        },
+        "slide_B7EYLe": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>\"I run because I love the feeling it gives me afterwards.”<br/>Selena, Amsterdam</p>",
+            "image": "shopify://shop_images/PHILOS_RUNNING_SELENA.jpg",
+            "link": "https://philos.run/blogs/running-philosophy"
+          }
+        },
+        "slide_qWfafk": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>\"I run because it makes me feel free”<br/>Sophie, Stockholm</p>",
+            "image": "shopify://shop_images/PHILOS_RUNNING_SOPHIE.jpg",
+            "link": "https://philos.run/blogs/running-philosophy/why-do-you-run-chapter-1-sophie-nordenhed"
+          }
+        },
+        "slide_hfE93X": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>“I run because it gives me a feeling of accomplishment.”<br/>Jasmin, Eindhoven</p>",
+            "image": "shopify://shop_images/Jasmin_IG-01.jpg",
+            "link": "https://philos.run/blogs/running-philosophy/why-do-you-run-chapter-viii-jasmin-setoe"
+          }
+        }
+      },
+      "block_order": [
+        "slide_iDJzEp",
+        "slide_PPBqVF",
+        "slide_mngff8",
+        "slide_PKpEAG",
+        "slide_tfiLaV",
+        "slide_B7EYLe",
+        "slide_qWfafk",
+        "slide_hfE93X"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "why do you run?",
+        "link_text": "",
+        "link": "shopify://collections/all",
+        "text": "nine international women share their journey"
+      }
+    },
+    "headline-and-image": {
+      "type": "headline-and-image",
+      "blocks": {
+        "introducing": {
+          "type": "headline",
+          "settings": {
+            "headline": "Introducing"
+          }
+        },
+        "the": {
+          "type": "headline",
+          "settings": {
+            "headline": "the"
+          }
+        },
+        "phantom": {
+          "type": "headline",
+          "settings": {
+            "headline": "Athena"
+          }
+        }
+      },
+      "block_order": [
+        "introducing",
+        "the",
+        "phantom"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/Philos_Athena_Running_Shoe_Clear_1ed75394-c9e0-4fd1-b727-c1155f91520f.png",
+        "image_link": "shopify://products/philos-athena",
+        "text": "<p>Grounded, natural, made in Italy for a beautiful running experience. Coming Nov 2024</p>",
+        "link_text": "Explore Philos Athena",
+        "link": "shopify://products/philos-athena"
+      }
+    },
+    "full-width-image-with-caption": {
+      "type": "big-image-with-caption",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/Philos_Running_HOME_4-04.jpg",
+        "image_mobile": "shopify://shop_images/philos_running_athena_shoes_split-02.jpg",
+        "headline": "Philos Athena",
+        "text": "<p>The Running Shoe Reimagined</p>",
+        "cta": "shopify://products/philos-athena",
+        "cta_text": "SHOP NOW",
+        "content_bottom": true
+      }
+    },
+    "big_image_with_caption_EwkbVK": {
+      "type": "big-image-with-caption",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design_13_65c6a526-eb05-4014-8a3d-a1a8298b0a6d.jpg",
+        "image_mobile": "shopify://shop_images/PHILOS_WOMENS_RUNNING_LOGO-01.jpg",
+        "headline": "back in stock",
+        "text": "<p>the best-selling full zip & bra</p>",
+        "cta": "shopify://products/philos-running-full-zip",
+        "cta_text": "SHOP NOW",
+        "content_bottom": true
+      }
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "blocks": {
+        "featured_products_T9hXp8": {
+          "type": "featured_products",
+          "settings": {
+            "product": "philos-running-long-sleeve-top"
+          }
+        },
+        "featured_products_UAVWWh": {
+          "type": "featured_products",
+          "settings": {
+            "product": "philos-running-bra"
+          }
+        },
+        "featured_products_VdwaJM": {
+          "type": "featured_products",
+          "settings": {
+            "product": "philos-running-tights"
+          }
+        },
+        "featured_products_VqX34Y": {
+          "type": "featured_products",
+          "settings": {
+            "product": "philos-running-soft-flasks"
+          }
+        },
+        "featured_products_PxnLXT": {
+          "type": "featured_products",
+          "settings": {
+            "product": "philos-running-shorts"
+          }
+        },
+        "featured_products_AEk7BH": {
+          "type": "featured_products",
+          "settings": {
+            "product": "philos-running-full-zip"
+          }
+        }
+      },
+      "block_order": [
+        "featured_products_T9hXp8",
+        "featured_products_UAVWWh",
+        "featured_products_VdwaJM",
+        "featured_products_VqX34Y",
+        "featured_products_PxnLXT",
+        "featured_products_AEk7BH"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "running head-to-toe",
+        "link_text": "",
+        "url": "shopify://collections/running-apparel"
+      }
+    },
+    "store-slider": {
+      "type": "cards-slider",
+      "blocks": {
+        "slide_NNeU3e": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>Philos Tank, Bra, Tights + Philos Athena</p>",
+            "image": "shopify://shop_images/Philos_Running_SETS_2-03.jpg",
+            "link": "shopify://collections/running-apparel"
+          }
+        },
+        "slide_wndh8V": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>Philos Full-Zip, Bra, Tights + Philos Athena</p>",
+            "image": "shopify://shop_images/Philos_Running_SETS_2-01.jpg",
+            "link": "shopify://collections/running-apparel"
+          }
+        },
+        "slide_xxAqV9": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>Philos Long Sleeve, Bra, Shorts + Philos Athena</p>",
+            "image": "shopify://shop_images/Philos_Running_SETS_2-02.jpg",
+            "link": "shopify://collections/running-apparel"
+          }
+        }
+      },
+      "block_order": [
+        "slide_NNeU3e",
+        "slide_wndh8V",
+        "slide_xxAqV9"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Running Sets",
+        "link_text": "",
+        "link": "shopify://collections/running-apparel",
+        "text": "Purchase 3 or more apparel pieces to receive 15% off your order"
+      }
+    },
+    "cards_slider_pnLHRt": {
+      "type": "cards-slider",
+      "blocks": {
+        "slide_XJLxxy": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Philos_Temple_of_Running_Store_Amsterdam_1.jpg",
+            "link": "shopify://pages/philos-temple-of-running"
+          }
+        },
+        "slide_CHWfeE": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Philos_Temple_of_Running_Store_Amsterdam_3_719a0ea4-c849-46a8-b1fe-781d418b9524.jpg",
+            "link": "shopify://pages/philos-temple-of-running"
+          }
+        },
+        "slide_XDRgNj": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Philos_Temple_of_Running_Store_Photos_1.jpg",
+            "link": "shopify://pages/philos-temple-of-running"
+          }
+        },
+        "slide_gz6YrY": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Philos_Temple_of_Running_Store_Amsterdam_2.jpg",
+            "link": "shopify://pages/philos-temple-of-running"
+          }
+        },
+        "slide_fe7aam": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Philos_Temple_of_Running_Store_Photos_5.jpg",
+            "link": "shopify://pages/philos-temple-of-running"
+          }
+        },
+        "slide_XffRDc": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Philos_Temple_of_Running_Store_Photos_4.jpg",
+            "link": "shopify://pages/philos-temple-of-running"
+          }
+        }
+      },
+      "block_order": [
+        "slide_XJLxxy",
+        "slide_CHWfeE",
+        "slide_XDRgNj",
+        "slide_gz6YrY",
+        "slide_fe7aam",
+        "slide_XffRDc"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Philos Temple of Running",
+        "link_text": "",
+        "link": "https://www.google.com/maps/place//data=!4m2!3m1!1s0x47c6091a752963e7:0x1f4985e280c26648?sa=X&ved=1t:8290&ictx=111",
+        "text": "\"The most beautiful running store in the world.\" Our flagship in Amsterdam."
+      }
+    },
+    "end-callout-text": {
+      "type": "callout-text",
+      "disabled": true,
+      "settings": {
+        "text": "<p>Beautifully made, technically-driven running apparel. Philos is a modern women-first running brand, engineered for performance and designed to elevate the running experience.<br/><strong>The future has an ancient heart.</strong></p>",
+        "caption": "",
+        "theme": "charcoal"
+      }
+    },
+    "origins-slider": {
+      "type": "cards-slider",
+      "blocks": {
+        "slide_Mjg9Eq": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/DSCF0706.jpg",
+            "link": "shopify://pages/about"
+          }
+        },
+        "slide_yd7U4c": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Philos_340.jpg",
+            "link": "shopify://pages/about"
+          }
+        },
+        "slide_YArxLC": {
+          "type": "slide",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/LIEKE_RETOUCH.jpg",
+            "link": "shopify://pages/about"
+          }
+        }
+      },
+      "block_order": [
+        "slide_Mjg9Eq",
+        "slide_yd7U4c",
+        "slide_YArxLC"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "link_text": "Origins of Running  |  About Philos",
+        "link": "shopify://pages/about",
+        "text": ""
+      }
+    }
+  },
+  "order": [
+    "home_hero_logo_MQKJAK",
+    "home_hero_iqPNje",
+    "press_MAkNUD",
+    "featured-collection",
+    "featured_pages_list_6yMxXa",
+    "shop_categories_D6Ujdm",
+    "featured_pages_list_bieUgD",
+    "fabric_eDDdxB",
+    "headline_and_image_BN9Ama",
+    "intro-callout-text",
+    "seen_on_you_GfUqYK",
+    "featured-pages",
+    "testimonials",
+    "headline-and-image",
+    "full-width-image-with-caption",
+    "big_image_with_caption_EwkbVK",
+    "featured-products",
+    "store-slider",
+    "cards_slider_pnLHRt",
+    "end-callout-text",
+    "origins-slider"
+  ]
+}

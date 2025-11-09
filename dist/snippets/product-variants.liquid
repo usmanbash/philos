@@ -1,0 +1,105 @@
+{%- comment -%}
+Snippet: Product Variants
+Description: This snippet loops through all products and their variants to render a product card for each color variation.
+Accepts:
+- products: The collection of products to loop through
+Usage:
+{% render 'product-variants', products: collection.products %}
+{%- endcomment -%}
+{%- comment -%}
+{%- assign sorted_products = products |  sort: 'published_at' -%}
+{%- endcomment -%}
+
+{% liquid
+  assign active_colors = ''
+  assign active_sizes = ''
+  for filter in collection.filters
+    case filter.label
+      when 'Color'
+        for value in filter.values
+          if value.active
+            assign active_colors = active_colors | append: value.label | append: ','
+          endif
+        endfor
+      when 'Size'
+        for value in filter.values
+          if value.active
+            assign active_sizes = active_sizes | append: value.label | append: ','
+          endif
+        endfor
+    endcase
+  endfor
+
+  assign active_color_filter_array = active_colors | split: ','
+  # assign active_size_array = active_sizes | split: ','
+%}
+
+{% for product in products %}
+  {%- liquid
+    # Initialize product
+    assign product_data = product
+    assign available_sizes = null
+    # Flag to determine if the data source is a collection or block
+    # and to retrieve the product data correctly
+    if data_source != blank
+      case data_source
+        when 'collection'
+          # If the data source is a collection, get the products from the collection
+          assign product_data = product
+        when 'block'
+          # If the data source is a block, get the products from the block settings
+          assign product_data = product.settings.product
+      endcase
+    endif
+    # Initialize variables for color and size option index
+    assign color_option_index = ''
+    assign size_option_index = ''
+    # Determine the indexes of the color and size options (e.g., option1, option2, etc.)
+    for option in product_data.options_with_values
+      case option.name
+        when 'Color'
+          assign color_option_index = option.position
+          assign available_colors = option.values
+        when 'Size'
+          assign size_option_index = option.position
+          assign available_sizes = option.values
+      endcase
+    endfor
+    # Dynamically access the color and size based on their determined indexes
+    assign color_option = 'option' | append: color_option_index
+    assign size_option = 'option' | append: size_option_index
+  -%}
+  {%- comment -%}Loop through the product_colors_array and render the product card {%- endcomment -%}
+  {% for color in available_colors %}
+    {% if active_color_filter_array.size == 0 or active_color_filter_array contains color %}
+      {%- liquid
+        # Get all variants of the color
+        assign color_variants = product_data.variants | where: color_option, color
+        # Get the first variant of the color
+        assign first_color_variant = product_data.variants | where: color_option, color | first
+        # Check if the first color variant is available
+        assign is_first_color_variant_available = first_color_variant.available
+        # If the first color variant is not available, get the first available variant
+        unless is_first_product_variant_available == true
+          for variant in color_variants
+            if variant.available
+              assign first_color_variant = variant
+              break
+            endif
+          endfor
+        endunless
+      -%}
+        {%- comment -%} Render the product card {%- endcomment -%}
+        <div class="card-wrapper {{ card_wrapper_class }}">
+          {% render 'product-variant-card',
+            product: product_data,
+            first_color_variant: first_color_variant,
+            color: color,
+            sorted_sizes: available_sizes,
+            color_option: color_option,
+            size_option: size_option
+          %}
+        </div>
+    {% endif %}
+  {% endfor %}
+{% endfor %}

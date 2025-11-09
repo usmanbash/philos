@@ -1,0 +1,160 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "template": {
+      "type": "template-product",
+      "blocks": {
+        "product_slider": {
+          "type": "product_slider",
+          "settings": {}
+        },
+        "product_detail_TEnwD6": {
+          "type": "product_detail",
+          "settings": {
+            "label": "Every Detail Considered",
+            "content": "{{ product.metafields.custom.key_features | metafield_tag }}"
+          }
+        },
+        "product_detail_ijjE9T": {
+          "type": "product_detail",
+          "settings": {
+            "label": "Choosing the Right Size",
+            "content": "{{ product.metafields.custom.size_fit | metafield_tag }}"
+          }
+        },
+        "product_detail_UUziUp": {
+          "type": "product_detail",
+          "settings": {
+            "label": "Fabric Technology",
+            "content": "{{ product.metafields.custom.materials_source | metafield_tag }}"
+          }
+        },
+        "product_detail_bY7ipW": {
+          "type": "product_detail",
+          "settings": {
+            "label": "Sourcing and Care",
+            "content": "{{ product.metafields.custom.care | metafield_tag }}"
+          }
+        },
+        "product_detail_cPkBMB": {
+          "type": "product_detail",
+          "disabled": true,
+          "settings": {
+            "label": "Shipping & Returns",
+            "content": "{{ product.metafields.custom.shipping_returns | metafield_tag }}"
+          }
+        },
+        "product_gallery": {
+          "type": "product_gallery",
+          "settings": {}
+        },
+        "seen_on_xXBhjX": {
+          "type": "seen_on",
+          "settings": {
+            "title": "Seen On",
+            "mode": "manual",
+            "manual_items": [
+              "leahbroger",
+              "seen-on-bridgerunner",
+              "julie-vendelbo"
+            ],
+            "limit": 3
+          }
+        },
+        "press_ixKN3H": {
+          "type": "press",
+          "settings": {
+            "logos": [
+              "vogue",
+              "harpers-bazaar",
+              "runners-world"
+            ]
+          }
+        },
+        "product_faq": {
+          "type": "product_faq",
+          "settings": {}
+        },
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "product_tags": {
+          "type": "product_tags",
+          "settings": {}
+        },
+        "product_features_KpcLbg": {
+          "type": "product_features",
+          "settings": {}
+        },
+        "variant_selector": {
+          "type": "variant_selector",
+          "settings": {}
+        },
+        "qty": {
+          "type": "qty",
+          "settings": {}
+        },
+        "checkout_buttons": {
+          "type": "checkout_buttons",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "product_slider",
+        "product_detail_TEnwD6",
+        "product_detail_ijjE9T",
+        "product_detail_UUziUp",
+        "product_detail_bY7ipW",
+        "product_detail_cPkBMB",
+        "product_gallery",
+        "seen_on_xXBhjX",
+        "press_ixKN3H",
+        "product_faq",
+        "vendor",
+        "title",
+        "price",
+        "product_tags",
+        "product_features_KpcLbg",
+        "variant_selector",
+        "qty",
+        "checkout_buttons",
+        "description"
+      ],
+      "settings": {
+        "size_guide_title": ""
+      }
+    },
+    "related_products": {
+      "type": "related-products",
+      "settings": {
+        "title": "Running head to toe",
+        "num_of_max_products": 6
+      }
+    }
+  },
+  "order": [
+    "template",
+    "related_products"
+  ]
+}

@@ -1,0 +1,48 @@
+{% comment %}
+  Snippet: Product Availability
+
+  Accepts:
+    _product: The product object
+    selected_variant: The selected variant object
+{% endcomment %}
+
+
+{% liquid
+  assign target = selected_variant | default: _product
+  assign available_now_t = 'product.available_now' | t
+  assign sold_out_t = 'product.sold_out' | t
+  assign available_from_t = 'product.available_from' | t
+
+  # Set 'Available' if the variant is available
+  assign availability_label = ''
+  # assign availability_label = available_now_t
+
+  # Override for sold out if the variant is not available
+  unless target.available == true
+    assign availability_label = sold_out_t
+
+    # If the product is sold out but has a future availability dat
+    assign available_from = _product.metafields.custom.available_from.value
+
+    if selected_variant != blank
+      assign variant_available_from = selected_variant.metafields.custom.variant_available_from.value
+      if variant_available_from != blank
+        assign available_from = variant_available_from
+      endif
+    endif
+
+    if available_from != blank
+      assign formatted_available_from = available_from | date: '%b %-d'
+      assign availability_label = available_from_t | append: ' ' | append: formatted_available_from
+    endif
+  endunless
+%}
+
+<span class="product-availability">
+
+  {%- if is_pdp == true -%}
+    <span x-html='availabilityLabel'>{{ availability_label }}</span>
+  {%- else -%}
+    <span>{{ availability_label }}</span>
+  {%- endif -%}
+</span>

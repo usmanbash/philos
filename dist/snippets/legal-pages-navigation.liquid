@@ -1,0 +1,53 @@
+{%- comment -%}
+Snippet: Legal Pages Navigation
+Description: This snippet creates a sidebar for legal pages.
+              It uses the linklist that is set in the section settings to populate the navigation.
+              There is mobile and desktop version of the nav.
+              Mobile version is a dropdown (accordion) menu.
+
+Accepts:
+  - menu: The name of the linklist that will be used to populate the navigation
+
+Usage:
+  {% render 'legal-pages-navigation', menu: 'support' %}
+
+{%- endcomment -%}
+
+{% liquid
+  assign links = linklists[menu].links
+  assign current_page_path = request.path
+%}
+
+<nav
+  x-data="legalPagesNavigation"
+  class="legal-pages-nav hidden lg:flex lg:flex-col lg:w-full lg:h-full">
+  <ul class="legal-pages-nav__list lg:w-3/4 font-proximaNova text-16 uppercase">
+    {% if links %}
+      {% for link in links %}
+        {% liquid
+          if current_page_path == link.url
+            assign nav_item_class = 'link--line text-black'
+          else
+            assign nav_item_class = 'link--reversed text-sonicSilver'
+          endif
+        %}
+        <li class="legal-pages-nav__list-item mb-2 last:mb-0">
+          {%- liquid
+            assign link_attr = ''
+            if link.url contains 'http://' or link.url contains 'https://'
+            assign link_attr = 'target="_blank" rel="noopener nofollow"'
+            endif
+          -%}
+          <a
+            href="{{ link.url }}"
+            {{ link_attr }}
+            aria-label="{{ 'general.check_out' | t }} {{ link.title | escape }}"
+            class="legal-pages-nav__link link {{ nav_item_class }} pb-1 transition-colors hover:text-black">
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+
+    {% endif %}
+  </ul>
+</nav>

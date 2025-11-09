@@ -1,0 +1,114 @@
+{%- comment -%}
+	Section: Tab Section
+  Description: This section is used to display content of the about page for the design tab.
+
+Accepts:
+  - Blocks:
+    - Full Bleed Imagery
+    - Text and Imagery Block
+{%- endcomment -%}
+
+{% liquid
+  assign section_id = section.settings.tab_section_id | downcase | replace: ' ', '-'
+%}
+
+<div
+  x-data="sectionAbout()"
+  @set-active-nav-tab.window="tab = $event.detail.tab"
+  class="section-about section-about--'{{ section_id }}' bg-charcoal relative">
+  <div
+    :class='{
+      absolute: tab != "{{ section_id }}"
+    }'
+    x-transition:enter="transition ease-in-out duration-500"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-show="tab === '{{ section_id }}'">
+    {%- for block in section.blocks -%}
+      <div class="tab-content">
+        {%- case block.type -%}
+          {%- when 'full_bleed_imagery' -%}
+            {% render 'full-bleed-imagery', block: block %}
+          {%- when 'text_and_imagery' -%}
+            {% render 'text-and-imagery-dark', block: block %}
+        {%- endcase -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+
+{% schema %}
+{
+	"name": "Tab Section",
+	"tag": "section",
+	"settings": [
+    {
+      "type": "text",
+      "label": "Tab Section ID",
+      "id": "tab_section_id",
+      "info": "This name is used as identifier for the tab. It should be unique and match with navigation tab id."
+    }
+  ],
+	"blocks": [
+    {
+      "type": "full_bleed_imagery",
+      "name": "Full Bleed Images",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3"
+        }
+      ]
+    },
+		{
+      "type": "text_and_imagery",
+      "name": "Text and Images",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "reversed",
+          "label": "Reversed",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image 4"
+        }
+      ]
+    }
+	]
+}
+{% endschema %}

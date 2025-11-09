@@ -1,0 +1,547 @@
+{% comment %} {{ 'template-product.css' | asset_url | stylesheet_tag }} {% endcomment %}
+
+{% liquid
+
+  # Selected product variant and inventory quantity
+  assign selected_variant = product.selected_or_first_available_variant
+  assign selected_variant_inventory_quantity = selected_variant.inventory_quantity
+
+  # variant/product available from
+  assign selected_variant_available_from = selected_variant.metafields.custom.variant_available_from.value
+  assign product_available_from = product.metafields.custom.available_from.value
+
+  # Product Features
+  assign product_features = product.metafields.custom.product_features.value
+
+  # SIZE GUIDE
+  assign size_guide_type = product.metafields.custom.size_guide.value
+  assign gallery_models = product.metafields.custom.gallery_models.value
+  assign measurement_disclaimer = product.metafields.custom.measurement_disclaimer.value
+
+  if size_guide_type.shoes == true
+    assign type = 'Shoes'
+  elsif size_guide_type.clothing == true
+    assign type = 'Clothing'
+  else
+    assign type = 'Clothing'
+  endif
+
+  # Currency
+  assign currency_code = cart.currency.iso_code
+
+%}
+
+{%- comment -%}
+  Prepare JSON data for Alpine.js components
+{%- endcomment -%}
+
+{%- comment -%} Template Product Data {%- endcomment -%}
+{% capture template_product_data -%}
+{
+  "type": {{ type | json }},
+  "galleryModels": {{ gallery_models | json }},
+  "measurementDisclaimer": {
+    "title": {{ measurement_disclaimer.title | json }},
+    "text": "{{ measurement_disclaimer.text | escape }}"
+  }
+}
+{%- endcapture %}
+
+{%- comment -%} Variant Selector Data {%- endcomment -%}
+{% capture variant_selector_data -%}
+{
+  "product": {
+    "handle": {{ product.handle | json }},
+    "available": {{ product.available | json }},
+    "productAvailableFrom": {{ product_available_from | json }},
+    "options": {{ product.options | json }},
+    "variants": {{ product.variants | json }},
+    "featuredImage": {{ product.featured_image | json }}
+  },
+  "selectedVariant": {{ selected_variant | json }},
+  "selectedVariantAvailableFrom": {{ selected_variant_available_from | json }},
+  "selectedVariantInventoryQuantity": {{ selected_variant_inventory_quantity | json }},
+  "currency": {{ currency_code | json }},
+  "variants": [
+  {% for variant in product.variants %}
+    {
+      "id": {{ variant.id | json }},
+      "inventory_quantity": {{ variant.inventory_quantity | json }},
+      "featured_media": {{ variant.featured_media | json }}
+    }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+  ]
+}
+{%- endcapture %}
+
+<script type="application/json" id="pdpData__templateProduct">
+{{ template_product_data }}
+</script>
+
+<script type="application/json" id="pdpData__variantSelector">
+{{ variant_selector_data }}
+</script>
+
+<div
+  x-data="templateProduct()"
+  class="relative pb-20 lg:pb-36">
+
+  <div
+    x-data="variantSelector()"
+    data-scroll
+    data-scroll-call="inViewportAnimation"
+    class="flex flex-col-reverse md:flex-row items-start">
+
+    {%- comment -%} Add Sticky ATC Button for Mobile {%- endcomment -%}
+    <div
+      class="fixed bottom-0 left-0 right-0 md:hidden w-full bg-white p-4 z-50 transition-transform duration-500"
+      :class="{'invisible translate-y-full': !isStickyVisible}">
+      <button 
+        type="button" 
+        :disabled="!available"
+        :aria-label="available ? '{{ 'product.add_to_cart' | t }}' : '{{ 'product.sold_out' | t }}'"
+        :class="available ? 'lg:hover:bg-white2 lg:hover:text-black' : 'pointer-events-none'"
+        class="w-full px-6 py-6 xl:py-4 border border-black bg-black text-white3 uppercase transition-colors"
+        x-on:click="scrollToAddToCart($event)">
+        <template x-if="available">
+          <span>{{ 'product.add_to_cart' | t }}</span>
+        </template>
+        <template x-else>
+          <span>{{ 'product.sold_out' | t }}</span>
+        </template>
+      </button>
+    </div>
+
+    {% comment %} LEFT COLUMN {% endcomment %}
+    <div class="product--media w-full md:w-1/2 xl:w-1/2">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          
+          {%- comment -%} PRODUCT SWIPER (DESKTOP) {%- endcomment -%}
+          {%- when 'product_slider' -%}
+            <div class="slider-gallery-wrapper--desktop" {{ block.shopify_attributes }}>
+              {% render 'product-slider-gallery',
+                data_animate_enabled: true,
+                wrapper_class: 'wide:landscape:h-auto h-[calc(56vh-4.5rem)] xl:h-[calc(100vh-4.5rem)] hidden md:block',
+                swiper_class: 'w-full h-full',
+                id: 'swiper-desktop'
+              %}
+            </div>
+          
+        {%- endcase -%}
+      {%- endfor -%}
+      
+      {% comment %} Product Details Block {% endcomment %}
+      <div class="product-details px-5 sm:px-10 md:pr-0 md:my-28">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'product_detail' -%}
+              {% if block.settings.content != blank %}
+                <div
+                  data-animate
+                  data-preset="fadeUp"
+                  data-to='{ "delay": 0.2 }'
+                  class="product-detail"
+                  {{ block.shopify_attributes }}>
+                  {% render 'accordion',
+                    title: block.settings.label,
+                    content: block.settings.content,
+                    accordion_wrapper_class: 'border-b border-gray text-black',
+                    accordion_class: "flex items-center justify-between py-4 cursor-pointer",
+                    title_class: "text-24",
+                    content_class: "content pt-4 pr-4 lg:pr-40 pb-10 text-16",
+                    accordion_plus_class: "flex-shrink-0",
+                    id: forloop.index
+                  %}
+                </div>
+              {% endif %}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- comment -%} PRODUCT GALLERY (sections) {%- endcomment -%}
+          {%- when 'fabric' -%}
+            <div class="product-fabric-wrapper" {{ block.shopify_attributes }}>
+                {% render 'pdp-fabric',
+                  image: block.settings.image
+                %}
+            </div>
+
+          {%- comment -%} PRODUCT GALLERY (sections) {%- endcomment -%}
+          {%- when 'product_gallery' -%}
+            <div class="product-gallery-wrapper" {{ block.shopify_attributes }}>
+              {% render 'product-variant-gallery' %}
+            </div>
+
+          {% comment %} SEEN-ON {% endcomment %}
+          {%- when 'seen_on' -%}
+            <div class="w-full px-0 sm:px-10 md:pr-0" {{ block.shopify_attributes }}>
+              {% render 'seen-on-you',
+                title: block.settings.title,
+                mode: block.settings.mode,
+                manual_items: block.settings.manual_items,
+                limit: block.settings.limit
+              %}
+            </div>
+
+          {% comment %} PRESS {% endcomment %}
+          {%- when 'press' -%}
+            <div class="w-full px-0 sm:px-10 md:pr-0 mt-10 md:mt-28" {{ block.shopify_attributes }}>
+              {% render 'pdp-press',
+                logos: block.settings.logos
+              %}
+            </div>
+
+          {%- comment -%} PRODUCT FAQs {%- endcomment -%}
+          {%- when 'product_faq' -%}
+            <div class="product-faqs px-5 sm:px-10 md:pr-0 mt-10 md:mt-28" {{ block.shopify_attributes }}>
+              {% render 'product-faq' %}
+            </div>
+        
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {% comment %} RIGHT COLUMN {% endcomment %}
+    <div class="md:sticky md:top-[2rem] w-full flex-1 sm:pt-5 xl:pt-0 xl:w-1/2">
+
+      {%- comment -%} PRODUCT SWIPER (MOBILE) {%- endcomment -%}
+      <div class="slider-galler-wrapper--mobile">
+        {% render 'product-slider-gallery',
+          wrapper_class: 'wide:landscape:h-auto h-[73vh] xl:h-[calc(100vh-5rem)] md:hidden pt-0'
+          swiper_class: 'h-full',
+          id: 'swiper-mobile'
+        %}
+      </div>
+
+      {%- comment -%} RIGHT / VARIANT SELECTOR {%- endcomment -%}
+      <div
+        data-scroll
+        data-scroll-call="inViewportAnimation"
+        class="variant-selector-wrapper">
+
+        <div
+          data-animate
+          data-preset="fadeUp"
+          data-to='{ "delay": 0.2 }'
+          @set-active-color-variation.window="setActiveColorVariation($event.detail)"
+          class="product--information h-fit text-black">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'available_product' -%}
+                {% comment %} AVAILABLE {% endcomment %}
+                <div class="text-right pt-5 lg:pt-0 px-5 sm:px-10 text-font-base" {{ block.shopify_attributes }}>
+                  {% render 'product-availability',
+                    _product: product,
+                    selected_variant: selected_variant,
+                    is_pdp: true
+                  %}
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+
+          <div class="px-5 md:px-10 lg:px-20 2xl:px-36">
+            {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' %}
+              <input
+                type="hidden"
+                name="id"
+                x-model="selectedVariantId"
+                value="{{ selected_variant.id }}">
+
+              {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                  
+                  {% comment %} VENDOR - put phantom logo here {% endcomment %}
+                  {%- when 'vendor' -%}
+                    <div class="hidden md:flex justify-center logo-nav logo logo--dark md:h-10"
+                      {{ block.shopify_attributes }}>
+                    </div>
+
+                  {% comment %} PRODUCT TITLE {% endcomment %}
+                  {%- when 'title' -%}
+                    <div class="mt-8 mb-6" {{ block.shopify_attributes }}>
+                      <h1 class="text-50 lg:text-60 font-ivar text-center">
+                        {{ product.title }}
+                      </h1>
+                    </div>
+
+                  {% comment %} PRICES {% endcomment %}
+                  {%- when 'price' -%}
+                    <div class="prices-wrapper" {{ block.shopify_attributes }}>
+                      {%- render 'product-prices',
+                        id: section.id,
+                        _compare_at_price: selected_variant.compare_at_price,
+                        _price: selected_variant.price
+                      -%}
+                    </div>
+
+                  {% comment %} PRODUCT TAGS {% endcomment %}
+                  {%- when 'product_tags' -%}
+                    {%- if product_features == blank -%}
+                      <div class="my-7 flex flex-wrap justify-center -m-0.5" {{ block.shopify_attributes }}>
+                        {%- for tag in product.tags -%}
+                          <p class="text-14 text-center border border-gray uppercase px-5 py-2 m-0.5 text-black rounded-lg">
+                            {{ tag | escape }}
+                          </p>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+
+                  {% comment %} PRODUCT FEATURES {% endcomment %}
+                  {%- when 'product_features' -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- render 'product-features' -%}
+                    </div>
+
+                  {% comment %} VARIANT SELECTOR {% endcomment %}
+                  {%- when 'variant_selector' -%}
+                    <div class="variant-selector-wrapper" {{ block.shopify_attributes }}>
+                      {%- render 'variant-selector',
+                        id: section.id,
+                        product: product
+                      -%}
+                    </div>
+
+                    {% comment %} QUANTITY 1️⃣ - hidden on this project, but it is functional. {% endcomment %}
+                  {%- when 'qty' -%}
+                    <div class="mt-3 hidden" {{ block.shopify_attributes }}>
+                      <label for="Quantity-{{ section.id }}"">QTY</label>
+                      <div class="my-2">
+                        <input
+                          x-model="quantity"
+                          id="Quantity-{{ section.id }}"
+                          name="Quantity"
+                          type="number"
+                          min="1"
+                          class="w-full px-3 py-1 border">
+                      </div>
+                    </div>
+
+                  {% comment %} CHECKOUT BUTTONS {% endcomment %}
+                  {%- when 'checkout_buttons' -%}
+                    <div 
+                      x-ref="checkoutButtons" 
+                      class="text-16 py-5 md:py-0 md:mt-5" 
+                      {{ block.shopify_attributes }}>
+                      
+                      {% comment %} SOLD OUT {% endcomment %}
+                      <template x-if="!available">
+                        {% comment %} <button
+                          name="add"
+                          type="submit"
+                          disabled
+                          aria-label="{{ 'product.sold_out' | t }}"
+                          class="w-full px-6 py-6 xl:py-4 text-white3 bg-black pointer-events-none uppercase">
+                          {{ 'product.sold_out' | t }}
+                        </button> {% endcomment %}
+                        {%- render 'back-in-stock' -%}
+                      </template>
+                      
+                      {% comment %} AVAILABLE {% endcomment %}
+                      <template x-if="available">
+                        <button
+                          name="add"
+                          type="submit"
+                          aria-label="{{ 'product.add_to_cart' | t }}"
+                          x-on:click="addToCart($event)"
+                          class="w-full px-6 py-6 xl:py-4 text-white3 bg-black lg:hover:bg-white2 lg:hover:text-black border border-black transition-colors uppercase">
+                          {{ 'product.add_to_cart' | t }}
+                        </button>
+                      </template>
+                      
+                    </div>
+
+                  {% comment %} PRODUCT DESCRIPTION {% endcomment %}
+                  {% when 'description' %}
+                    <div class="md:mt-4" {{ block.shopify_attributes }}>
+                      {%- liquid
+                        # Set the variables to the title and content
+                        assign title = 'product.description_title' | t
+                        assign content = product.description
+                        assign accordion_wrapper_class = 'border-b border-gray text-black'
+                      -%}
+                      <div class="product__description-wrapper border-b border-gray md:border-none">
+                        <div class="product-description content pt-4 pb-8 md:pb-6 pr-4 text-16">
+                          {{ product.description }}
+                        </div>
+                      </div>
+                    </div>
+                
+                {%- endcase -%}
+              {%- endfor -%}
+            {%- endform -%}
+          </div>
+        
+        </div>
+      </div>
+
+      {% comment %} PRODUCT FEATURES MODAL {% endcomment %}
+      {%- render 'product-features-modal' -%}
+
+    </div>
+  
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    {
+      "type": "text",
+      "id": "size_guide_title",
+      "label": "Size Guide Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "available_product",
+      "name": "Available",
+      "limit": 1
+    },
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "product_tags",
+      "name": "Product Tags",
+      "limit": 1
+    },
+    {
+      "type": "product_features",
+      "name": "Product Features",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "variant_selector",
+      "name": "Variant Selector",
+      "limit": 1
+    },
+    {
+      "type": "qty",
+      "name": "Qty",
+      "limit": 1
+    },
+    {
+      "type": "checkout_buttons",
+      "name": "Checkout Buttons",
+      "limit": 1
+    },
+    {
+      "type": "product_slider",
+      "name": "Product Slider",
+      "limit": 1
+    },
+    {
+      "type": "product_detail",
+      "name": "Product Detail",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    },
+    {
+      "type": "fabric",
+      "name": "Fabric",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "seen_on",
+      "name": "Seen On",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Section title",
+          "default": "Seen On You"
+        },
+        {
+          "type": "select",
+          "id": "mode",
+          "label": "Mode",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "manual", "label": "Manual" }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "metaobject_list",
+          "id": "manual_items",
+          "label": "Manual Items",
+          "metaobject_type": "seen_on"
+        },
+        {
+          "type": "range",
+          "id": "limit",
+          "label": "Max number of items",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 6
+        }
+      ]
+    },
+    {
+      "type": "press",
+      "name": "Press",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "metaobject_list",
+          "id": "logos",
+          "label": "Press Logos",
+          "metaobject_type": "press_logo"
+        }
+      ]
+    },
+    {
+      "type": "product_faq",
+      "name": "Product FAQ",
+      "limit": 1
+    },
+    {
+      "type": "product_gallery",
+      "name": "Product Gallery",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}

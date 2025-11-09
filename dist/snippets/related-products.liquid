@@ -1,0 +1,141 @@
+{%- comment -%}
+Snippet: Related Products
+Description: This snippet loops through all products and their variants to render a product card for each color variation.
+
+Accepts:
+- products: The collection of products to loop through
+Usage:
+{% render 'related-products',
+  title: section.settings.title,
+  current_product_id: product.id,
+  collections: product.collections,
+%}
+
+For refactoring - consider this:
+@see https://shopify.dev/docs/api/ajax/reference/product-recommendations
+@see https://shopify.dev/docs/themes/product-merchandising/recommendations/related-products
+@see https://shopify.dev/docs/api/liquid/objects/recommendations#recommendations-products
+{%- endcomment -%}
+{% assign all_products = collection.products %}
+
+{%- liquid
+  assign has_related_products = false
+  for product in all_products
+    if product.id != current_product_id
+      assign has_related_products = true
+      # Exit the loop once a related product is found
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_related_products -%}
+  <div
+    x-data="relatedProducts({
+      options: {
+        spaceBetween: 20,
+        navigation: {
+          enabled: true,
+          nextEl: '.swiper-button__next',
+          prevEl: '.swiper-button__prev',
+        },
+        breakpoints: {
+          0: {
+            slidesPerView: 1.2,
+            centeredSlides: true,
+            loop: true
+          },
+          640: {
+            slidesPerView: 2,
+            centeredSlides: false,
+            loop: true
+          },
+          1024: {
+            slidesPerView: 4,
+            centeredSlides: false,
+            loop: true
+          }
+        },
+        allowTouchMove: true,
+        simulateTouch: true,
+        effect: 'slide',
+        grabCursor: true
+      }
+    })"
+    class="related-products relative h-full w-full">
+
+    <div x-ref="relatedProductsEl" class="swiper-container relative w-full h-full overflow-hidden">
+      {%- comment -%} Slider Header {%- endcomment -%}
+      {%- render 'slider-navbar',
+        title: title
+      -%}
+
+        {%- comment -%} Swiper {%- endcomment -%}
+      <div class="swiper-wrapper">
+        {%- assign rendered_products = '' -%}
+
+        {% for product in all_products %}
+
+          {% unless product.id == current_product_id %}
+            {% unless rendered_products contains product.id %}
+              {%- assign rendered_products = rendered_products | append: product.id | append: ',' -%}
+
+              {%- liquid
+                # Initialize variables for color and size option index
+                assign color_option_index = ''
+                assign size_option_index = ''
+                # Determine the indexes of the color and size options (e.g., option1, option2, etc.)
+                for option in product.options_with_values
+                  case option.name
+                    when 'Color'
+                      assign color_option_index = option.position
+                      assign available_colors = option.values
+                    when 'Size'
+                      assign size_option_index = option.position
+                      assign available_sizes = option.values
+                  endcase
+                endfor
+
+                # Dynamically access the color and size based on their determined indexes
+                assign color_option = 'option' | append: color_option_index
+                assign size_option = 'option' | append: size_option_index
+              -%}
+
+              {%- comment -%}Loop through the colors_array and render the product card {%- endcomment -%}
+              {% for color in available_colors %}
+                {%- liquid
+                  # Get all variants of the color
+                  assign color_variants = product.variants | where: color_option, color
+                  # Get the first variant of the color
+                  assign first_color_variant = product.variants | where: color_option, color | first
+                  # Check if the first color variant is available
+                  assign is_first_color_variant_available = first_color_variant.available
+                  # If the first color variant is not available, get the first available variant
+                  unless is_first_product_variant_available == true
+                    for variant in color_variants
+                      if variant.available
+                        assign first_color_variant = variant
+                        break
+                      endif
+                    endfor
+                  endunless
+                -%}
+                {%- comment -%} Render the product card {%- endcomment -%}
+                <div class="swiper-slide">
+                  {% render 'product-variant-card',
+                    _product: product,
+                    first_color_variant: first_color_variant,
+                    color: color,
+                    sorted_sizes: available_sizes,
+                    color_option: color_option,
+                    size_option: size_option
+                  %}
+                </div>
+              {% endfor %}
+            {% endunless %}
+          {% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

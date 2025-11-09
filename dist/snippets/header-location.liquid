@@ -1,0 +1,12 @@
+{%- comment -%}
+Snippet: Location
+Description: This snippet displays the location, time and temperature.
+{%- endcomment -%}
+
+<div
+  x-data='headerLocation()'
+  class='flex flex-row items-center text-nav-font'>
+  <span class='uppercase px-2' x-text='location'></span>
+  <span class='hidden sm:inline px-2' x-text='time'></span>
+  <span class='px-2' x-text='temperature'></span>
+</div>

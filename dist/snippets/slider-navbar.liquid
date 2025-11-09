@@ -1,0 +1,112 @@
+{%- comment -%}
+  Snippet: slider-navbar.liquid
+  Description:
+    This snippet is used to display the slider text and navigation buttons.
+
+  Parameters:
+    - title (string, optional)
+    - text (string, optional)
+    - link (string, optional)
+    - link_text (string, optional)
+    - slider_navbar_class (string, optional): The class of the slider navbar
+
+  Usage:
+    {% raw %}
+      {%- render 'slider-navbar',
+        title: 'New Releases',
+        slider_navbar_class: 'px-5 sm:px-0'
+      -%}
+    {% endraw %}
+
+    {% raw %}
+      {%- render 'slider-navbar',
+        link: collections.featured.url,
+        link_text: 'View all products',
+        text: 'Discover our handpicked selection of premium items',
+        slider_navbar_class: 'px-4 lg:px-8'
+      -%}
+    {% endraw %}
+
+{%- endcomment -%}
+{%- liquid
+  # Set default class
+  assign slider_navbar_class = slider_navbar_class | default: ''
+  
+  # Determine link attributes for external links
+  assign link_attr = ''
+  if link contains 'http://' or link contains 'https://'
+    assign link_attr = 'target="_blank" rel="noopener nofollow"'
+  endif
+
+
+  # Check if we're on a product page
+  assign is_product = false
+  if product
+    assign is_product = true
+  endif
+
+  assign title_classes = 'text-30 lg:text-46'
+  if is_product
+   assign title_classes = 'text-24 lg:text-30'
+  endif
+
+-%}
+<div
+  x-data
+  class="slider-navbar flex w-full py-4 text-black {{ slider_navbar_class }}">
+
+  {%- comment -%} Slider Navbar Text {%- endcomment -%}
+  <div class="slider-navbar__text">
+    
+    {%- if title != blank -%}
+      <h3
+        class="font-ivar {{ title_classes }} text-black">
+        {{ title }}
+      </h3>
+    {%- endif -%}
+    
+    {%- if link != blank -%}
+      <a
+        href="{{ link }}"
+        {{ link_attr }}
+        aria-label="{{ 'general.check_out' | t }} {{ link_text | escape }}"
+        class="link link--line text-16 lg:text-font-base">
+        {{ link_text }}
+      </a>
+    {%- endif -%}
+    
+    {%- if text != blank -%}
+      <p class="mt-2 text-16">{{ text }}</p>
+    {%- endif -%}
+  
+  </div>
+
+  {%- comment -%} Navigation {%- endcomment -%}
+  <div class="slider-navigation__wrapper ml-auto">
+    <div
+      class="slider-navigation w-full h-full"
+      :class="{
+        'flex items-center gap-4': showNavigation,
+        'hidden': !showNavigation 
+      }"
+    >
+      <div
+        class="swiper-button__prev transition-opacity duration-300 hover:opacity-70"
+        :class="{
+          'swiper-button__prev--disabled opacity-50 pointer-events-none': loop ? false : isBeginning
+        }"
+      >
+        {% render 'icon-arrow-left' %}
+      </div>
+
+      <div
+        class="swiper-button__next transition-opacity duration-300 hover:opacity-70"
+        :class="{
+          'swiper-button__next--disabled opacity-50 pointer-events-none': loop ? false : isEnd
+        }"
+      >
+        {% render 'icon-arrow-right' %}
+      </div>
+    </div>
+  </div>
+</div>

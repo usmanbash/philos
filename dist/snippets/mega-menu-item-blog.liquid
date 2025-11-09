@@ -1,0 +1,61 @@
+{%- comment -%}
+Snippet: Mega Menu Item: Blog
+Description: Renders a blog with a title, description, and 3 articles
+
+Usage:
+  {% render 'mega-menu-item-blog', block: block %}
+
+Accepts:
+  - block: the block object
+  - block.settings.blog: the blog to display
+  - block.settings.headline: the title of the blog
+  - block.settings.cta_text: the text for the call to action
+  - block.settings.text: the description of the blog
+  - block.settings.article_1: the first article to display
+  - block.settings.article_2: the second article to display
+  - block.settings.article_3: the third article to display
+{%- endcomment -%}
+<div class="mega-menu-item mega-menu-item--blog flex flex-col lg:flex-row h-full w-full">
+  <div class="lg:w-1/4 pr-4">
+    {%- comment -%} First Column: Content{%- endcomment -%}
+    <div class="flex flex-col w-full h-full justify-end">
+      {%- liquid
+        assign blog = blogs[block.settings.blog]
+        assign blog_headline = block.settings.headline | default: blog.title
+      -%}
+
+      <h2 class="mb-8 font-ivar text-46">{{ blog_headline }}</h2>
+
+      <a
+        href="{{ blog.url }}"
+        aria-label="{{ 'general.check_out' | t }} {{ blog.title | escape }}"
+        class="mb-8 text-24">
+        <div class="link link--reversed">
+          {{ block.settings.cta_text }}
+        </div>
+      </a>
+
+      <div class="mb-8 pr-32 text-16">{{ block.settings.text }}</div>
+
+    </div>
+  </div>
+
+  {%- comment -%} Article Cards {%- endcomment -%}
+  <div class="w-3/4 flex flex-col lg:flex-row">
+    {% for i in (1..3) %}
+      {% assign article_handle = 'article_' | append: i %}
+      {% if block.settings[article_handle] %}
+
+        {% assign article = articles[block.settings[article_handle]] %}
+        <div class="lg:w-1/3 lg:ml-5 first:ml-0">
+          {% render 'menu-card',
+            image: article.image,
+            title: article.title,
+            page_url: article.url
+          %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+

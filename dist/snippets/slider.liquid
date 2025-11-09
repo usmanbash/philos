@@ -1,0 +1,160 @@
+{%- comment -%}
+Snippet: Slider
+Description: A snippet that displays a slider
+
+Slider settings
+  space_between_slides: Space between slides
+  slides_per_view: Number of slides per view
+  slides_per_view_mob: Number of slides per view on mobile
+  loop_on_mobile: Loop on mobile
+  centered_slides: Centered slides
+  slider_navbar_class: Slider navbar class
+  link: Link
+  link_text: Link text
+  title: Title
+  text: Text
+  card_type: Card type
+  slides: Slides
+  current_article_id: Current article ID
+  current_article_tags: Current article tags
+  blog: Blog
+  data_source: Data source
+{%- endcomment -%}
+
+{%- liquid
+  assign space_between_slides = space_between_slides | default: 0
+  assign slides_per_view_mob = slides_per_view_mob | default: 1
+  assign slides_per_view_tablet = slides_per_view_tablet | default: 2
+  assign slides_per_view = slides_per_view | default: 3
+  assign loop_on_mobile = loop_on_mobile | default: false
+  assign loop_on_desk = loop_on_desk | default: false
+  assign centered_slides = centered_slides | default: false
+  assign should_loop_on_desk = false
+  if slides.size > 0 and slides.size > slides_per_view and loop_on_desk
+    assign should_loop_on_desk = true
+  endif
+-%}
+
+{%- comment -%}
+  allowTouchMove: true => Allow dragging/sliding with touch gestures
+  simulateTouch: true, => Allow dragging/sliding with a mouse (simulating touch)
+{%- endcomment -%}
+
+<div x-data="slider({
+    options: {
+      spaceBetween: {{ space_between_slides }},
+      navigation: {
+        enabled: true,
+        nextEl: '.swiper-button__next',
+        prevEl: '.swiper-button__prev',
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: {{ slides_per_view_mob }},
+          loop: {{ loop_on_mobile }},
+          centeredSlides: {{ centered_slides }}
+        },
+        640: {
+          slidesPerView: {{ slides_per_view_tablet }},
+          loop: {{ loop_on_mobile }}
+        },
+        1024: {
+          slidesPerView: {{ slides_per_view }},
+          loop: {{ should_loop_on_desk }},
+         }
+      },
+      allowTouchMove: true,
+      simulateTouch: true,
+      effect: 'slide',
+      grabCursor: true
+    }
+  })"
+  class="slider-wrapper relative w-full h-full">
+
+  <div 
+    x-ref="sliderEl" 
+    class="swiper-container relative w-full h-full overflow-hidden">
+
+    {%- comment -%} Slider Header {%- endcomment -%}
+    {%- render 'slider-navbar',
+      link: link,
+      link_text: link_text,
+      title: title,
+      text: text,
+      slider_navbar_class: slider_navbar_class
+    -%}
+
+    {%- comment -%} Slider {%- endcomment -%}
+    {%- if slides.size > 0 -%}
+      <div class="swiper-wrapper">
+        {%- case card_type -%}
+          {%- when 'image_and_caption_card' -%}
+            {%- for block in slides -%}
+              {%- assign aria_label = 'slide-card-link-' |  append: forloop.index -%}
+              <div class="swiper-slide">
+                <a
+                  href="{{ block.settings.link }}"
+                  aria-label="{{ block.settings.image.alt |  default: aria_label }}"
+                  class="slide-card__link inline-block w-full h-full">
+                  {%- comment -%} Image and Caption Card{%- endcomment -%}
+                  {%- render 'image-and-caption-card',
+                    image: block.settings.image,
+                    image_caption: block.settings.text,
+                    imgRatio: 0.72
+                  -%}
+                </a>
+
+              </div>
+            {%- endfor -%}
+
+          {%- comment -%} Article Card {%- endcomment -%}
+          {%- when 'article_card' -%}
+            {% assign rendered_articles = '' %}
+            {%- for article in slides -%}
+              {% unless article.id == current_article_id %}
+
+                {% assign already_rendered = false %}
+                {% if rendered_articles contains article.id %}
+                  {% assign already_rendered = true %}
+                {% endif %}
+
+                {% if already_rendered == false %}
+
+                  <div class="swiper-slide">
+                    {% render 'article-card',
+                      blog_handle: blog.handle,
+                      article: article
+                    %}
+                  </div>
+                  {% assign rendered_articles = rendered_articles | append: article.id | append: ',' %}
+                {% endif %}
+              {% endunless %}
+            {%- endfor -%}
+
+            {%- when 'product_card' -%}
+              {% render 'product-variants',
+                products: slides,
+                data_source: data_source,
+                card_wrapper_class: 'swiper-slide cursor-grab'
+              %}
+
+            {%- when 'page_card' -%}
+              {%- for slide in slides -%}
+                {%- assign page = pages[slide.page] -%}
+                {%- assign image_src = page.metafields.custom.image -%}
+                  <div class="swiper-slide">
+                    {% render 'menu-card',
+                      page_type: 'page',
+                      image: image_src,
+                      title: slide.page_headline,
+                      page_url: page.url
+                    %}
+                  </div>
+              {%- endfor -%}
+
+        {%- endcase -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
